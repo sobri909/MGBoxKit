@@ -332,7 +332,8 @@
     [self loadAsyncLayoutSection];
   };
 
-  MGLine *more = [MGLine lineWithLeft:@"More" right:arrow size:ROW_SIZE];
+  MGLine *more = [MGLine lineWithLeft:@"CSS style properties" right:arrow
+      size:ROW_SIZE];
   more.leftPadding = more.rightPadding = 16;
   [layout.topLines addObject:more];
   more.onTap = ^{
