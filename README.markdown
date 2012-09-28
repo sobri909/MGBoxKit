@@ -64,7 +64,7 @@ MGScrollView *scroller = [MGScrollView scrollerWithSize:self.bounds.size];
 
 ```
 MGTableBoxStyled *section = MGTableBoxStyled.box;
-[scroller.boxes addObject:section]`
+[scroller.boxes addObject:section];
 ```
 
 #### Add Some Rows:
@@ -104,7 +104,7 @@ grid.contentLayoutMode = MGLayoutStackHorizontalWithWrap;
 #### Add Some Views to the Grid:
 
 ```objc
-// add ten 100x100 boxes
+// add ten 100x100 boxes, with 10pt top and left margins
 for (int i = 0; i < 10; i++) {
     MGBox *box = [MGBox boxWithSize:(CGSize){100, 100}];
     box.leftMargin = box.topMargin = 10;
@@ -126,11 +126,16 @@ All `MGBoxes`, `MGScrollViews`, and subclasses support two layout methods (`layo
 
 ### [box layout]
 
-Layout the box (and all descendent boxes) without animation.
+Layout the box's children (and all descendents) without animation.
 
 ### [box layoutWithSpeed:completion:]
 
-Same as above, but with boxes animated between previous and new computed positions, fading new boxes in, and fading removed boxes out.
+Same as above, but with child boxes animated between previous and new computed positions, fading new boxes in, and fading removed boxes out. Child boxes will have their unanimated `layout` method called. If you want a child box to also animate the positioning of its children in the same drawing pass, call its `layoutWithSpeed:completion:` method first.
+
+```objc
+[grid layoutWithSpeed:0.3 completion:nil];
+[scroller layoutWithSpeed:0.3 completion:nil];
+```
 
 ### box.asyncLayout and box.asyncLayoutOnce
 
@@ -177,7 +182,7 @@ for (MGBox *box in scroller.boxes) {
 
 ### Margins and Padding
 
-When `layout` or `layoutWithSpeed:completion:` is called, each descendent box in the tree is positioned according to the container box's `contentLayoutMode` (ie table or grid), taking into acount the container's padding and the child's margins.
+When `layout` or `layoutWithSpeed:completion:` is called, each descendent box in the tree is positioned according to the container box's `contentLayoutMode` (ie table or grid), taking into account the container's padding and the child's margins.
 
 Getters and setters are provided for:
 
@@ -188,7 +193,7 @@ Getters and setters are provided for:
 
 ### Z-Index
 
-The same as in CSS - a `zIndex` property of `MGBox` that affects the stacking order of boxes during layout.
+The same as in CSS. The `zIndex` property of `MGBox` affects the stacking order of boxes during layout.
 
 ### Fixed Positioning
 
@@ -222,7 +227,7 @@ box.onLongPress = ^{
 
 ```objc
 [earth onChangeOf:@"isFlat" do:^{
-    if (object.isFlat) {
+    if (earth.isFlat) {
         NSLog(@"the earth is now flat");
     } else {
         NSLog(@"the earth is no longer flat.");
@@ -244,7 +249,7 @@ box.onLongPress = ^{
 
 ### Blocks Based UIControl Event Handlers
 
-`MGButton` provides a nice easy `onControlEvent:do:` method, which frees you from the awkward muck of adding targets, selectors, etc. 
+`MGButton` provides a nice easy `onControlEvent:do:` method, which frees you from the muck of adding targets, selectors, etc. 
 
 ```objc
 [button onControlEvent:UIControlEventTouchUpInside do:^{
@@ -277,11 +282,11 @@ All `MGBoxes` have a convenience `setup` method which is called from both `initW
 
 Additionally you might want to override the standard `layout` method, if you want to perform some tasks before or after layout. You should almost certainly call `[super layout]` in your custom layout method.
 
-If your custom `MGBox` has a shadow, it's useful to adjust its `shadowPath` in the `layout` method, after `[super layout]`, because shadows without shadow paths make iOS cry.
+If your custom `MGBox` has a shadow, it's useful to adjust its `shadowPath` in the `layout` method, after `[super layout]`, because shadows without shadowPaths make iOS cry.
 
 ## The Difference Between 'boxes' and 'subviews'
 
-This distinction can present an occasional trap. When `layout` or `layoutWithSpeed:completion:` are called, the layout engine only applies `MGBox` layout rules to boxes in the container's `boxes` set. All other `UIViews` in `subviews` will simply be ignored, with no `MGBox` style layout rules applied (their `zIndex` will be treated as `0`).
+This distinction can present an occasional trap. When `layout` or `layoutWithSpeed:completion:` are called, the layout engine only applies `MGBox` layout rules to boxes in the container's `boxes` set. All other views in `subviews` will simply be ignored, with no `MGBox` style layout rules applied (their `zIndex` will be treated as `0`).
 
 All `MGBoxes` that are subviews but are not in `boxes` will be removed during layout. Any `MGBoxes` in `boxes` that are not yet subviews will be added as subviews.
 
@@ -354,6 +359,6 @@ Own up to being a `UIScrollViewDelegate`
 UIImage *screenshot = [box screenshot:0]; // 0 = device scale, 1 = old school, 2 = retina
 ```
 
-#### More
+## More
 
-There's a few more undocumented features, if you're the type to go poking through the source. Enjoy!
+There's a few more undocumented features, if you're the type to go poking around the source. Enjoy!
