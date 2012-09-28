@@ -10,11 +10,19 @@
 
 @property (nonatomic, weak) UIView *keepAboveKeyboard;
 
+// factories
++ (id)scroller;
++ (id)scrollerWithSize:(CGSize)size;
+
+// init
+- (void)setup;
+
+// layout and scrolling
 - (void)layoutWithSpeed:(NSTimeInterval)speed
              completion:(Block)completion;
+- (void)scrollToView:(UIView *)view withMargin:(CGFloat)margin;
 - (void)snapToNearestBox;
 - (void)keyboardWillAppear:(NSNotification *)note;
 - (void)restoreAfterKeyboardClose:(Block)completion;
-- (void)setup;
 
 @end

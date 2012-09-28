@@ -7,7 +7,7 @@
 #import "MGScrollView.h"
 #import "MGLayoutManager.h"
 
-#define KEYBOARD_MARGIN 10
+#define SCROLL_MARGIN 8
 
 @implementation MGScrollView {
   CGFloat keyboardNudge;
@@ -18,13 +18,24 @@
 // MGLayoutBox protocol
 @synthesize boxes, parentBox, boxLayoutMode, contentLayoutMode;
 @synthesize asyncLayout, asyncLayoutOnce, asyncQueue;
-@synthesize topMargin, bottomMargin, leftMargin, rightMargin;
-@synthesize topPadding, rightPadding, bottomPadding, leftPadding;
+@synthesize margin, topMargin, bottomMargin, leftMargin, rightMargin;
+@synthesize padding, topPadding, rightPadding, bottomPadding, leftPadding;
 @synthesize attachedTo, replacementFor, sizingMode;
-@synthesize fixedPosition, zIndex;
+@synthesize fixedPosition, zIndex, layingOut;
 
 // MGLayoutBox protocol optionals
 @synthesize tapper, tappable, onTap;
+
++ (id)scroller {
+  MGScrollView *scroller = [[self alloc] initWithFrame:CGRectZero];
+  return scroller;
+}
+
++ (id)scrollerWithSize:(CGSize)size {
+  CGRect frame = CGRectMake(0, 0, size.width, size.height);
+  MGScrollView *scroller = [[self alloc] initWithFrame:frame];
+  return scroller;
+}
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -96,6 +107,13 @@
   return ![touch.view isKindOfClass:UIControl.class];
 }
 
+#pragma mark - Scrolling
+
+- (void)scrollToView:(UIView *)view withMargin:(CGFloat)_margin {
+  CGRect frame = [self convertRect:view.frame fromView:view.superview];
+  [self scrollRectToVisible:CGRectInset(frame, -_margin, -_margin) animated:YES];
+}
+
 #pragma mark - Edge snapping
 
 - (void)snapToNearestBox {
@@ -148,9 +166,9 @@
   keyboard = [self convertRect:keyboard fromView:nil];
 
   // determine overage
-  CGFloat margin = KEYBOARD_MARGIN,
+  CGFloat keyboardMargin = SCROLL_MARGIN,
       targetBottom = target.origin.y + target.size.height,
-      over = targetBottom + margin - keyboard.origin.y;
+      over = targetBottom + keyboardMargin - keyboard.origin.y;
 
   // need to nudge?
   keyboardNudge = over > 0 ? over : 0;
@@ -194,6 +212,20 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)other 
 
 #pragma mark - Setters
 
+- (void)setMargin:(UIEdgeInsets)_margin {
+  self.topMargin = _margin.top;
+  self.rightMargin = _margin.right;
+  self.bottomMargin = _margin.bottom;
+  self.leftMargin = _margin.left;
+}
+
+- (void)setPadding:(UIEdgeInsets)_padding {
+  self.topPadding = _padding.top;
+  self.rightPadding = _padding.right;
+  self.bottomPadding = _padding.bottom;
+  self.leftPadding = _padding.left;
+}
+
 - (void)setTappable:(BOOL)can {
   if (tappable == can) {
     return;
@@ -220,6 +252,16 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)other 
     boxes = NSMutableOrderedSet.orderedSet;
   }
   return boxes;
+}
+
+- (UIEdgeInsets)margin {
+  return UIEdgeInsetsMake(self.topMargin, self.leftMargin, self.bottomMargin,
+      self.rightMargin);
+}
+
+- (UIEdgeInsets)padding {
+  return UIEdgeInsetsMake(self.topPadding, self.leftPadding, self.bottomPadding,
+      self.rightPadding);
 }
 
 - (CGPoint)fixedPosition {

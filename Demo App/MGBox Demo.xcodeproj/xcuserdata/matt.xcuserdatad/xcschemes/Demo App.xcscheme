@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C9968EB51610CDEF00D113FB"
-               BuildableName = "Demo App.app"
-               BlueprintName = "Demo App"
-               ReferencedContainer = "container:Demo App.xcodeproj">
+               BuildableName = "MGBox Demo.app"
+               BlueprintName = "MGBox Demo"
+               ReferencedContainer = "container:MGBox Demo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C9968EB51610CDEF00D113FB"
-            BuildableName = "Demo App.app"
-            BlueprintName = "Demo App"
-            ReferencedContainer = "container:Demo App.xcodeproj">
+            BuildableName = "MGBox Demo.app"
+            BlueprintName = "MGBox Demo"
+            ReferencedContainer = "container:MGBox Demo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C9968EB51610CDEF00D113FB"
-            BuildableName = "Demo App.app"
-            BlueprintName = "Demo App"
-            ReferencedContainer = "container:Demo App.xcodeproj">
+            BuildableName = "MGBox Demo.app"
+            BlueprintName = "MGBox Demo"
+            ReferencedContainer = "container:MGBox Demo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C9968EB51610CDEF00D113FB"
-            BuildableName = "Demo App.app"
-            BlueprintName = "Demo App"
-            ReferencedContainer = "container:Demo App.xcodeproj">
+            BuildableName = "MGBox Demo.app"
+            BlueprintName = "MGBox Demo"
+            ReferencedContainer = "container:MGBox Demo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

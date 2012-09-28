@@ -4,7 +4,6 @@
 //  http://bigpaua.com/
 //
 
-#import <QuartzCore/QuartzCore.h>
 #import "MGTableBox.h"
 
 @interface MGTableBoxStyled : MGTableBox

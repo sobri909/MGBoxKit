@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3307137FAF1435B4ECA15024 /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 330715EF12EC184937E5FA7E /* add@2x.png */; };
+		33071941672C2D8830257E32 /* PhotoBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3307132EC7E612F5B422461B /* PhotoBox.m */; };
+		330719F40060E9DDC87FB9C7 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 33071767DF74FC852F68B7FE /* add.png */; };
 		C9968EBB1610CDEF00D113FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9968EBA1610CDEF00D113FB /* UIKit.framework */; };
 		C9968EBD1610CDEF00D113FB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9968EBC1610CDEF00D113FB /* Foundation.framework */; };
 		C9968EBF1610CDEF00D113FB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9968EBE1610CDEF00D113FB /* CoreGraphics.framework */; };
@@ -16,8 +19,8 @@
 		C9968ECD1610CDF000D113FB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C9968ECC1610CDF000D113FB /* Default.png */; };
 		C9968ECF1610CDF000D113FB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9968ECE1610CDF000D113FB /* Default@2x.png */; };
 		C9968ED11610CDF000D113FB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9968ED01610CDF000D113FB /* Default-568h@2x.png */; };
-		C9968ED41610CDF000D113FB /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9968ED21610CDF000D113FB /* MainStoryboard_iPhone.storyboard */; };
-		C9968ED71610CDF000D113FB /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9968ED51610CDF000D113FB /* MainStoryboard_iPad.storyboard */; };
+		C9968ED41610CDF000D113FB /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9968ED21610CDF000D113FB /* iPhone.storyboard */; };
+		C9968ED71610CDF000D113FB /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9968ED51610CDF000D113FB /* iPad.storyboard */; };
 		C9968EDA1610CDF000D113FB /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9968ED91610CDF000D113FB /* DemoViewController.m */; };
 		C9968F0D1610D3A600D113FB /* MGBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C9968EFD1610D3A600D113FB /* MGBlockWrapper.m */; };
 		C9968F0E1610D3A600D113FB /* MGBox.m in Sources */ = {isa = PBXBuildFile; fileRef = C9968EFF1610D3A600D113FB /* MGBox.m */; };
@@ -27,10 +30,19 @@
 		C9968F121610D3A600D113FB /* MGScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9968F081610D3A600D113FB /* MGScrollView.m */; };
 		C9968F131610D3A600D113FB /* MGTableBox.m in Sources */ = {isa = PBXBuildFile; fileRef = C9968F0A1610D3A600D113FB /* MGTableBox.m */; };
 		C9968F141610D3A600D113FB /* MGTableBoxStyled.m in Sources */ = {isa = PBXBuildFile; fileRef = C9968F0C1610D3A600D113FB /* MGTableBoxStyled.m */; };
+		C9968F3B1610D84300D113FB /* NSObject+MGEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = C9968F381610D84300D113FB /* NSObject+MGEvents.m */; };
+		C9968F3C1610D84300D113FB /* UIView+MGEasyFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = C9968F3A1610D84300D113FB /* UIView+MGEasyFrame.m */; };
+		C9968F6D1610EDEF00D113FB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9968F6C1610EDEF00D113FB /* QuartzCore.framework */; };
+		C9BE1ED81612106000D16831 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C9BE1ED61612106000D16831 /* arrow.png */; };
+		C9BE1ED91612106000D16831 /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9BE1ED71612106000D16831 /* arrow@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C9968EB61610CDEF00D113FB /* Demo App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Demo App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3307132EC7E612F5B422461B /* PhotoBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBox.m; sourceTree = "<group>"; };
+		330714AD1C35930E7498DCE3 /* PhotoBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoBox.h; sourceTree = "<group>"; };
+		330715EF12EC184937E5FA7E /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add@2x.png"; sourceTree = "<group>"; };
+		33071767DF74FC852F68B7FE /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
+		C9968EB61610CDEF00D113FB /* MGBox Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MGBox Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9968EBA1610CDEF00D113FB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C9968EBC1610CDEF00D113FB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9968EBE1610CDEF00D113FB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -43,8 +55,8 @@
 		C9968ECC1610CDF000D113FB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		C9968ECE1610CDF000D113FB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		C9968ED01610CDF000D113FB /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		C9968ED31610CDF000D113FB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		C9968ED61610CDF000D113FB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		C9968ED31610CDF000D113FB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPhone.storyboard; sourceTree = "<group>"; };
+		C9968ED61610CDF000D113FB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPad.storyboard; sourceTree = "<group>"; };
 		C9968ED81610CDF000D113FB /* DemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
 		C9968ED91610CDF000D113FB /* DemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
 		C9968EFB1610D3A600D113FB /* MGBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBase.h; sourceTree = "<group>"; };
@@ -65,6 +77,13 @@
 		C9968F0A1610D3A600D113FB /* MGTableBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableBox.m; sourceTree = "<group>"; };
 		C9968F0B1610D3A600D113FB /* MGTableBoxStyled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableBoxStyled.h; sourceTree = "<group>"; };
 		C9968F0C1610D3A600D113FB /* MGTableBoxStyled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableBoxStyled.m; sourceTree = "<group>"; };
+		C9968F371610D84300D113FB /* NSObject+MGEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MGEvents.h"; sourceTree = "<group>"; };
+		C9968F381610D84300D113FB /* NSObject+MGEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MGEvents.m"; sourceTree = "<group>"; };
+		C9968F391610D84300D113FB /* UIView+MGEasyFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MGEasyFrame.h"; sourceTree = "<group>"; };
+		C9968F3A1610D84300D113FB /* UIView+MGEasyFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MGEasyFrame.m"; sourceTree = "<group>"; };
+		C9968F6C1610EDEF00D113FB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C9BE1ED61612106000D16831 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		C9BE1ED71612106000D16831 /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9968F6D1610EDEF00D113FB /* QuartzCore.framework in Frameworks */,
 				C9968EBB1610CDEF00D113FB /* UIKit.framework in Frameworks */,
 				C9968EBD1610CDEF00D113FB /* Foundation.framework in Frameworks */,
 				C9968EBF1610CDEF00D113FB /* CoreGraphics.framework in Frameworks */,
@@ -81,11 +101,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		33071349A23848C54E74AB98 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				C9BE1ED61612106000D16831 /* arrow.png */,
+				C9BE1ED71612106000D16831 /* arrow@2x.png */,
+				33071767DF74FC852F68B7FE /* add.png */,
+				330715EF12EC184937E5FA7E /* add@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		C9968EAB1610CDEF00D113FB = {
 			isa = PBXGroup;
 			children = (
 				C9968EFA1610D3A600D113FB /* MGBox */,
-				C9968EC01610CDEF00D113FB /* Demo App */,
+				C9968EC01610CDEF00D113FB /* Demo app */,
 				C9968EB91610CDEF00D113FB /* Frameworks */,
 				C9968EB71610CDEF00D113FB /* Products */,
 			);
@@ -94,7 +125,7 @@
 		C9968EB71610CDEF00D113FB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C9968EB61610CDEF00D113FB /* Demo App.app */,
+				C9968EB61610CDEF00D113FB /* MGBox Demo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -102,6 +133,7 @@
 		C9968EB91610CDEF00D113FB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9968F6C1610EDEF00D113FB /* QuartzCore.framework */,
 				C9968EBA1610CDEF00D113FB /* UIKit.framework */,
 				C9968EBC1610CDEF00D113FB /* Foundation.framework */,
 				C9968EBE1610CDEF00D113FB /* CoreGraphics.framework */,
@@ -109,37 +141,39 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C9968EC01610CDEF00D113FB /* Demo App */ = {
+		C9968EC01610CDEF00D113FB /* Demo app */ = {
 			isa = PBXGroup;
 			children = (
+				330714AD1C35930E7498DCE3 /* PhotoBox.h */,
+				3307132EC7E612F5B422461B /* PhotoBox.m */,
 				C9968EC91610CDF000D113FB /* AppDelegate.h */,
 				C9968ECA1610CDF000D113FB /* AppDelegate.m */,
-				C9968ED21610CDF000D113FB /* MainStoryboard_iPhone.storyboard */,
-				C9968ED51610CDF000D113FB /* MainStoryboard_iPad.storyboard */,
 				C9968ED81610CDF000D113FB /* DemoViewController.h */,
 				C9968ED91610CDF000D113FB /* DemoViewController.m */,
-				C9968EC11610CDF000D113FB /* Supporting Files */,
+				33071349A23848C54E74AB98 /* Images */,
+				C9968EC11610CDF000D113FB /* Supporting files */,
+				C9BE1EE21612416C00D16831 /* User interface */,
 			);
+			name = "Demo app";
 			path = "Demo App";
 			sourceTree = "<group>";
 		};
-		C9968EC11610CDF000D113FB /* Supporting Files */ = {
+		C9968EC11610CDF000D113FB /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
 				C9968EC21610CDF000D113FB /* Demo App-Info.plist */,
 				C9968EC31610CDF000D113FB /* InfoPlist.strings */,
 				C9968EC61610CDF000D113FB /* main.m */,
 				C9968EC81610CDF000D113FB /* Demo App-Prefix.pch */,
-				C9968ECC1610CDF000D113FB /* Default.png */,
-				C9968ECE1610CDF000D113FB /* Default@2x.png */,
-				C9968ED01610CDF000D113FB /* Default-568h@2x.png */,
+				C9BE1EDE16121C2000D16831 /* Launch images */,
 			);
-			name = "Supporting Files";
+			name = "Supporting files";
 			sourceTree = "<group>";
 		};
 		C9968EFA1610D3A600D113FB /* MGBox */ = {
 			isa = PBXGroup;
 			children = (
+				C9968F361610D84300D113FB /* Categories */,
 				C9968EFB1610D3A600D113FB /* MGBase.h */,
 				C9968EFC1610D3A600D113FB /* MGBlockWrapper.h */,
 				C9968EFD1610D3A600D113FB /* MGBlockWrapper.m */,
@@ -163,12 +197,42 @@
 			path = ../MGBox;
 			sourceTree = "<group>";
 		};
+		C9968F361610D84300D113FB /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				C9968F371610D84300D113FB /* NSObject+MGEvents.h */,
+				C9968F381610D84300D113FB /* NSObject+MGEvents.m */,
+				C9968F391610D84300D113FB /* UIView+MGEasyFrame.h */,
+				C9968F3A1610D84300D113FB /* UIView+MGEasyFrame.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		C9BE1EDE16121C2000D16831 /* Launch images */ = {
+			isa = PBXGroup;
+			children = (
+				C9968ECC1610CDF000D113FB /* Default.png */,
+				C9968ECE1610CDF000D113FB /* Default@2x.png */,
+				C9968ED01610CDF000D113FB /* Default-568h@2x.png */,
+			);
+			name = "Launch images";
+			sourceTree = "<group>";
+		};
+		C9BE1EE21612416C00D16831 /* User interface */ = {
+			isa = PBXGroup;
+			children = (
+				C9968ED21610CDF000D113FB /* iPhone.storyboard */,
+				C9968ED51610CDF000D113FB /* iPad.storyboard */,
+			);
+			name = "User interface";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C9968EB51610CDEF00D113FB /* Demo App */ = {
+		C9968EB51610CDEF00D113FB /* MGBox Demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C9968EDD1610CDF000D113FB /* Build configuration list for PBXNativeTarget "Demo App" */;
+			buildConfigurationList = C9968EDD1610CDF000D113FB /* Build configuration list for PBXNativeTarget "MGBox Demo" */;
 			buildPhases = (
 				C9968EB21610CDEF00D113FB /* Sources */,
 				C9968EB31610CDEF00D113FB /* Frameworks */,
@@ -178,9 +242,9 @@
 			);
 			dependencies = (
 			);
-			name = "Demo App";
+			name = "MGBox Demo";
 			productName = "Demo App";
-			productReference = C9968EB61610CDEF00D113FB /* Demo App.app */;
+			productReference = C9968EB61610CDEF00D113FB /* MGBox Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -193,7 +257,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Big Paua";
 			};
-			buildConfigurationList = C9968EB01610CDEF00D113FB /* Build configuration list for PBXProject "Demo App" */;
+			buildConfigurationList = C9968EB01610CDEF00D113FB /* Build configuration list for PBXProject "MGBox Demo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -205,7 +269,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C9968EB51610CDEF00D113FB /* Demo App */,
+				C9968EB51610CDEF00D113FB /* MGBox Demo */,
 			);
 		};
 /* End PBXProject section */
@@ -219,8 +283,12 @@
 				C9968ECD1610CDF000D113FB /* Default.png in Resources */,
 				C9968ECF1610CDF000D113FB /* Default@2x.png in Resources */,
 				C9968ED11610CDF000D113FB /* Default-568h@2x.png in Resources */,
-				C9968ED41610CDF000D113FB /* MainStoryboard_iPhone.storyboard in Resources */,
-				C9968ED71610CDF000D113FB /* MainStoryboard_iPad.storyboard in Resources */,
+				C9968ED41610CDF000D113FB /* iPhone.storyboard in Resources */,
+				C9968ED71610CDF000D113FB /* iPad.storyboard in Resources */,
+				330719F40060E9DDC87FB9C7 /* add.png in Resources */,
+				3307137FAF1435B4ECA15024 /* add@2x.png in Resources */,
+				C9BE1ED81612106000D16831 /* arrow.png in Resources */,
+				C9BE1ED91612106000D16831 /* arrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +310,9 @@
 				C9968F121610D3A600D113FB /* MGScrollView.m in Sources */,
 				C9968F131610D3A600D113FB /* MGTableBox.m in Sources */,
 				C9968F141610D3A600D113FB /* MGTableBoxStyled.m in Sources */,
+				C9968F3B1610D84300D113FB /* NSObject+MGEvents.m in Sources */,
+				C9968F3C1610D84300D113FB /* UIView+MGEasyFrame.m in Sources */,
+				33071941672C2D8830257E32 /* PhotoBox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,20 +327,20 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		C9968ED21610CDF000D113FB /* MainStoryboard_iPhone.storyboard */ = {
+		C9968ED21610CDF000D113FB /* iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C9968ED31610CDF000D113FB /* en */,
 			);
-			name = MainStoryboard_iPhone.storyboard;
+			name = iPhone.storyboard;
 			sourceTree = "<group>";
 		};
-		C9968ED51610CDF000D113FB /* MainStoryboard_iPad.storyboard */ = {
+		C9968ED51610CDF000D113FB /* iPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C9968ED61610CDF000D113FB /* en */,
 			);
-			name = MainStoryboard_iPad.storyboard;
+			name = iPad.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -332,7 +403,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo App/Demo App-Prefix.pch";
 				INFOPLIST_FILE = "Demo App/Demo App-Info.plist";
-				PRODUCT_NAME = "Demo App";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "MGBox Demo";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -343,7 +415,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo App/Demo App-Prefix.pch";
 				INFOPLIST_FILE = "Demo App/Demo App-Info.plist";
-				PRODUCT_NAME = "Demo App";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "MGBox Demo";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -351,7 +424,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C9968EB01610CDEF00D113FB /* Build configuration list for PBXProject "Demo App" */ = {
+		C9968EB01610CDEF00D113FB /* Build configuration list for PBXProject "MGBox Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C9968EDB1610CDF000D113FB /* Debug */,
@@ -360,7 +433,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C9968EDD1610CDF000D113FB /* Build configuration list for PBXNativeTarget "Demo App" */ = {
+		C9968EDD1610CDF000D113FB /* Build configuration list for PBXNativeTarget "MGBox Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C9968EDE1610CDF000D113FB /* Debug */,

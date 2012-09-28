@@ -7,16 +7,26 @@
 
 @interface MGLayoutManager ()
 
-+ (void)stackVertical:(UIView <MGLayoutBox> *)container;
-+ (void)stackHorizontal:(UIView <MGLayoutBox> *)container;
-+ (void)stackVerticalWithWrap:(UIView <MGLayoutBox> *)container;
-+ (void)stackHorizontalWithWrap:(UIView <MGLayoutBox> *)container;
++ (void)stackVertical:(UIView <MGLayoutBox> *)container
+             onlyMove:(NSSet *)only;
++ (void)stackHorizontal:(UIView <MGLayoutBox> *)container
+               onlyMove:(NSSet *)only;
++ (void)stackVerticalWithWrap:(UIView <MGLayoutBox> *)container
+                     onlyMove:(NSSet *)only;
++ (void)stackHorizontalWithWrap:(UIView <MGLayoutBox> *)container
+                       onlyMove:(NSSet *)only;
 
 @end
 
 @implementation MGLayoutManager
 
 + (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container {
+
+  // layout locked?
+  if (container.layingOut) {
+    return;
+  }
+  container.layingOut = YES;
 
   // goners
   NSArray *gone = [MGLayoutManager findBoxesInView:container
@@ -40,16 +50,16 @@
   // layout the boxes
   switch (container.contentLayoutMode) {
   case MGLayoutStackVertical:
-    [MGLayoutManager stackVertical:container];
+    [MGLayoutManager stackVertical:container onlyMove:nil];
     break;
   case MGLayoutStackHorizontal:
-    [MGLayoutManager stackHorizontal:container];
+    [MGLayoutManager stackHorizontal:container onlyMove:nil];
     break;
   case MGLayoutStackVerticalWithWrap:
-    [MGLayoutManager stackVerticalWithWrap:container];
+    [MGLayoutManager stackVerticalWithWrap:container onlyMove:nil];
     break;
   case MGLayoutStackHorizontalWithWrap:
-    [MGLayoutManager stackHorizontalWithWrap:container];
+    [MGLayoutManager stackHorizontalWithWrap:container onlyMove:nil];
     break;
   }
 
@@ -58,13 +68,22 @@
 
   // zindex time
   [self stackByZIndexIn:container];
+
+  // release the lock
+  container.layingOut = NO;
 }
 
 + (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container
             withSpeed:(NSTimeInterval)speed completion:(Block)completion {
 
+  // layout locked?
+  if (container.layingOut) {
+    return;
+  }
+  container.layingOut = YES;
+
   // find new top boxes
-  NSMutableArray *newTopBoxes = @[].mutableCopy;
+  NSMutableSet *newTopBoxes = NSMutableSet.set;
   for (UIView <MGLayoutBox> *box in container.boxes) {
     if (box.replacementFor || box.boxLayoutMode != MGBoxLayoutAutomatic) {
       continue;
@@ -78,11 +97,14 @@
     [newTopBoxes addObject:box];
   }
 
+  // every box is new? then skip that animation style
+  if (newTopBoxes.count == container.boxes.count) {
+    [newTopBoxes removeAllObjects];
+  }
+
   // parent box relationship
   for (UIView <MGLayoutBox> *box in container.boxes) {
-    if ([container conformsToProtocol:@protocol(MGLayoutBox)]) {
-      box.parentBox = (id)container;
-    }
+    box.parentBox = (id)container;
   }
 
   // children layout first
@@ -94,16 +116,10 @@
   NSArray *gone = [MGLayoutManager findBoxesInView:container
       notInSet:container.boxes];
 
-  // new boxes start at zero alpha
-  for (UIView <MGLayoutBox> *box in container.boxes) {
-    if ([container.subviews indexOfObject:box] == NSNotFound) {
-      box.alpha = 0;
-    }
-  }
-
-  // set y for new top boxes
+  // set origin for new top boxes
   CGFloat offsetY = 0;
   for (UIView <MGLayoutBox> *box in newTopBoxes) {
+    box.x = container.leftPadding + box.leftMargin;
     offsetY += box.topMargin;
     box.y = offsetY;
     offsetY += box.height + box.bottomMargin;
@@ -114,22 +130,33 @@
     box.y -= offsetY;
   }
 
-  // pre animation positions for remaining new boxes
-  CGFloat preAnimY = container.topPadding;
+  // new boxes start faded out
+  NSMutableSet *newNotTopBoxes = NSMutableSet.set;
   for (UIView <MGLayoutBox> *box in container.boxes) {
-    if (box.boxLayoutMode != MGBoxLayoutAutomatic) {
-      continue;
-    }
-    if ([newTopBoxes containsObject:box]) {
-      continue; // new top boxes are already positioned
-    }
-    preAnimY += box.topMargin;
-    CGPoint pos = box.frame.origin;
     if (![container.subviews containsObject:box]) {
       box.alpha = 0;
-      box.frame = CGRectMake(pos.x, preAnimY, box.width, box.height);
+
+      // collect new boxes that aren't top boxes
+      if (![newTopBoxes containsObject:box]) {
+        [newNotTopBoxes addObject:box];
+      }
     }
-    preAnimY += box.height + box.bottomMargin;
+  }
+
+  // set start positions for remaining new boxes
+  switch (container.contentLayoutMode) {
+  case MGLayoutStackVertical:
+    [MGLayoutManager stackVertical:container onlyMove:newNotTopBoxes];
+    break;
+  case MGLayoutStackHorizontal:
+    [MGLayoutManager stackHorizontal:container onlyMove:newNotTopBoxes];
+    break;
+  case MGLayoutStackVerticalWithWrap:
+    [MGLayoutManager stackVerticalWithWrap:container onlyMove:newNotTopBoxes];
+    break;
+  case MGLayoutStackHorizontalWithWrap:
+    [MGLayoutManager stackHorizontalWithWrap:container onlyMove:newNotTopBoxes];
+    break;
   }
 
   // everyone in now please
@@ -153,7 +180,7 @@
 
     // new boxes fade in
     for (UIView <MGLayoutBox> *box in container.boxes) {
-      if ([gone indexOfObject:box] == NSNotFound && !box.alpha) {
+      if (![gone containsObject:box] && !box.alpha) {
         box.alpha = 1;
       }
     }
@@ -161,16 +188,16 @@
     // set final positions
     switch (container.contentLayoutMode) {
     case MGLayoutStackVertical:
-      [MGLayoutManager stackVertical:container];
+      [MGLayoutManager stackVertical:container onlyMove:nil];
       break;
     case MGLayoutStackHorizontal:
-      [MGLayoutManager stackHorizontal:container];
+      [MGLayoutManager stackHorizontal:container onlyMove:nil];
       break;
     case MGLayoutStackVerticalWithWrap:
-      [MGLayoutManager stackVerticalWithWrap:container];
+      [MGLayoutManager stackVerticalWithWrap:container onlyMove:nil];
       break;
     case MGLayoutStackHorizontalWithWrap:
-      [MGLayoutManager stackHorizontalWithWrap:container];
+      [MGLayoutManager stackHorizontalWithWrap:container onlyMove:nil];
       break;
     }
 
@@ -182,6 +209,9 @@
     // clean up
     [gone makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
+    // release the layout lock
+    container.layingOut = NO;
+
     // completion handler
     if (completion) {
       completion();
@@ -189,7 +219,8 @@
   }];
 }
 
-+ (void)stackVertical:(UIView <MGLayoutBox> *)container {
++ (void)stackVertical:(UIView <MGLayoutBox> *)container
+             onlyMove:(NSSet *)only {
   CGFloat y = container.topPadding, maxWidth = 0;
 
   // lay out automatic boxes
@@ -199,33 +230,48 @@
     }
     maxWidth = MAX(maxWidth, box.leftMargin + box.width + box.rightMargin);
     y += box.topMargin;
-    box.origin = CGPointMake(container.leftPadding + box.leftMargin, y);
+    if (!only || [only containsObject:box]) {
+      box.origin = CGPointMake(container.leftPadding + box.leftMargin, y);
+    }
     y += box.height + box.bottomMargin;
   }
 
-  // update size to fit the children
+  // don't update height if we weren't positioning everyone
+  if (only) {
+    return;
+  }
+
+  // update size to fit the children (and possible shrink wrap)
   CGSize size;
-  size.width = MAX(container.width, container.leftPadding + maxWidth
-      + container.rightPadding);
-  size.height = MAX(container.height, y + container.bottomPadding);
+  if (container.sizingMode == MGResizingShrinkWrap) {
+    size.width = container.leftPadding + maxWidth + container.rightPadding;
+    size.height = y + container.bottomPadding;
+  } else {
+    size.width = MAX(container.width, container.leftPadding + maxWidth
+        + container.rightPadding);
+    size.height = MAX(container.height, y + container.bottomPadding);
+  }
   if ([container isKindOfClass:MGScrollView.class]) {
     size.width += container.leftMargin + container.rightMargin;
     size.height += container.topMargin + container.bottomMargin;
-    [(MGScrollView *)container setContentSize:size];
+    [(id)container setContentSize:size];
   } else {
     container.size = size;
   }
 }
 
-+ (void)stackHorizontal:(UIView <MGLayoutBox> *)container {
++ (void)stackHorizontal:(UIView <MGLayoutBox> *)container
+               onlyMove:(NSSet *)only {
   // implement plz
 }
 
-+ (void)stackVerticalWithWrap:(UIView <MGLayoutBox> *)container {
++ (void)stackVerticalWithWrap:(UIView <MGLayoutBox> *)container
+                     onlyMove:(NSSet *)only {
   // implement plz
 }
 
-+ (void)stackHorizontalWithWrap:(UIView <MGLayoutBox> *)container {
++ (void)stackHorizontalWithWrap:(UIView <MGLayoutBox> *)container
+                       onlyMove:(NSSet *)only {
   CGFloat x = container.leftPadding, y = container.topPadding, maxHeight = 0;
 
   // lay out automatic boxes
@@ -242,10 +288,17 @@
 
     // position
     x += box.leftMargin;
-    box.origin = CGPointMake(x, y + box.topMargin);
+    if (!only || [only containsObject:box]) {
+      box.origin = CGPointMake(x, y + box.topMargin);
+    }
 
     x += box.width + box.rightMargin;
     maxHeight = MAX(maxHeight, y + box.topMargin + box.height + box.bottomMargin);
+  }
+
+  // don't update height if we weren't positioning everyone
+  if (only) {
+    return;
   }
 
   // update height to fit the children

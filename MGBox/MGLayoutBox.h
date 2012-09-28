@@ -3,7 +3,7 @@
 //
 
 #import "MGBase.h"
-#import "UIView+EasyFrame.h"
+#import "UIView+MGEasyFrame.h"
 
 typedef enum {
   MGBoxLayoutAutomatic,
@@ -13,7 +13,7 @@ typedef enum {
 } MGBoxLayoutMode;
 
 typedef enum {
-  MGResizingNone, MGResizingExpandWidthToFill
+  MGResizingNone, MGResizingExpandWidthToFill, MGResizingShrinkWrap
 } MGBoxResizingMode;
 
 typedef enum {
@@ -35,6 +35,7 @@ typedef enum {
 @property (nonatomic, assign) dispatch_queue_t asyncQueue;
 
 // self size and positioning
+@property (nonatomic, assign) UIEdgeInsets margin;
 @property (nonatomic, assign) CGFloat topMargin;
 @property (nonatomic, assign) CGFloat bottomMargin;
 @property (nonatomic, assign) CGFloat leftMargin;
@@ -47,12 +48,15 @@ typedef enum {
 @property (nonatomic, assign) int zIndex;
 
 // child positioning
+@property (nonatomic, assign) UIEdgeInsets padding;
 @property (nonatomic, assign) CGFloat topPadding;
 @property (nonatomic, assign) CGFloat rightPadding;
 @property (nonatomic, assign) CGFloat bottomPadding;
 @property (nonatomic, assign) CGFloat leftPadding;
 @property (nonatomic, assign) MGContentLayoutMode contentLayoutMode;
 
+// layout
+@property (nonatomic, assign) BOOL layingOut;
 - (void)layout;
 
 @optional

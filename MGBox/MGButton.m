@@ -15,10 +15,10 @@
 // MGLayoutBox protocol
 @synthesize boxes, parentBox, boxLayoutMode, contentLayoutMode;
 @synthesize asyncLayout, asyncLayoutOnce, asyncQueue;
-@synthesize topMargin, bottomMargin, leftMargin, rightMargin;
-@synthesize topPadding, rightPadding, bottomPadding, leftPadding;
+@synthesize margin, topMargin, bottomMargin, leftMargin, rightMargin;
+@synthesize padding, topPadding, rightPadding, bottomPadding, leftPadding;
 @synthesize attachedTo, replacementFor, sizingMode;
-@synthesize fixedPosition, zIndex;
+@synthesize fixedPosition, zIndex, layingOut;
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -81,6 +81,16 @@
   return boxes;
 }
 
+- (UIEdgeInsets)margin {
+  return UIEdgeInsetsMake(self.topMargin, self.leftMargin, self.bottomMargin,
+      self.rightMargin);
+}
+
+- (UIEdgeInsets)padding {
+  return UIEdgeInsetsMake(self.topPadding, self.leftPadding, self.bottomPadding,
+      self.rightPadding);
+}
+
 - (CGPoint)fixedPosition {
   if (!fixedPositionEstablished) {
     fixedPosition = self.frame.origin;
@@ -90,10 +100,9 @@
 }
 
 - (dispatch_queue_t)asyncQueue {
-  if (asyncQueue) {
-    return asyncQueue;
+  if (!asyncQueue) {
+    asyncQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
   }
-  asyncQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
   return asyncQueue;
 }
 
@@ -105,6 +114,20 @@
 }
 
 #pragma mark - Setters
+
+- (void)setMargin:(UIEdgeInsets)_margin {
+  self.topMargin = _margin.top;
+  self.rightMargin = _margin.right;
+  self.bottomMargin = _margin.bottom;
+  self.leftMargin = _margin.left;
+}
+
+- (void)setPadding:(UIEdgeInsets)_padding {
+  self.topPadding = _padding.top;
+  self.rightPadding = _padding.right;
+  self.bottomPadding = _padding.bottom;
+  self.leftPadding = _padding.left;
+}
 
 - (void)setFixedPosition:(CGPoint)pos {
   self.boxLayoutMode = MGBoxLayoutFixedPosition;

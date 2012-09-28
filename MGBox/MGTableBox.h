@@ -6,9 +6,8 @@
 
 @interface MGTableBox : MGBox
 
-@property (nonatomic, retain) NSMutableArray *topLines;
-@property (nonatomic, retain) NSMutableArray *middleLines;
-@property (nonatomic, retain) NSMutableArray *bottomLines;
-@property (nonatomic, retain) UIView *content;
+@property (nonatomic, retain) NSMutableOrderedSet *topLines;
+@property (nonatomic, retain) NSMutableOrderedSet *middleLines;
+@property (nonatomic, retain) NSMutableOrderedSet *bottomLines;
 
 @end

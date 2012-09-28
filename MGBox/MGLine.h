@@ -34,10 +34,8 @@ typedef enum {
 + (id)lineWithLeft:(NSObject *)left right:(NSObject *)right;
 + (id)lineWithLeft:(NSObject *)left right:(NSObject *)right
              size:(CGSize)size;
-+ (id)multilineWithText:(NSString *)text font:(UIFont *)font
-                padding:(CGFloat)padding;
-+ (id)multilineWithText:(NSString *)text font:(UIFont *)font
-                padding:(CGFloat)padding width:(CGFloat)width;
++ (id)multilineWithText:(NSString *)text font:(UIFont *)font width:(CGFloat)width
+                padding:(UIEdgeInsets)padding;
 
 - (NSSet *)allItems;
 - (UILabel *)makeLabel:(NSString *)text align:(UITextAlignment)align;

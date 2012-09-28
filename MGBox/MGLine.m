@@ -7,9 +7,6 @@
 #import "MGLine.h"
 #import "MGLayoutManager.h"
 
-#define DEFAULT_SIZE         CGSizeZero
-#define DEFAULT_ITEM_PADDING 0.0
-
 @interface MGLine ()
 
 @property (nonatomic, retain) NSMutableArray *dontFit;
@@ -20,7 +17,7 @@
 - (void)layoutLeftWithin:(CGFloat)limit;
 - (void)layoutRightWithin:(CGFloat)limit;
 - (void)layoutMiddleWithin:(CGFloat)limit;
-- (CGFloat)size:(NSArray *)views within:(CGFloat)widthLimit font:(UIFont *)font;
+- (CGFloat)size:(NSArray *)views within:(CGFloat)limit font:(UIFont *)font;
 
 @end
 
@@ -33,52 +30,57 @@
 
   self.dontFit = @[].mutableCopy;
 
-  self.itemPadding = DEFAULT_ITEM_PADDING;
-
+  // fonts
   self.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
   self.textColor = UIColor.blackColor;
   self.textShadowColor = UIColor.whiteColor;
+  self.rightFont = self.font;
 }
 
 + (id)line {
-  return [self lineWithSize:DEFAULT_SIZE];
+  return [self boxWithSize:CGSizeZero];
 }
 
 + (id)lineWithSize:(CGSize)size {
-  CGRect frame;
-  frame.size = size;
-  MGLine *line = [[self alloc] initWithFrame:frame];
-  return line;
+  return [self boxWithSize:size];
 }
 
-+ (id)multilineWithText:(NSString *)text font:(UIFont *)font
-                padding:(CGFloat)padding {
-  CGSize size = DEFAULT_SIZE;
-  return [self multilineWithText:text font:font padding:padding width:size.width];
-}
++ (id)multilineWithText:(NSString *)text font:(UIFont *)font width:(CGFloat)width
+                padding:(UIEdgeInsets)padding {
 
-+ (id)multilineWithText:(NSString *)text font:(UIFont *)font
-                padding:(CGFloat)padding width:(CGFloat)width {
+  // default font?
   font = font ? font : [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
 
+  // make the label
   UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-  label.font = font;
   label.backgroundColor = UIColor.clearColor;
-  label.numberOfLines = 0;
   label.shadowColor = UIColor.whiteColor;
   label.shadowOffset = CGSizeMake(0, 1);
+  label.numberOfLines = 0;
+  label.font = font;
   label.text = text;
-  CGSize textSize = [label.text sizeWithFont:label.font
-      constrainedToSize:CGSizeMake(width - 24, 480)];
-  label.frame = CGRectMake(0, 0, width - 24, textSize.height + padding);
 
-  CGSize size = CGSizeMake(width, label.frame.size.height);
-  MGLine *line = [self lineWithLeft:label right:nil size:size];
+  // usable width
+  CGFloat innerWidth = width - padding.left - padding.right;
+
+  // size the label
+  CGSize textSize = [label.text sizeWithFont:label.font
+      constrainedToSize:CGSizeMake(innerWidth, FLT_MAX)];
+  label.size = (CGSize){innerWidth, textSize.height};
+
+  // make the line
+  MGLine *line = [MGLine lineWithSize:(CGSize){width,
+      label.height + padding.top + padding.bottom
+  }];
+  line.leftItems = @[label].mutableCopy;
+  line.padding = padding;
+  line.font = font;
+
   return line;
 }
 
 + (id)lineWithLeft:(NSObject *)left right:(NSObject *)right {
-  return [self lineWithLeft:left right:right size:DEFAULT_SIZE];
+  return [self lineWithLeft:left right:right size:CGSizeZero];
 }
 
 + (id)lineWithLeft:(NSObject *)left right:(NSObject *)right
@@ -108,20 +110,26 @@
 
   [self removeOldContents];
 
-  // lay things out
+  // max usable space
   CGFloat maxWidth = self.width - self.leftPadding - self.rightPadding;
-  if (self.sidePrecedence == MGSidePrecedenceLeft) {
+
+  // lay things out
+  switch (self.sidePrecedence) {
+  case MGSidePrecedenceLeft:
     [self layoutLeftWithin:maxWidth];
     [self layoutRightWithin:maxWidth - leftUsed];
     [self layoutMiddleWithin:maxWidth - leftUsed - rightUsed];
-  } else if (self.sidePrecedence == MGSidePrecedenceRight) {
+    break;
+  case MGSidePrecedenceRight:
     [self layoutRightWithin:maxWidth];
     [self layoutLeftWithin:maxWidth - rightUsed];
     [self layoutMiddleWithin:maxWidth - leftUsed - rightUsed];
-  } else {
+    break;
+  case MGSidePrecedenceMiddle:
     [self layoutMiddleWithin:maxWidth];
     [self layoutLeftWithin:maxWidth - middleUsed];
     [self layoutRightWithin:maxWidth - leftUsed - middleUsed];
+    break;
   }
 
   // deal with attached boxes
@@ -322,7 +330,7 @@
   }
 }
 
-- (CGFloat)size:(NSArray *)views within:(CGFloat)widthLimit font:(UIFont *)font {
+- (CGFloat)size:(NSArray *)views within:(CGFloat)limit font:(UIFont *)font {
   NSMutableArray *expandables = @[].mutableCopy;
   CGFloat used = 0;
   unsigned int i;
@@ -357,7 +365,7 @@
     used += self.itemPadding * 2;
 
     // not even enough space for the padding alone?
-    if (!self.widenAsNeeded && used > widthLimit) {
+    if (!self.widenAsNeeded && used > limit) {
       break; // yep, out of space
     }
 
@@ -367,10 +375,10 @@
       UILabel *label = (id)item;
       label.font = font;
       CGSize labelSize = [label.text sizeWithFont:label.font];
-      if (used + labelSize.width > widthLimit) { // needs slimming
-        labelSize.width = widthLimit - used;
+      if (used + labelSize.width > limit) { // needs slimming
+        label.width = limit - used;
       }
-      used += labelSize.width;
+      used += label.width;
 
       // MGLayoutBoxes have margins to deal with
     } else if ([item conformsToProtocol:@protocol(MGLayoutBox)]) {
@@ -383,7 +391,7 @@
     }
 
     // ran out of space after counting the view size?
-    if (!self.widenAsNeeded && used > widthLimit) {
+    if (!self.widenAsNeeded && used > limit) {
       break;
     }
   }
@@ -400,8 +408,8 @@
   }
 
   // distribute leftover space to expandables
-  if (widthLimit - used > 0) {
-    CGFloat remaining = widthLimit - used;
+  if (limit - used > 0) {
+    CGFloat remaining = limit - used;
     CGFloat perBox = floorf(remaining / expandables.count);
     CGFloat leftover = remaining - perBox * expandables.count;
     for (MGBox *expandable in expandables) {
