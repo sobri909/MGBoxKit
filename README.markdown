@@ -1,10 +1,10 @@
 # MGBox2 - Simple, quick iOS Tables, Grids, and more
 
-Designed for rapid table and collection creation with minimal code, easy customisation, attractive default styling, using modern blocks based design patterns, and without need for fidgety tweaking or awkward design patterns. 
+Designed for rapid table and grid creation with minimal code, easy customisation, attractive default styling, using modern blocks based design patterns, and without need for fidgety tweaking or awkward design patterns. 
 
 Includes blocks based gesture recognisers, observers, control events, and custom events.
 
-MGBox, MGScrollView, and MGButton can also be used as generic UIView wrappers to get the benefits of view padding, margins, and zIndex, amongst others.
+`MGBox`, `MGScrollView`, and `MGButton` can also be used as generic `UIView` wrappers to get the benefits of view padding, margins, and zIndex, amongst others.
 
 ## Layout Features
 
@@ -12,7 +12,7 @@ MGBox, MGScrollView, and MGButton can also be used as generic UIView wrappers to
 - Grid layouts (similar to `UICollectionView`, but less fuss)
 - Table rows automatically layout `NSStrings`, `UIImages`, and multiline text  
 - Animated adding/removing/reordering rows, items, sections, etc
-- Margins, Padding, Z-Index, Fixed Positioning, and more
+- Margins, Padding, zIndex, Fixed Positioning, and more
 - Optional asynchronous blocks based layout
 - Optional scroll view box edge snapping
 
@@ -98,6 +98,7 @@ row.leftPadding = row.rightPadding = 16;
 MGBox *grid = [MGBox boxWithSize:self.bounds.size];
 grid.contentLayoutMode = MGLayoutStackHorizontalWithWrap;
 [scroller.boxes addObject:grid];
+```
 
 #### Add Some Views to the Grid:
 
@@ -120,7 +121,7 @@ for (int i = 0; i < 10; i++) {
 
 ## Animated and Asynchronous Layout
 
-All `MGBoxes`, `MGScrollViews`, and subclasses (`MGLine`, etc) support two layout methods (`layout`, `layoutWithSpeed:completion:`) and two async layout block properties (`asyncLayout` and `asyncLayoutOnce`).
+All `MGBoxes`, `MGScrollViews`, and subclasses support two layout methods (`layout`, `layoutWithSpeed:completion:`) and two async layout block properties (`asyncLayout` and `asyncLayoutOnce`).
 
 ### [box layout]
 
@@ -128,11 +129,11 @@ Layout the box (and all descendent boxes) without animation.
 
 ### [box layoutWithSpeed:completion:]
 
-Same as above, but with boxes animated between previous and new computed positions, fading new boxes in, and fading gone boxes out.
+Same as above, but with boxes animated between previous and new computed positions, fading new boxes in, and fading removed boxes out.
 
 ### box.asyncLayout and box.asyncLayoutOnce
 
-`asyncLayout` blocks are performed on every call to `layout` or `layoutWithSpeed:completion`.
+`asyncLayout` blocks are performed on every call to `layout` or `layoutWithSpeed:completion:`.
 
 ```objc
 box.asyncLayout = ^{
@@ -145,8 +146,9 @@ box.asyncLayout = ^{
         NSLog(@"that took a while!");
     });    
 };
+```
 
-`asyncLayoutOnce` blocks are performed only on the first call to `layout` or `layoutWithSpeed:completion`, thus are useful for initial table or grid setup, when things like loading data over the network might be a performance factor.
+`asyncLayoutOnce` blocks are performed only on the first call to `layout` or `layoutWithSpeed:completion:`, thus are useful for initial table or grid setup, when things like loading data over the network might be a performance factor.
 
 ```objc
 box.asyncLayoutOnce = ^{
@@ -174,18 +176,18 @@ for (MGBox *box in scroller.boxes) {
 
 ### Margins and Padding
 
-When `layout` or `layoutWithSpeed:completion` is called, each descendent box in the tree is positioned according to the container box's `contentLayoutMode` (ie table or grid), taking into acount the container's padding and the child's margins.
+When `layout` or `layoutWithSpeed:completion:` is called, each descendent box in the tree is positioned according to the container box's `contentLayoutMode` (ie table or grid), taking into acount the container's padding and the child's margins.
 
 Getters and setters are provided for:
 
 * `padding` (`UIEdgeInsets`)
-* `margins` (`UIEdgeInsets`)
+* `margin` (`UIEdgeInsets`)
 * `leftPadding`, `topPadding`, `rightPadding`, `bottomPadding`
 * `leftMargin`, `topMargin`, `rightMargin`, `bottomMargin`
 
 ### Z-Index
 
-The same as in CSS. A `zIndex` property of `MGBox` that affects the stacking order of boxes during layout.
+The same as in CSS - a `zIndex` property of `MGBox` that affects the stacking order of boxes during layout.
 
 ### Fixed Positioning
 
@@ -195,17 +197,7 @@ Set a box's `fixedPosition` property to a desired `CGPoint` to force it to stay 
 
 Assign another view to a box's `attachedTo` property to force the box to position at the same origin. Optionally adjust the offset by fiddling with the box's top and left margins.
 
-## The Difference Between 'boxes' and 'subviews'
-
-This distinction can present an occasional trap. When `layout` or `layoutWithSpeed:completion:` are called, the layout engine only applies `MGBox` layout rules to boxes in the container's `boxes` set.
-
-All other `UIViews` in `subviews` will simply be ignored, with no `MGBox` style layout rules applied (their `zIndex` will be treated as `0`), and they will not be removed.
-
-All `MGBoxes` that are subviews but are not in `boxes` will be removed during layout. Any `MGBoxes` in `boxes` that are not yet subviews will be added as subviews.
-
-So as a general rule of thumb: Put `MGBoxes` into `boxes`, everything else into `subviews`, then call one of the `layout` methods when you're done. As long as you stick to that, you won't get tripped up.
-
-## Blocks Based Observers, Custom Events, Control Events, and Gesture Recognisers
+## Blocks Based Observers, Custom Events, Control Events, and Gestures
 
 ### Tap, Swipe, and Hold
 
@@ -221,10 +213,11 @@ box.onSwipe = ^{
 box.onLongPress = ^{
     NSLog(@"you can let go now.");
 };
+```
 
 ### Blocks Based Observers
 
-`NSObject+MGEvents` provides blocks based observing for all objects. 
+`NSObject+MGEvents` provides blocks based observing for all objects' keypaths. No more worrying about crashes caused by dangling observers after dealloc.
 
 ```objc
 [earth onChangeOf:@"isFlat" do:^{
@@ -281,9 +274,17 @@ Also, if you want to create a custom table section style, you'll want to subclas
 
 All `MGBoxes` have a convenience `setup` method which is called from both `initWithFrame:` and `initWithCoder:`, thus making it a good location to apply any custom styling such as shadows, background colours, corner radiuses, etc. You should probably call `[super setup]` in here.
 
-Additionally you might want to override the standard `layout` method, if you have position adjustments you want to make, or if you want to perform some tasks before or after layout. You should almost certainly call `[super layout]` in your custom layout method.
+Additionally you might want to override the standard `layout` method, if you want to perform some tasks before or after layout. You should almost certainly call `[super layout]` in your custom layout method.
 
 If your custom `MGBox` has a shadow, it's useful to adjust its `shadowPath` in the `layout` method, after `[super layout]`, because shadows without shadow paths make iOS cry.
+
+## The Difference Between 'boxes' and 'subviews'
+
+This distinction can present an occasional trap. When `layout` or `layoutWithSpeed:completion:` are called, the layout engine only applies `MGBox` layout rules to boxes in the container's `boxes` set. All other `UIViews` in `subviews` will simply be ignored, with no `MGBox` style layout rules applied (their `zIndex` will be treated as `0`).
+
+All `MGBoxes` that are subviews but are not in `boxes` will be removed during layout. Any `MGBoxes` in `boxes` that are not yet subviews will be added as subviews.
+
+So as a general rule of thumb: Put `MGBoxes` into `boxes`, everything else into `subviews`, then call one of the `layout` methods when you're done. As long as you stick to that, you won't get tripped up.
 
 ## MGLine
 
@@ -311,7 +312,7 @@ The `itemPadding` property defines how much padding to apply to the left and rig
 
 `MGTableBoxStyled` is a styled subclass of `MGTableBox`, which provides the default table style you see in the screenshots and demo app.
 
-When using these classes for table sections, you add your rows (eg `MGLine` objects) to their `topLines`, `middleLines`, and `bottomLines` arrays (instead of the standard `boxes` set).
+When using these classes for table sections, add your rows (eg `MGLine` objects) to their `topLines`, `middleLines`, and `bottomLines` arrays (instead of the standard `boxes` set).
 
 ## MGScrollView Box Edge Snapping
 
@@ -352,6 +353,6 @@ Own up to being a `UIScrollViewDelegate`
 UIImage *screenshot = [box screenshot:0]; // 0 = device scale, 1 = old school, 2 = retina
 ```
 
-####
+#### More
 
 There's a few more undocumented features, if you're the type to go poking through the source. Enjoy!
