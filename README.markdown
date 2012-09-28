@@ -28,16 +28,19 @@ MGBox, MGScrollView, and MGButton can also be used as generic UIView wrappers to
 
 Complex tables, sections, and grids created with simple code.
 
+### The Demo App:
+
+![Demo App Screenshot 1](http://cloud.github.com/downloads/sobri909/MGBox2/DemoApp1.png)
+![Demo App Screenshot 2](http://cloud.github.com/downloads/sobri909/MGBox2/DemoApp2.png)
+![Demo App Screenshot 3](http://cloud.github.com/downloads/sobri909/MGBox2/DemoApp3.png)
+
+
 ### Created with the convenience "screenshot" method:
 
-![IfAlarm Screenshot 1](http://cloud.github.com/downloads/sobri909/MGBox/Screenshot1.png)
-![IfAlarm Screenshot 2](http://cloud.github.com/downloads/sobri909/MGBox/Screenshot2.png)
+![IfAlarm Screenshot 1](http://cloud.github.com/downloads/sobri909/MGBox2/IfAlarm1.png)
+![IfAlarm Screenshot 2](http://cloud.github.com/downloads/sobri909/MGBox2/IfAlarm2.png)
 
 (From [IfAlarm](http://ifalarm.com))
-
-### The demo app:
-
-![Demo App Screenshot](http://cloud.github.com/downloads/sobri909/MGBox/DemoAppScreenshot.png)
 
 ## Setup
 
