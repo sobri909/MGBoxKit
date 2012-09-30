@@ -1,7 +1,3 @@
-## NOTE: Beta Testers Wanted!
-
-I'm looking for beta testers for a new iPad/iPhone flowcharts app, which makes heavy use of `MGBox` as a generic layout engine. If you're interested in lending a hand (or want to see what sort of layouts are possible with `MGBox`), please sign up here: http://tflig.ht/AESFxp Thanks!
-
 # MGBox2 - Simple, quick iOS tables, grids, and more
 
 Designed for rapid table and grid creation with minimal code, easy customisation, attractive default styling, using modern blocks based design patterns, and without need for fidgety tweaking or awkward design patterns. 
