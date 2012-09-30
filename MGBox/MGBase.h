@@ -4,4 +4,5 @@
 
 typedef void(^Block)();
 
+#import <QuartzCore/QuartzCore.h>
 #import "MGBlockWrapper.h"
