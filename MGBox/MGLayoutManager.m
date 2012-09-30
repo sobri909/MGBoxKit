@@ -83,7 +83,7 @@
   container.layingOut = YES;
 
   // find new top boxes
-  NSMutableSet *newTopBoxes = NSMutableSet.set;
+  NSMutableOrderedSet *newTopBoxes = NSMutableOrderedSet.orderedSet;
   for (UIView <MGLayoutBox> *box in container.boxes) {
     if (box.replacementFor || box.boxLayoutMode != MGBoxLayoutAutomatic) {
       continue;
@@ -97,8 +97,12 @@
     [newTopBoxes addObject:box];
   }
 
-  // every box is new? then skip that animation style
-  if (newTopBoxes.count == container.boxes.count) {
+  // find gone boxes
+  NSArray *gone = [MGLayoutManager findBoxesInView:container
+      notInSet:container.boxes];
+
+  // every box is new and no one is gone? then skip that animation style
+  if (!gone.count && newTopBoxes.count == container.boxes.count) {
     [newTopBoxes removeAllObjects];
   }
 
@@ -111,10 +115,6 @@
   for (id box in container.boxes) {
     [box layout];
   }
-
-  // find gone boxes
-  NSArray *gone = [MGLayoutManager findBoxesInView:container
-      notInSet:container.boxes];
 
   // set origin for new top boxes
   CGFloat offsetY = 0;

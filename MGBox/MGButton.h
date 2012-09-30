@@ -11,17 +11,12 @@
 
 @interface MGButton : UIButton <MGLayoutBox>
 
-@property (nonatomic, copy) NSString *toUrl;
-@property (nonatomic, copy) NSString *toPlist;
-@property (nonatomic, copy) NSString *toSelector;
-
 @property (nonatomic, assign) CGFloat maxWidth; // get rid of this
-
-@property (nonatomic, retain) NSMutableDictionary *eventHandlers;
 
 - (void)setup;
 
 // event handling
+@property (nonatomic, retain) NSMutableDictionary *eventHandlers;
 - (void)onControlEvent:(UIControlEvents)controlEvent do:(Block)handler;
 
 @end
