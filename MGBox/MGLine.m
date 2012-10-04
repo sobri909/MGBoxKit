@@ -335,7 +335,14 @@
   CGFloat used = 0;
   unsigned int i;
   for (i = 0; i < views.count; i++) {
+
+    // little bit of thread safety
+    if (![views[i] isKindOfClass:UIView.class]) {
+      continue;
+    }
+
     UIView *item = views[i];
+
     CGSize itemSize = item.frame.size;
     [self.dontFit removeObject:item];
 
@@ -473,9 +480,6 @@
 
 - (void)setTextColor:(UIColor *)textColor {
   _textColor = textColor;
-  if (!textColor) {
-    return;
-  }
   for (UILabel *label in self.subviews) {
     if ([label isKindOfClass:UILabel.class]) {
       label.textColor = textColor;
@@ -490,9 +494,6 @@
 
 - (void)setTextShadowColor:(UIColor *)textShadowColor {
   _textShadowColor = textShadowColor;
-  if (!textShadowColor) {
-    return;
-  }
   for (UILabel *label in self.subviews) {
     if ([label isKindOfClass:UILabel.class]) {
       label.shadowColor = textShadowColor;
