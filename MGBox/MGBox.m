@@ -50,7 +50,7 @@
 
 - (void)setup {
   self.boxLayoutMode = MGBoxLayoutAutomatic;
-  self.contentLayoutMode = MGLayoutStackVertical;
+  self.contentLayoutMode = MGLayoutTableStyle;
   self.sizingMode = MGResizingNone;
 }
 

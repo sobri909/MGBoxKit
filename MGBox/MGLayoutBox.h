@@ -17,10 +17,7 @@ typedef enum {
 } MGBoxResizingMode;
 
 typedef enum {
-  MGLayoutStackVertical,
-  MGLayoutStackHorizontal,
-  MGLayoutStackVerticalWithWrap,
-  MGLayoutStackHorizontalWithWrap
+  MGLayoutTableStyle, MGLayoutGridStyle
 } MGContentLayoutMode;
 
 @protocol MGLayoutBox <NSObject>

@@ -7,14 +7,10 @@
 
 @interface MGLayoutManager ()
 
-+ (void)stackVertical:(UIView <MGLayoutBox> *)container
-             onlyMove:(NSSet *)only;
-+ (void)stackHorizontal:(UIView <MGLayoutBox> *)container
++ (void)stackTableStyle:(UIView <MGLayoutBox> *)container
                onlyMove:(NSSet *)only;
-+ (void)stackVerticalWithWrap:(UIView <MGLayoutBox> *)container
-                     onlyMove:(NSSet *)only;
-+ (void)stackHorizontalWithWrap:(UIView <MGLayoutBox> *)container
-                       onlyMove:(NSSet *)only;
++ (void)stackGridStyle:(UIView <MGLayoutBox> *)container
+              onlyMove:(NSSet *)only;
 
 @end
 
@@ -49,17 +45,11 @@
 
   // layout the boxes
   switch (container.contentLayoutMode) {
-  case MGLayoutStackVertical:
-    [MGLayoutManager stackVertical:container onlyMove:nil];
+  case MGLayoutTableStyle:
+    [MGLayoutManager stackTableStyle:container onlyMove:nil];
     break;
-  case MGLayoutStackHorizontal:
-    [MGLayoutManager stackHorizontal:container onlyMove:nil];
-    break;
-  case MGLayoutStackVerticalWithWrap:
-    [MGLayoutManager stackVerticalWithWrap:container onlyMove:nil];
-    break;
-  case MGLayoutStackHorizontalWithWrap:
-    [MGLayoutManager stackHorizontalWithWrap:container onlyMove:nil];
+  case MGLayoutGridStyle:
+    [MGLayoutManager stackGridStyle:container onlyMove:nil];
     break;
   }
 
@@ -145,17 +135,11 @@
 
   // set start positions for remaining new boxes
   switch (container.contentLayoutMode) {
-  case MGLayoutStackVertical:
-    [MGLayoutManager stackVertical:container onlyMove:newNotTopBoxes];
+  case MGLayoutTableStyle:
+    [MGLayoutManager stackTableStyle:container onlyMove:newNotTopBoxes];
     break;
-  case MGLayoutStackHorizontal:
-    [MGLayoutManager stackHorizontal:container onlyMove:newNotTopBoxes];
-    break;
-  case MGLayoutStackVerticalWithWrap:
-    [MGLayoutManager stackVerticalWithWrap:container onlyMove:newNotTopBoxes];
-    break;
-  case MGLayoutStackHorizontalWithWrap:
-    [MGLayoutManager stackHorizontalWithWrap:container onlyMove:newNotTopBoxes];
+  case MGLayoutGridStyle:
+    [MGLayoutManager stackGridStyle:container onlyMove:newNotTopBoxes];
     break;
   }
 
@@ -187,30 +171,24 @@
 
     // set final positions
     switch (container.contentLayoutMode) {
-    case MGLayoutStackVertical:
-      [MGLayoutManager stackVertical:container onlyMove:nil];
+    case MGLayoutTableStyle:
+      [MGLayoutManager stackTableStyle:container onlyMove:nil];
       break;
-    case MGLayoutStackHorizontal:
-      [MGLayoutManager stackHorizontal:container onlyMove:nil];
-      break;
-    case MGLayoutStackVerticalWithWrap:
-      [MGLayoutManager stackVerticalWithWrap:container onlyMove:nil];
-      break;
-    case MGLayoutStackHorizontalWithWrap:
-      [MGLayoutManager stackHorizontalWithWrap:container onlyMove:nil];
+    case MGLayoutGridStyle:
+      [MGLayoutManager stackGridStyle:container onlyMove:nil];
       break;
     }
 
     // final positions for attached and replacement boxes
     [MGLayoutManager positionAttachedBoxesIn:container];
 
+    // release the layout lock
+    container.layingOut = NO;
+
   } completion:^(BOOL done) {
 
     // clean up
     [gone makeObjectsPerformSelector:@selector(removeFromSuperview)];
-
-    // release the layout lock
-    container.layingOut = NO;
 
     // completion handler
     if (completion) {
@@ -219,8 +197,8 @@
   }];
 }
 
-+ (void)stackVertical:(UIView <MGLayoutBox> *)container
-             onlyMove:(NSSet *)only {
++ (void)stackTableStyle:(UIView <MGLayoutBox> *)container
+               onlyMove:(NSSet *)only {
   CGFloat y = container.topPadding, maxWidth = 0;
 
   // lay out automatic boxes
@@ -252,26 +230,14 @@
     size.height = MAX(container.height, y + container.bottomPadding);
   }
   if ([container isKindOfClass:MGScrollView.class]) {
-    size.width += container.leftMargin + container.rightMargin;
-    size.height += container.topMargin + container.bottomMargin;
     [(id)container setContentSize:size];
   } else {
     container.size = size;
   }
 }
 
-+ (void)stackHorizontal:(UIView <MGLayoutBox> *)container
-               onlyMove:(NSSet *)only {
-  // implement plz
-}
-
-+ (void)stackVerticalWithWrap:(UIView <MGLayoutBox> *)container
-                     onlyMove:(NSSet *)only {
-  // implement plz
-}
-
-+ (void)stackHorizontalWithWrap:(UIView <MGLayoutBox> *)container
-                       onlyMove:(NSSet *)only {
++ (void)stackGridStyle:(UIView <MGLayoutBox> *)container
+              onlyMove:(NSSet *)only {
   CGFloat x = container.leftPadding, y = container.topPadding, maxHeight = 0;
 
   // lay out automatic boxes
