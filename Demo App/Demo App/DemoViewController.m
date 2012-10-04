@@ -51,7 +51,7 @@
   arrow = [UIImage imageNamed:@"arrow"];
 
   // setup the main scroller (using a grid layout)
-  self.scroller.contentLayoutMode = MGLayoutStackHorizontalWithWrap;
+  self.scroller.contentLayoutMode = MGLayoutGridStyle;
   self.scroller.bottomPadding = 8;
 
   // iPhone or iPad grid?
@@ -59,14 +59,14 @@
 
   // the photos grid
   photosGrid = [MGBox boxWithSize:photosGridSize];
-  photosGrid.contentLayoutMode = MGLayoutStackHorizontalWithWrap;
+  photosGrid.contentLayoutMode = MGLayoutGridStyle;
   [self.scroller.boxes addObject:photosGrid];
   //[photosGrid layout];
 
   // the tables grid
   CGSize tablesGridSize = phone ? IPHONE_TABLES_GRID : IPAD_TABLES_GRID;
   tablesGrid = [MGBox boxWithSize:tablesGridSize];
-  tablesGrid.contentLayoutMode = MGLayoutStackHorizontalWithWrap;
+  tablesGrid.contentLayoutMode = MGLayoutGridStyle;
   [self.scroller.boxes addObject:tablesGrid];
 
   // the features table

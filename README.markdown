@@ -97,7 +97,7 @@ row.leftPadding = row.rightPadding = 16;
 
 ```objc
 MGBox *grid = [MGBox boxWithSize:self.bounds.size];
-grid.contentLayoutMode = MGLayoutStackHorizontalWithWrap;
+grid.contentLayoutMode = MGLayoutGridStyle;
 [scroller.boxes addObject:grid];
 ```
 
