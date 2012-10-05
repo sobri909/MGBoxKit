@@ -44,8 +44,9 @@
 
   // underlines
   for (MGLine *line in self.boxes) {
-    if ([line isKindOfClass:MGLine.class] && line != self.boxes.lastObject) {
-      line.underlineType = MGUnderlineBottom;
+    if ([line isKindOfClass:MGLine.class] && line == self.boxes.lastObject
+        && line.underlineType != MGUnderlineTop) {
+      line.underlineType = MGUnderlineNone;
     }
   }
 

@@ -35,6 +35,9 @@
   self.textColor = UIColor.blackColor;
   self.textShadowColor = UIColor.whiteColor;
   self.rightFont = self.font;
+
+  // default underline
+  self.underlineType = MGUnderlineBottom;
 }
 
 + (id)line {
