@@ -50,7 +50,7 @@
   if (!_middleLines) {
     _middleLines = NSMutableOrderedSet.orderedSet;
   }
-  return _topLines;
+  return _middleLines;
 }
 
 - (NSMutableOrderedSet *)bottomLines {
