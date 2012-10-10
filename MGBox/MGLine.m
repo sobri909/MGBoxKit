@@ -379,13 +379,10 @@
       break; // yep, out of space
     }
 
-    // single line UILabels can be shrunk
-    if ([item isKindOfClass:UILabel.class] && [(UILabel *)item numberOfLines]
-        == 1) {
+    // UILabels can be shrunk
+    if ([item isKindOfClass:UILabel.class]) {
       UILabel *label = (id)item;
-      label.font = font;
-      CGSize labelSize = [label.text sizeWithFont:label.font];
-      if (used + labelSize.width > limit) { // needs slimming
+      if (used + label.size.width > limit) { // needs slimming
         label.width = limit - used;
       }
       used += label.width;
@@ -426,7 +423,7 @@
       expandable.width += perBox;
       used += perBox;
       if (expandable == expandables.lastObject) {
-        expandable.width += leftover;
+        expandable.width += floorf(leftover);
         used += leftover;
       }
       [expandable layout];
