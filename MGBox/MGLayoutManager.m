@@ -209,7 +209,7 @@
     maxWidth = MAX(maxWidth, box.leftMargin + box.width + box.rightMargin);
     y += box.topMargin;
     if (!only || [only containsObject:box]) {
-      box.origin = CGPointMake(container.leftPadding + box.leftMargin, y);
+      box.origin = CGPointMake(container.leftPadding + box.leftMargin, roundf(y));
     }
     y += box.height + box.bottomMargin;
   }
@@ -255,7 +255,7 @@
     // position
     x += box.leftMargin;
     if (!only || [only containsObject:box]) {
-      box.origin = CGPointMake(x, y + box.topMargin);
+      box.origin = CGPointMake(roundf(x), roundf(y + box.topMargin));
     }
 
     x += box.width + box.rightMargin;
