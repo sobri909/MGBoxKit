@@ -32,7 +32,8 @@
   // everyone in now please
   for (UIView <MGLayoutBox> *box in container.boxes) {
     [container addSubview:box];
-    if ([box conformsToProtocol:@protocol(MGLayoutBox)] && [container conformsToProtocol:@protocol(MGLayoutBox)]) {
+    if ([box conformsToProtocol:@protocol(MGLayoutBox)]
+        && [container conformsToProtocol:@protocol(MGLayoutBox)]) {
       box.parentBox = (id)container;
     }
   }
