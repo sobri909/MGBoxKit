@@ -60,4 +60,11 @@
   return _bottomLines;
 }
 
+- (NSOrderedSet *)allLines {
+  NSMutableOrderedSet *all = self.topLines.mutableCopy;
+  [all addObjectsFromArray:self.middleLines.array];
+  [all addObjectsFromArray:self.bottomLines.array];
+  return all;
+}
+
 @end
