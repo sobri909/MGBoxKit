@@ -194,12 +194,13 @@
 
   // lay out
   CGFloat x = self.leftPadding;
-  int i;
-  for (i = 0; i < self.leftItems.count; i++) {
+  for (int i = 0; i < self.leftItems.count; i++) {
     UIView *view = self.leftItems[i];
-    if ([self.dontFit indexOfObject:view] != NSNotFound) {
+
+    if ([self.dontFit containsObject:view]) {
       continue;
     }
+
     if ([view conformsToProtocol:@protocol(MGLayoutBox)]
         && [(id <MGLayoutBox>)view boxLayoutMode] == MGBoxLayoutAttached) {
       continue;
@@ -241,11 +242,10 @@
 
   // lay out
   CGFloat x = self.width - self.rightPadding;
-  int i;
-  for (i = 0; i < self.rightItems.count; i++) {
+  for (int i = 0; i < self.rightItems.count; i++) {
     UIView *view = self.rightItems[i];
 
-    if ([self.dontFit indexOfObject:view] != NSNotFound) {
+    if ([self.dontFit containsObject:view]) {
       continue;
     }
 
@@ -298,11 +298,10 @@
     x = self.leftPadding + leftUsed + roundf((limit - middleUsed) / 2);
   }
 
-  int i;
-  for (i = 0; i < self.middleItems.count; i++) {
+  for (int i = 0; i < self.middleItems.count; i++) {
     UIView *view = self.middleItems[i];
 
-    if ([self.dontFit indexOfObject:view] != NSNotFound) {
+    if ([self.dontFit containsObject:view]) {
       continue;
     }
 
@@ -468,7 +467,7 @@
     [self.layer addSublayer:self.solidUnderline];
     break;
   case MGUnderlineBottom:
-    self.solidUnderline.frame = CGRectMake(0, self.height - 1, self.width, 2);
+    self.solidUnderline.frame = CGRectMake(0, self.height - 2, self.width, 2);
     [self.layer addSublayer:self.solidUnderline];
     break;
   case MGUnderlineNone:
