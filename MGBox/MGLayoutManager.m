@@ -123,7 +123,7 @@
   // new boxes start faded out
   NSMutableSet *newNotTopBoxes = NSMutableSet.set;
   for (UIView <MGLayoutBox> *box in container.boxes) {
-    if (![container.subviews containsObject:box]) {
+    if (![container.subviews containsObject:box] && !box.replacementFor) {
       box.alpha = 0;
 
       // collect new boxes that aren't top boxes
