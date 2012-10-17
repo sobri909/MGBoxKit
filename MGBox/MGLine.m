@@ -23,6 +23,7 @@
 
 @implementation MGLine {
   CGFloat leftUsed, middleUsed, rightUsed;
+  NSMutableArray *_leftItems, *_middleItems, *_rightItems;
 }
 
 - (void)setup {
@@ -443,9 +444,7 @@
   label.textColor = self.textColor;
   label.shadowColor = self.textShadowColor;
   label.shadowOffset = CGSizeMake(0, 1);
-  label.lineBreakMode = align == NSTextAlignmentRight
-      ? NSLineBreakByTruncatingHead
-      : NSLineBreakByTruncatingTail;
+  label.lineBreakMode = NSLineBreakByTruncatingTail;
   label.textAlignment = align;
   CGSize size = [label.text sizeWithFont:label.font];
   label.size = CGSizeMake(size.width, self.height);
@@ -502,6 +501,38 @@
     if ([label isKindOfClass:UILabel.class]) {
       label.shadowColor = textShadowColor;
     }
+  }
+}
+
+#pragma mark - Setters
+
+- (void)setLeftItems:(id)items {
+  if ([items isKindOfClass:NSMutableArray.class]) {
+    _leftItems = items;
+  } else if ([items isKindOfClass:NSArray.class]) {
+    _leftItems = [items mutableCopy];
+  } else {
+    _leftItems = @[items].mutableCopy;
+  }
+}
+
+- (void)setMiddleItems:(id)items {
+  if ([items isKindOfClass:NSMutableArray.class]) {
+    _middleItems = items;
+  } else if ([items isKindOfClass:NSArray.class]) {
+    _middleItems = [items mutableCopy];
+  } else {
+    _middleItems = @[items].mutableCopy;
+  }
+}
+
+- (void)setRightItems:(id)items {
+  if ([items isKindOfClass:NSMutableArray.class]) {
+    _rightItems = items;
+  } else if ([items isKindOfClass:NSArray.class]) {
+    _rightItems = [items mutableCopy];
+  } else {
+    _rightItems = @[items].mutableCopy;
   }
 }
 
