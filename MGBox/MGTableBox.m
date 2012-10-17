@@ -9,6 +9,7 @@
 @implementation MGTableBox
 
 - (void)layout {
+  self.height = 0;
 
   // cleanse
   [self.boxes removeAllObjects];

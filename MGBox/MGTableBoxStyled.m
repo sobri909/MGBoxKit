@@ -19,7 +19,7 @@
   [super setup];
 
   // size and position
-  self.width = WIDTH;
+  self.width = self.width ? self.width : WIDTH;
   self.topMargin = TOP_MARGIN;
   self.bottomMargin = BOTTOM_MARGIN;
   self.leftMargin = LEFT_MARGIN;
