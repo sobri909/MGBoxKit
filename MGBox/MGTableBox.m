@@ -11,13 +11,8 @@
 - (void)layout {
   self.height = 0;
 
-  // cleanse
-  [self.boxes removeAllObjects];
-
-  // put in the lines
-  [self.boxes addObjectsFromArray:self.topLines.array];
-  [self.boxes addObjectsFromArray:self.middleLines.array];
-  [self.boxes addObjectsFromArray:self.bottomLines.array];
+  // refresh
+  self.boxes = self.allLines.mutableCopy;
 
   // and all together now
   [super layout];
@@ -25,18 +20,12 @@
 
 - (void)layoutWithSpeed:(NSTimeInterval)speed completion:(Block)completion {
 
-  // cleanse
-  [self.boxes removeAllObjects];
-
-  // put in the lines
-  [self.boxes addObjectsFromArray:self.topLines.array];
-  [self.boxes addObjectsFromArray:self.middleLines.array];
-  [self.boxes addObjectsFromArray:self.bottomLines.array];
+  // refresh
+  self.boxes = self.allLines.mutableCopy;
 
   // and smoothly together now
   [super layoutWithSpeed:speed completion:completion];
 }
-
 
 #pragma mark - Getters
 
