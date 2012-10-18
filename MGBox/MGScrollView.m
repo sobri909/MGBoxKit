@@ -104,6 +104,14 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)recogniser
        shouldReceiveTouch:(UITouch *)touch {
+
+  // say yes to UIScrollView's internal recognisers
+  if (recogniser == self.panGestureRecognizer || recogniser
+      == self.gestureRecognizers[0]) {
+    return YES;
+  }
+
+  // say no if a UIControl got there first (iOS 6 makes this unnecessary)
   return ![touch.view isKindOfClass:UIControl.class];
 }
 
