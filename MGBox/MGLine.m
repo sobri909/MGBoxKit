@@ -389,7 +389,16 @@
 
       // MGLayoutBoxes have margins to deal with
     } else if ([item conformsToProtocol:@protocol(MGLayoutBox)]) {
-      MGBox *box = (id)item;
+      UIView <MGLayoutBox> *box = (id)item;
+
+      // undocumented optional 'maxWidth' property
+      if ([box respondsToSelector:@selector(setMaxWidth:)]) {
+        CGFloat totalWidth = box.leftMargin + box.width + box.rightMargin;
+        if (used + totalWidth > limit) { // needs slimming
+          box.maxWidth = limit - used - box.leftMargin - box.rightMargin;
+        }
+      }
+
       used += box.leftMargin + box.width + box.rightMargin;
 
       // hopefully is a UIView then
@@ -507,7 +516,9 @@
 #pragma mark - Setters
 
 - (void)setLeftItems:(id)items {
-  if ([items isKindOfClass:NSMutableArray.class]) {
+  if (!items) {
+    _leftItems = NSMutableArray.array;
+  } else if ([items isKindOfClass:NSMutableArray.class]) {
     _leftItems = items;
   } else if ([items isKindOfClass:NSArray.class]) {
     _leftItems = [items mutableCopy];
@@ -517,7 +528,9 @@
 }
 
 - (void)setMiddleItems:(id)items {
-  if ([items isKindOfClass:NSMutableArray.class]) {
+  if (!items) {
+    _middleItems = NSMutableArray.array;
+  } else if ([items isKindOfClass:NSMutableArray.class]) {
     _middleItems = items;
   } else if ([items isKindOfClass:NSArray.class]) {
     _middleItems = [items mutableCopy];
@@ -527,7 +540,9 @@
 }
 
 - (void)setRightItems:(id)items {
-  if ([items isKindOfClass:NSMutableArray.class]) {
+  if (!items) {
+    _rightItems = NSMutableArray.array;
+  } else if ([items isKindOfClass:NSMutableArray.class]) {
     _rightItems = items;
   } else if ([items isKindOfClass:NSArray.class]) {
     _rightItems = [items mutableCopy];

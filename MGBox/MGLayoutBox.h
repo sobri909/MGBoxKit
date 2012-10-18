@@ -58,6 +58,9 @@ typedef enum {
 
 @optional
 
+// resizing
+@property (nonatomic, assign) CGFloat maxWidth;
+
 // tap
 @property (nonatomic, retain) UITapGestureRecognizer *tapper;
 @property (nonatomic, assign) BOOL tappable;
