@@ -28,20 +28,20 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 
 Complex tables, sections, and grids created with simple code.
 
-### The Demo App:
+### From the Demo App
 
 ![Demo App Screenshot 1](http://cloud.github.com/downloads/sobri909/MGBox2/DemoApp1.png)
 
-![Demo App Screenshot 4](http://cloud.github.com/downloads/sobri909/MGBox2/DemoApp4.png)
-![Demo App Screenshot 5](http://cloud.github.com/downloads/sobri909/MGBox2/DemoApp5.png)
+### From [IfAlarm](http://ifalarm.com)
 
-
-### Created with the convenience "screenshot" method:
+Created with the convenience `-[MGBox screenshot:]` method.
 
 ![IfAlarm Screenshot 1](http://cloud.github.com/downloads/sobri909/MGBox2/IfAlarm1.png)
 ![IfAlarm Screenshot 2](http://cloud.github.com/downloads/sobri909/MGBox2/IfAlarm2.png)
 
-(From [IfAlarm](http://ifalarm.com))
+### From [Flowies](http://flowi.es)
+
+![Flowies Screenshot 1](http://cloud.github.com/downloads/sobri909/MGBox2/Flowies1.png)
 
 ## Setup
 
