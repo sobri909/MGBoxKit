@@ -300,17 +300,48 @@ Although `MGLine` is an `MGBox` subclass, it instead sources its content views f
 
 The items arrays can contain `NSStrings`, `UIImages`, or any arbitrary `UIViews` you want to add to the line (eg switches, sliders, buttons, etc).
 
+### MGLine Multiline Text
+
+`MGLine` can automatically wrap long strings, as well as mix and match them with other items in the same line. For example you might want multiline text on the left and an image on the right, or vice versa.
+
+```objc
+MGLine *line1 = [MGLine lineWithMultilineLeft:@"a long string on the left" 
+    right:[UIImage imageNamed:@"Sharonda"] width:320 minHeight:40];
+MGLine *line2 = [MGLine lineWithleft:[UIImage imageNamed:@"Felicia" 
+    multilineRight:@"a long string on the right" width:320 minHeight:40];
+```
+
+Any string containing a newline char will be treated as multiline, so as a shorthand you can also do something like this:
+
+```objc
+MGLine *line = [MGLine lineWithLeft:@"a long string\n" right:nil];
+```
+
 ### MGLine Side Precedence
 
 The `sidePrecedence` property decides whether content on the left, right, or middle takes precedence when space runs out. `UILabels` will be shortened to fit. `UIImages` and `UIViews` will be removed from the centre outwards if there's not enough room to fit them in.
 
-### MGLine Fonts
+### MGLine Fonts and Text Alignment
 
-The `font` and `rightFont` properties define what fonts are used to wrap `NSStrings`. The `textColor` property rotates the canvas a random number of degrees. I'm not sure what `textShadowColor` does. Coffee please.
+The `font` and `rightFont` properties define what fonts are used to wrap `NSStrings`. The `textColor` property rotates the canvas a random number of degrees. I'm not sure what `textShadowColor` does.
+
+The properties `leftItemsTextAlignment`, `middleItemsTextAlignment`, `rightItemsTextAlignment` are passed on to the labels created for your strings.
 
 ### MGLine Item Padding
 
 The `itemPadding` property defines how much padding to apply to the left and right of each item. This is added to the `leftMargin` and `rightMargin` values of any `MGBoxes` you might have added as line items. 
+
+### MGLine Min and Max Height
+
+By default the `minHeight` and `maxHeight` properties are both zero, thus causing the line's size to be unchanged by the size of its contents. But if either of them is non-zero, the line height will adjust to fit the highest content item, within the given bounds. 
+
+A `maxHeight` of zero when `minHeight` is non-zero allows the line to increase in height without restriction.
+
+```objc
+MGLine *line = [MGLine lineWithLeft:@"a really long string\n" right:nil];
+line.minHeight = 40; // the line will be at least 40 high
+line.maxHeight = 0; // the line will grow as high as it needs to accommodate the string
+``
 
 ## MGTableBox, MGTableBoxStyled
 
