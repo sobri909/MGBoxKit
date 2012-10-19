@@ -249,15 +249,13 @@ box.onLongPress = ^{
 
 ### Blocks Based UIControl Event Handlers
 
-`MGButton` provides a nice easy `onControlEvent:do:` method, which frees you from the muck of adding targets, selectors, etc. 
+`UIControl+MGEvents` provides a nice easy `onControlEvent:do:` method for all UIControls, which frees you from the muck of adding targets, selectors, etc. 
 
 ```objc
 [button onControlEvent:UIControlEventTouchUpInside do:^{
     NSLog(@"i've been touched up inside. golly.");
 }];
 ```
-
-Ideally this would be available for all `UIControls`, rather than only `MGButton` subclasses. That's on the todo list.
 
 ## UIView+MGEasyFrame Category
 
