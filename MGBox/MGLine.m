@@ -1,6 +1,5 @@
 //
 //  Created by Matt Greenfield on 24/05/12
-//  Copyright (c) 2012 Big Paua. All rights reserved
 //  http://bigpaua.com/
 //
 
@@ -10,14 +9,6 @@
 @interface MGLine ()
 
 @property (nonatomic, retain) NSMutableArray *dontFit;
-
-- (void)wrapRawContents:(NSMutableArray *)contents
-                  align:(UITextAlignment)align;
-- (void)removeOldContents;
-- (void)layoutLeftWithin:(CGFloat)limit;
-- (void)layoutRightWithin:(CGFloat)limit;
-- (void)layoutMiddleWithin:(CGFloat)limit;
-- (CGFloat)size:(NSArray *)views within:(CGFloat)limit font:(UIFont *)font;
 
 @end
 
@@ -37,9 +28,16 @@
   self.textShadowColor = UIColor.whiteColor;
   self.rightFont = self.font;
 
+  // default text alignments
+  self.leftItemsTextAlignment = NSTextAlignmentLeft;
+  self.middleItemsTextAlignment = NSTextAlignmentCenter;
+  self.rightItemsTextAlignment = NSTextAlignmentRight;
+
   // default underline
   self.underlineType = MGUnderlineBottom;
 }
+
+#pragma mark - Factories
 
 + (id)line {
   return [self boxWithSize:CGSizeZero];
@@ -49,36 +47,41 @@
   return [self boxWithSize:size];
 }
 
++ (id)lineWithMultilineLeft:(NSString *)left right:(id)right width:(CGFloat)width
+                  minHeight:(CGFloat)height {
+  MGLine *line = [self lineWithSize:(CGSize){width, height}];
+  line.multilineLeft = left;
+  line.rightItems = right;
+  line.minHeight = height;
+  line.maxHeight = 0;
+  return line;
+}
+
++ (id)lineWithLeft:(id)left multilineRight:(NSString *)right width:(CGFloat)width
+         minHeight:(CGFloat)height {
+  MGLine *line = [self lineWithSize:(CGSize){width, height}];
+  line.leftItems = left;
+  line.multilineRight = right;
+  line.minHeight = height;
+  line.maxHeight = 0;
+  return line;
+}
+
 + (id)multilineWithText:(NSString *)text font:(UIFont *)font width:(CGFloat)width
                 padding:(UIEdgeInsets)padding {
 
-  // default font?
-  font = font ? font : [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-
-  // make the label
-  UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-  label.backgroundColor = UIColor.clearColor;
-  label.shadowColor = UIColor.whiteColor;
-  label.shadowOffset = CGSizeMake(0, 1);
-  label.numberOfLines = 0;
-  label.font = font;
-  label.text = text;
-
-  // usable width
-  CGFloat innerWidth = width - padding.left - padding.right;
-
-  // size the label
-  CGSize textSize = [label.text sizeWithFont:label.font
-      constrainedToSize:CGSizeMake(innerWidth, FLT_MAX)];
-  label.size = (CGSize){innerWidth, textSize.height};
+  // compute min height
+  CGSize minSize = [text sizeWithFont:font];
+  CGFloat height = minSize.height + padding.top + padding.bottom;
 
   // make the line
-  MGLine *line = [MGLine lineWithSize:(CGSize){width,
-      label.height + padding.top + padding.bottom
-  }];
-  line.leftItems = @[label].mutableCopy;
+  MGLine *line = [MGLine lineWithSize:(CGSize){width, height}];
+  line.minHeight = height;
+  line.maxHeight = 0;
+
+  line.font = font ? font : [line.font fontWithSize:14];
   line.padding = padding;
-  line.font = font;
+  line.multilineLeft = text;
 
   return line;
 }
@@ -87,8 +90,7 @@
   return [self lineWithLeft:left right:right size:CGSizeZero];
 }
 
-+ (id)lineWithLeft:(NSObject *)left right:(NSObject *)right
-              size:(CGSize)size {
++ (id)lineWithLeft:(NSObject *)left right:(NSObject *)right size:(CGSize)size {
   MGLine *line = [self lineWithSize:size];
   if ([left isKindOfClass:NSArray.class]) {
     line.leftItems = left.mutableCopy;
@@ -108,9 +110,12 @@
 - (void)layout {
 
   // wrap NSStrings and UIImages
-  [self wrapRawContents:self.leftItems align:NSTextAlignmentLeft];
-  [self wrapRawContents:self.rightItems align:NSTextAlignmentRight];
-  [self wrapRawContents:self.middleItems align:NSTextAlignmentCenter];
+  [self wrapRawContents:self.leftItems align:self.leftItemsTextAlignment
+      font:self.font];
+  [self wrapRawContents:self.rightItems align:self.rightItemsTextAlignment
+      font:self.rightFont];
+  [self wrapRawContents:self.middleItems align:self.middleItemsTextAlignment
+      font:self.middleFont];
 
   [self removeOldContents];
 
@@ -131,10 +136,13 @@
     break;
   case MGSidePrecedenceMiddle:
     [self layoutMiddleWithin:maxWidth];
-    [self layoutLeftWithin:maxWidth - middleUsed];
-    [self layoutRightWithin:maxWidth - leftUsed - middleUsed];
+    [self layoutLeftWithin:(maxWidth - middleUsed) / 2];
+    [self layoutRightWithin:(maxWidth - middleUsed) / 2];
     break;
   }
+
+  // adjust height to fit contents
+  [self adjustHeight];
 
   // deal with attached boxes
   for (UIView <MGLayoutBox> *attachee in self.allItems) {
@@ -153,12 +161,12 @@
   [MGLayoutManager stackByZIndexIn:self];
 }
 
-- (void)wrapRawContents:(NSMutableArray *)contents
-                  align:(UITextAlignment)align {
+- (void)wrapRawContents:(NSMutableArray *)contents align:(UITextAlignment)align
+                   font:(UIFont *)font {
   for (int i = 0; i < contents.count; i++) {
     id item = contents[i];
     if ([item isKindOfClass:NSString.class]) {
-      UILabel *label = [self makeLabel:item align:align];
+      UILabel *label = [self makeLabel:item align:align font:font];
       contents[i] = label;
     } else if ([item isKindOfClass:UIImage.class]) {
       UIImageView *view = [[UIImageView alloc] initWithImage:item];
@@ -184,7 +192,7 @@
 - (void)layoutLeftWithin:(CGFloat)limit {
 
   // size and discard
-  leftUsed = [self size:self.leftItems within:limit font:self.font];
+  leftUsed = [self size:self.leftItems within:limit];
 
   // widen as needed
   if (self.widenAsNeeded) {
@@ -225,14 +233,16 @@
     }
     x += view.width + self.itemPadding;
 
-    view.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+    view.autoresizingMask = UIViewAutoresizingFlexibleTopMargin
+        | UIViewAutoresizingFlexibleBottomMargin
+        | UIViewAutoresizingFlexibleRightMargin;
   }
 }
 
 - (void)layoutRightWithin:(CGFloat)limit {
 
   // size and discard
-  rightUsed = [self size:self.rightItems within:limit font:self.rightFont];
+  rightUsed = [self size:self.rightItems within:limit];
 
   // widen as needed
   if (self.widenAsNeeded) {
@@ -275,14 +285,16 @@
 
     x -= self.itemPadding;
 
-    view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+    view.autoresizingMask = UIViewAutoresizingFlexibleTopMargin
+        | UIViewAutoresizingFlexibleBottomMargin
+        | UIViewAutoresizingFlexibleLeftMargin;
   }
 }
 
 - (void)layoutMiddleWithin:(CGFloat)limit {
 
   // size and discard
-  middleUsed = [self size:self.middleItems within:limit font:self.font];
+  middleUsed = [self size:self.middleItems within:limit];
 
   // widen as needed
   if (self.widenAsNeeded) {
@@ -328,12 +340,42 @@
     }
     x += view.width + self.itemPadding;
 
-    view.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin
+    view.autoresizingMask = UIViewAutoresizingFlexibleTopMargin
+        | UIViewAutoresizingFlexibleBottomMargin
+        | UIViewAutoresizingFlexibleLeftMargin
         | UIViewAutoresizingFlexibleRightMargin;
   }
 }
 
-- (CGFloat)size:(NSArray *)views within:(CGFloat)limit font:(UIFont *)font {
+- (void)adjustHeight {
+
+  // no room for adjustment?
+  if (self.minHeight == self.maxHeight) {
+    return;
+  }
+
+  // find the highest item
+  CGFloat maxItemHeight = 0;
+  for (UIView <MGLayoutBox> *item in self.allItems) {
+    if ([item conformsToProtocol:@protocol(MGLayoutBox)] && item.boxLayoutMode
+        == MGBoxLayoutAttached) {
+      continue;
+    }
+    maxItemHeight = MAX(maxItemHeight, item.height);
+  }
+
+  // adjust box height while respecting minHeight/maxHeight properties
+  CGFloat newHeight = MAX(maxItemHeight + self.topPadding
+      + self.bottomPadding, self.minHeight);
+  if (self.maxHeight) {
+    newHeight = MIN(newHeight, self.maxHeight);
+  }
+  if (newHeight != self.height) {
+    self.height = newHeight;
+  }
+}
+
+- (CGFloat)size:(NSArray *)views within:(CGFloat)limit {
   NSMutableArray *expandables = @[].mutableCopy;
   CGFloat used = 0;
   unsigned int i;
@@ -379,12 +421,24 @@
       break; // yep, out of space
     }
 
-    // UILabels can be shrunk
-    if ([item isKindOfClass:UILabel.class]) {
+    // self made UILabels can be resized
+    if ([item isKindOfClass:UILabel.class] && item.tag == -1) {
       UILabel *label = (id)item;
-      if (used + label.size.width > limit) { // needs slimming
-        label.width = limit - used;
+
+      // multiline
+      if (!label.numberOfLines) {
+        CGFloat maxHeight = self.maxHeight ? self.maxHeight - self.topPadding
+            - self.bottomPadding : FLT_MAX;
+        label.size = [label.text sizeWithFont:label.font
+            constrainedToSize:(CGSize){limit - used, maxHeight}];
+
+        // single line
+      } else {
+        if (used + label.width > limit) { // needs slimming
+          label.width = limit - used;
+        }
       }
+
       used += label.width;
 
       // MGLayoutBoxes have margins to deal with
@@ -442,28 +496,45 @@
   return used;
 }
 
-- (UILabel *)makeLabel:(NSString *)text
-                 align:(UITextAlignment)align {
+- (UILabel *)makeLabel:(NSString *)text align:(UITextAlignment)align {
+  UIFont *font = align == UITextAlignmentRight && self.rightFont
+      ? self.rightFont
+      : self.font;
+  return [self makeLabel:text align:align font:font];
+}
+
+- (UILabel *)makeLabel:(NSString *)text align:(UITextAlignment)align
+                  font:(UIFont *)font {
   UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
   label.backgroundColor = UIColor.clearColor;
   label.text = text;
-  label.font = align == UITextAlignmentRight && self.rightFont
-      ? self.rightFont
-      : self.font;
+  label.font = font ? font : self.font;
+  label.textAlignment = align;
   label.textColor = self.textColor;
   label.shadowColor = self.textShadowColor;
   label.shadowOffset = CGSizeMake(0, 1);
-  label.lineBreakMode = NSLineBreakByTruncatingTail;
-  label.textAlignment = align;
-  CGSize size = [label.text sizeWithFont:label.font];
-  label.size = CGSizeMake(size.width, self.height);
+
+  // final resizing will be done at layout time
+  label.size = [label.text sizeWithFont:label.font];
+
+  // tag as modifiable
+  label.tag = -1;
+
+  // newline chars trigger a multiline label
+  if ([text rangeOfString:@"\n"].location != NSNotFound) {
+    label.lineBreakMode = NSLineBreakByWordWrapping;
+    label.numberOfLines = 0;
+  } else {
+    label.lineBreakMode = NSLineBreakByTruncatingTail;
+  }
+
   return label;
 }
 
 #pragma mark - Setters
 
-- (void)setHeight:(CGFloat)height {
-  super.height = height;
+- (void)setFrame:(CGRect)frame {
+  super.frame = frame;
   self.underlineType = self.underlineType;
 }
 
@@ -513,8 +584,6 @@
   }
 }
 
-#pragma mark - Setters
-
 - (void)setLeftItems:(id)items {
   if (!items) {
     _leftItems = NSMutableArray.array;
@@ -548,6 +617,30 @@
     _rightItems = [items mutableCopy];
   } else {
     _rightItems = @[items].mutableCopy;
+  }
+}
+
+- (void)setMultilineLeft:(NSString *)text {
+  if ([text rangeOfString:@"\n"].location == NSNotFound) {
+    self.leftItems = (id)[text stringByAppendingString:@"\n"];
+  } else {
+    self.leftItems = (id)text;
+  }
+}
+
+- (void)setMultilineMiddle:(NSString *)text {
+  if ([text rangeOfString:@"\n"].location == NSNotFound) {
+    self.middleItems = (id)[text stringByAppendingString:@"\n"];
+  } else {
+    self.middleItems = (id)text;
+  }
+}
+
+- (void)setMultilineRight:(NSString *)text {
+  if ([text rangeOfString:@"\n"].location == NSNotFound) {
+    self.rightItems = (id)[text stringByAppendingString:@"\n"];
+  } else {
+    self.rightItems = (id)text;
   }
 }
 
