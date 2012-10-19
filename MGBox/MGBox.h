@@ -5,7 +5,6 @@
 //
 
 #import "MGLayoutBox.h"
-#import "NSObject+MGEvents.h"
 
 @interface MGBox : UIView <MGLayoutBox, UIGestureRecognizerDelegate>
 
