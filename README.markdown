@@ -339,7 +339,7 @@ A `maxHeight` of zero when `minHeight` is non-zero allows the line to increase i
 MGLine *line = [MGLine lineWithLeft:@"a really long string\n" right:nil];
 line.minHeight = 40; // the line will be at least 40 high
 line.maxHeight = 0; // the line will grow as high as it needs to accommodate the string
-``
+```
 
 ## MGTableBox, MGTableBoxStyled
 
