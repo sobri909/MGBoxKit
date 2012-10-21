@@ -390,7 +390,7 @@ UIImage *screenshot = [box screenshot:0]; // 0 = device scale, 1 = old school, 2
 
 ## License
 
-No need give credit or mention `MGBox` in your app. No one reads those things anyway. The license is otherwise BSD standard.
+No need to give credit or mention `MGBox` in your app. No one reads those things anyway. The license is otherwise BSD standard.
 
 If you want to give back, you could always [buy one of my apps](http://bigpaua.com) ;)
 
