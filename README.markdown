@@ -14,6 +14,7 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 - Animated adding/removing/reordering rows, items, sections, etc
 - Margins, Padding, zIndex, Fixed Positioning, and more
 - Optional asynchronous blocks based layout
+- Automatically keeps input fields above the keyboard  
 - Optional scroll view box edge snapping
 
 ## Code Convenience Features
@@ -349,7 +350,13 @@ line.maxHeight = 0; // the line will grow as high as it needs to accommodate the
 
 When using these classes for table sections, add your rows (eg `MGLine` objects) to their `topLines`, `middleLines`, and `bottomLines` arrays (instead of the standard `boxes` set).
 
-## MGScrollView Box Edge Snapping
+## MGScrollView
+
+### MGScrollView Input Fields Above Keyboard
+
+`MGScrollViews` will by default automatically scroll to keep any selected input field visible when the keyboard appears. You can adjust the amount of margin with the `keyboardMargin` property, and disable the feature with the `keepFirstResponderAboveKeyboard` property.
+
+### MGScrollView Box Edge Snapping
 
 You might like this for your project, or it might annoy you. It's one of those things.
 
