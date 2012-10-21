@@ -9,3 +9,4 @@ typedef void(^Block)();
 #import "UIView+MGEasyFrame.h"
 #import "NSObject+MGEvents.h"
 #import "UIControl+MGEvents.h"
+#import "UIResponder+FirstResponder.h"

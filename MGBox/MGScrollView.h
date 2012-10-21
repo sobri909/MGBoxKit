@@ -10,19 +10,31 @@
 
 @property (nonatomic, weak) UIView *keepAboveKeyboard;
 
-// factories
+#pragma mark - Factories
+
 + (id)scroller;
 + (id)scrollerWithSize:(CGSize)size;
 
-// init
+#pragma mark - Init
+
 - (void)setup;
 
-// layout and scrolling
+#pragma mark - Layout and scrolling
+
 - (void)layoutWithSpeed:(NSTimeInterval)speed
              completion:(Block)completion;
+
+// convenience method to scroll a rect into view
 - (void)scrollToView:(UIView *)view withMargin:(CGFloat)margin;
+
+// box edge snapping
 - (void)snapToNearestBox;
-- (void)keyboardWillAppear:(NSNotification *)note;
-- (void)restoreAfterKeyboardClose:(Block)completion;
+
+// dealing with the keyboard
+@property (nonatomic, assign) BOOL keepFirstResponderAboveKeyboard;
+@property (nonatomic, assign) CGFloat keyboardMargin;
+
+// this is done automatically now
+- (void)restoreAfterKeyboardClose:(Block)completion __attribute__ ((deprecated));
 
 @end
