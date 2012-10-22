@@ -24,6 +24,23 @@ static char *MGEventHandlersKey;
   [handlers addObject:wrapper];
 }
 
+- (void)removeHandlersForControlEvent:(UIControlEvents)controlEvent {
+
+  // get all handlers for this control event
+  NSMutableArray *handlers = self.MGEventHandlers[@((int)controlEvent)];
+
+  // remove them
+  for (MGBlockWrapper *wrapper in handlers) {
+    [self removeTarget:wrapper action:NULL forControlEvents:controlEvent];
+  }
+
+  // and now release the blocks
+  handlers = @[].mutableCopy;
+  self.MGEventHandlers[@((int)controlEvent)] = handlers;
+}
+
+#pragma mark - Getters and setters
+
 - (NSMutableDictionary *)MGEventHandlers {
   id handlers = objc_getAssociatedObject(self, MGEventHandlersKey);
   if (!handlers) {
