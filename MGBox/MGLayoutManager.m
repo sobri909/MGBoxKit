@@ -91,8 +91,9 @@
   NSArray *gone = [MGLayoutManager findBoxesInView:container
       notInSet:container.boxes];
 
-  // every box is new and no one is gone? then skip that animation style
-  if (!gone.count && newTopBoxes.count == container.boxes.count) {
+  // every box is new and haven't asked for slide-in-from-empty animation?
+  if (newTopBoxes.count == container.boxes.count
+      && !container.slideBoxesInFromEmpty) {
     [newTopBoxes removeAllObjects];
   }
 

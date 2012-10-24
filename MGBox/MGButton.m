@@ -18,7 +18,7 @@
 @synthesize margin, topMargin, bottomMargin, leftMargin, rightMargin;
 @synthesize padding, topPadding, rightPadding, bottomPadding, leftPadding;
 @synthesize attachedTo, replacementFor, sizingMode;
-@synthesize fixedPosition, zIndex, layingOut;
+@synthesize fixedPosition, zIndex, layingOut, slideBoxesInFromEmpty;
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];

@@ -18,7 +18,7 @@
 @synthesize margin, topMargin, bottomMargin, leftMargin, rightMargin;
 @synthesize padding, topPadding, rightPadding, bottomPadding, leftPadding;
 @synthesize attachedTo, replacementFor, sizingMode;
-@synthesize fixedPosition, zIndex, layingOut;
+@synthesize fixedPosition, zIndex, layingOut, slideBoxesInFromEmpty;
 
 // MGLayoutBox protocol optionals
 @synthesize tapper, tappable, onTap;
@@ -49,6 +49,8 @@
 }
 
 - (void)setup {
+
+  // defaults
   self.boxLayoutMode = MGBoxLayoutAutomatic;
   self.contentLayoutMode = MGLayoutTableStyle;
   self.sizingMode = MGResizingNone;

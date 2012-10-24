@@ -53,6 +53,7 @@ typedef enum {
 @property (nonatomic, assign) MGContentLayoutMode contentLayoutMode;
 
 // layout
+@property (nonatomic, assign) BOOL slideBoxesInFromEmpty;
 @property (nonatomic, assign) BOOL layingOut;
 - (void)layout;
 
