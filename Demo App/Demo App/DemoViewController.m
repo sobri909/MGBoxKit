@@ -61,7 +61,6 @@
   photosGrid = [MGBox boxWithSize:photosGridSize];
   photosGrid.contentLayoutMode = MGLayoutGridStyle;
   [self.scroller.boxes addObject:photosGrid];
-  //[photosGrid layout];
 
   // the tables grid
   CGSize tablesGridSize = phone ? IPHONE_TABLES_GRID : IPAD_TABLES_GRID;
