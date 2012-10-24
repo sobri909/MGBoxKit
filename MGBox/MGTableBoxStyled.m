@@ -33,10 +33,6 @@
   self.layer.shadowOffset = CGSizeMake(0, 0.5);
   self.layer.shadowRadius = 1;
   self.layer.shadowOpacity = 1;
-
-  // rasterise
-  self.layer.shouldRasterize = YES;
-  self.layer.rasterizationScale = UIScreen.mainScreen.scale;
 }
 
 - (void)layout {
