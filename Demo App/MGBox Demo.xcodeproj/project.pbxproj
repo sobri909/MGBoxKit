@@ -10,6 +10,8 @@
 		3307137FAF1435B4ECA15024 /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 330715EF12EC184937E5FA7E /* add@2x.png */; };
 		33071941672C2D8830257E32 /* PhotoBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3307132EC7E612F5B422461B /* PhotoBox.m */; };
 		330719F40060E9DDC87FB9C7 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 33071767DF74FC852F68B7FE /* add.png */; };
+		C992B2521637F6130015F5B0 /* UIControl+MGEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = C992B2501637F6130015F5B0 /* UIControl+MGEvents.m */; };
+		C992B2561637F6320015F5B0 /* UIResponder+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C992B2541637F6320015F5B0 /* UIResponder+FirstResponder.m */; };
 		C9968EBB1610CDEF00D113FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9968EBA1610CDEF00D113FB /* UIKit.framework */; };
 		C9968EBD1610CDEF00D113FB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9968EBC1610CDEF00D113FB /* Foundation.framework */; };
 		C9968EBF1610CDEF00D113FB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9968EBE1610CDEF00D113FB /* CoreGraphics.framework */; };
@@ -42,6 +44,10 @@
 		330714AD1C35930E7498DCE3 /* PhotoBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoBox.h; sourceTree = "<group>"; };
 		330715EF12EC184937E5FA7E /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add@2x.png"; sourceTree = "<group>"; };
 		33071767DF74FC852F68B7FE /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
+		C992B2501637F6130015F5B0 /* UIControl+MGEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+MGEvents.m"; sourceTree = "<group>"; };
+		C992B2511637F6130015F5B0 /* UIControl+MGEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+MGEvents.h"; sourceTree = "<group>"; };
+		C992B2541637F6320015F5B0 /* UIResponder+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponder.m"; sourceTree = "<group>"; };
+		C992B2551637F6320015F5B0 /* UIResponder+FirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+FirstResponder.h"; sourceTree = "<group>"; };
 		C9968EB61610CDEF00D113FB /* MGBox Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MGBox Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9968EBA1610CDEF00D113FB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C9968EBC1610CDEF00D113FB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -200,6 +206,10 @@
 		C9968F361610D84300D113FB /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				C992B2541637F6320015F5B0 /* UIResponder+FirstResponder.m */,
+				C992B2551637F6320015F5B0 /* UIResponder+FirstResponder.h */,
+				C992B2501637F6130015F5B0 /* UIControl+MGEvents.m */,
+				C992B2511637F6130015F5B0 /* UIControl+MGEvents.h */,
 				C9968F371610D84300D113FB /* NSObject+MGEvents.h */,
 				C9968F381610D84300D113FB /* NSObject+MGEvents.m */,
 				C9968F391610D84300D113FB /* UIView+MGEasyFrame.h */,
@@ -313,6 +323,8 @@
 				C9968F3B1610D84300D113FB /* NSObject+MGEvents.m in Sources */,
 				C9968F3C1610D84300D113FB /* UIView+MGEasyFrame.m in Sources */,
 				33071941672C2D8830257E32 /* PhotoBox.m in Sources */,
+				C992B2521637F6130015F5B0 /* UIControl+MGEvents.m in Sources */,
+				C992B2561637F6320015F5B0 /* UIResponder+FirstResponder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
