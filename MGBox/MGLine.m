@@ -26,7 +26,6 @@
   self.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
   self.textColor = UIColor.blackColor;
   self.textShadowColor = UIColor.whiteColor;
-  self.rightFont = self.font;
 
   // default text alignments
   self.leftItemsTextAlignment = NSTextAlignmentLeft;
