@@ -35,7 +35,7 @@ Complex tables, sections, and grids created with simple code.
 
 ### From the Demo App
 
-![Demo App Screenshot 1](http://cloud.github.com/downloads/sobri909/MGBox2/DemoApp1.png)
+![Demo App Screenshot](http://cloud.github.com/downloads/sobri909/MGBox2/DemoApp6.png)
 
 ### From [IfAlarm](http://ifalarm.com)
 
@@ -50,7 +50,8 @@ Created with the convenience `-[MGBox screenshot:]` method.
 
 ## Setup
 
-Add the `MGBox` folder to your project. (ARC and Xcode 4.5 are required)
+1. Add the `MGBox` folder to your project. (ARC and Xcode 4.5 are required)
+2. Add the `CoreText` and `QuartzCore` frameworks to your project. 
 
 Have a poke around the Demo App to see some of the features in use. 
 
@@ -85,14 +86,14 @@ header.leftPadding = header.rightPadding = 16;
 
 // a string on the left and a horse on the right
 MGLineStyled *row1 = [MGLineStyled lineWithLeft:@"Left text" 
-  right:[UIImage imageNamed:@"horse"] size:rowSize];
+    right:[UIImage imageNamed:@"horse.png"] size:rowSize];
 [section.topLines addObject:row1];
 
 // a string with Mush markup
 MGLineStyled *row2 = MGLineStyled.line;
 row2.multilineLeft = @"This row has **bold** text, //italics// text, __underlined__ text, "
-  "and some `monospaced` text. The text will span more than one line, and the row will "
-  "automatically adjust its height to fit.|mush";
+    "and some `monospaced` text. The text will span more than one line, and the row will "
+    "automatically adjust its height to fit.|mush";
 row2.minHeight = 40;
 [section.topLines addObject:row2];
 ```
