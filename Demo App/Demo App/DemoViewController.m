@@ -163,12 +163,12 @@
   PhotoBox *box = [PhotoBox photoBoxFor:i size:[self photoBoxSize]];
 
   // remove the box when tapped
-  __block id bbox = box;
+  __weak id wbox = box;
   box.onTap = ^{
     MGBox *section = (id)box.parentBox;
 
     // remove
-    [section.boxes removeObject:bbox];
+    [section.boxes removeObject:wbox];
 
     // if we don't have an add box, and there's photos left, add one
     if (![self photoBoxWithTag:-1] && [self randomMissingPhoto]) {
@@ -189,15 +189,15 @@
   PhotoBox *box = [PhotoBox photoAddBoxWithSize:[self photoBoxSize]];
 
   // deal with taps
-  __block MGBox *bbox = box;
+  __weak MGBox *wbox = box;
   box.onTap = ^{
 
     // a new photo number
     int photo = [self randomMissingPhoto];
 
     // replace the add box with a photo loading box
-    int idx = [photosGrid.boxes indexOfObject:bbox];
-    [photosGrid.boxes removeObject:bbox];
+    int idx = [photosGrid.boxes indexOfObject:wbox];
+    [photosGrid.boxes removeObject:wbox];
     [photosGrid.boxes insertObject:[self photoBoxFor:photo] atIndex:idx];
     [photosGrid layout];
 

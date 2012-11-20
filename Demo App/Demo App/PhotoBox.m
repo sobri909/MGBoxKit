@@ -68,9 +68,9 @@
   [spinner startAnimating];
 
   // do the photo loading async, because internets
-  __block id bbox = box;
+  __weak id wbox = box;
   box.asyncLayoutOnce = ^{
-    [bbox loadPhoto];
+    [wbox loadPhoto];
   };
 
   return box;
