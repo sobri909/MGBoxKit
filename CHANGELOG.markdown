@@ -1,6 +1,6 @@
 ## 2.0.0
 
-###### Upgrading
+##### Upgrading
 
 - `MGBox` now requires the `CoreText` framework. Add this to your project.
 - Also add these new files to your project:
@@ -12,7 +12,7 @@
   `MGTableBoxStyled`, replace `MGLine` with `MGLineStyled`, or set your 
   `MGLine` instances to have a `borderStyle` of `MGBorderEtchedTop | MGBorderEdgedBottom`.
 
-###### Enhancements
+##### Enhancements
 
 - Mush Lightweight Markup
   - Markup similar to Markdown/Textile, providing bold, italic, underline, and 
@@ -38,6 +38,6 @@
 
 See the documentation for usage examples of the new APIs.
 
-###### Deprecated
+##### Deprecated
 
 - `-[MGLine underlineType]`, replaced by `-[MGBox borderStyle]`
