@@ -5,6 +5,10 @@
 
 #import "MGLine.h"
 #import "MGLayoutManager.h"
+#import "MGMushParser.h"
+#import "NSAttributedString+MGTrim.h"
+
+#define FALLBACK(potential, fallback) (potential ? potential : fallback)
 
 @interface MGLine ()
 
@@ -15,6 +19,7 @@
 @implementation MGLine {
   CGFloat leftUsed, middleUsed, rightUsed;
   NSMutableArray *_leftItems, *_middleItems, *_rightItems;
+  BOOL asyncDrawing, asyncDrawOnceing;
 }
 
 - (void)setup {
@@ -22,18 +27,21 @@
 
   self.dontFit = @[].mutableCopy;
 
-  // fonts
+  // default font styles
   self.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
   self.textColor = UIColor.blackColor;
   self.textShadowColor = UIColor.whiteColor;
+  self.leftTextShadowOffset = (CGSize){0, 1};
+  self.middleTextShadowOffset = (CGSize){0, 1};
+  self.rightTextShadowOffset = (CGSize){0, 1};
 
   // default text alignments
   self.leftItemsTextAlignment = NSTextAlignmentLeft;
   self.middleItemsTextAlignment = NSTextAlignmentCenter;
   self.rightItemsTextAlignment = NSTextAlignmentRight;
 
-  // default underline
-  self.underlineType = MGUnderlineBottom;
+  // may be deprecated in future. use MGBox borders instead
+  self.underlineType = MGUnderlineNone;
 }
 
 #pragma mark - Factories
@@ -74,7 +82,7 @@
   CGFloat height = minSize.height + padding.top + padding.bottom;
 
   // make the line
-  MGLine *line = [MGLine lineWithSize:(CGSize){width, height}];
+  MGLine *line = [self lineWithSize:(CGSize){width, height}];
   line.minHeight = height;
   line.maxHeight = 0;
 
@@ -108,13 +116,10 @@
 
 - (void)layout {
 
-  // wrap NSStrings and UIImages
-  [self wrapRawContents:self.leftItems align:self.leftItemsTextAlignment
-      font:self.font];
-  [self wrapRawContents:self.rightItems align:self.rightItemsTextAlignment
-      font:self.rightFont];
-  [self wrapRawContents:self.middleItems align:self.middleItemsTextAlignment
-      font:self.middleFont];
+  // wrap NSStrings, NSAttributedStrings, and UIImages
+  [self wrapRawContents:self.leftItems placement:MGLeft];
+  [self wrapRawContents:self.rightItems placement:MGRight];
+  [self wrapRawContents:self.middleItems placement:MGMiddle];
 
   [self removeOldContents];
 
@@ -123,21 +128,21 @@
 
   // lay things out
   switch (self.sidePrecedence) {
-  case MGSidePrecedenceLeft:
-    [self layoutLeftWithin:maxWidth];
-    [self layoutRightWithin:maxWidth - leftUsed];
-    [self layoutMiddleWithin:maxWidth - leftUsed - rightUsed];
-    break;
-  case MGSidePrecedenceRight:
-    [self layoutRightWithin:maxWidth];
-    [self layoutLeftWithin:maxWidth - rightUsed];
-    [self layoutMiddleWithin:maxWidth - leftUsed - rightUsed];
-    break;
-  case MGSidePrecedenceMiddle:
-    [self layoutMiddleWithin:maxWidth];
-    [self layoutLeftWithin:(maxWidth - middleUsed) / 2];
-    [self layoutRightWithin:(maxWidth - middleUsed) / 2];
-    break;
+    case MGSidePrecedenceLeft:
+      [self layoutLeftWithin:maxWidth];
+      [self layoutRightWithin:maxWidth - leftUsed];
+      [self layoutMiddleWithin:maxWidth - leftUsed - rightUsed];
+      break;
+    case MGSidePrecedenceRight:
+      [self layoutRightWithin:maxWidth];
+      [self layoutLeftWithin:maxWidth - rightUsed];
+      [self layoutMiddleWithin:maxWidth - leftUsed - rightUsed];
+      break;
+    case MGSidePrecedenceMiddle:
+      [self layoutMiddleWithin:maxWidth];
+      [self layoutLeftWithin:(maxWidth - middleUsed) / 2];
+      [self layoutRightWithin:(maxWidth - middleUsed) / 2];
+      break;
   }
 
   // adjust height to fit contents
@@ -158,18 +163,34 @@
 
   // zIndex stack plz
   [MGLayoutManager stackByZIndexIn:self];
+
+  // async draws
+  if (self.asyncLayout || self.asyncLayoutOnce) {
+    dispatch_async(self.asyncQueue, ^{
+      if (self.asyncLayout && !asyncDrawing) {
+        asyncDrawing = YES;
+        self.asyncLayout();
+        asyncDrawing = NO;
+      }
+      if (self.asyncLayoutOnce && !asyncDrawOnceing) {
+        asyncDrawOnceing = YES;
+        self.asyncLayoutOnce();
+        self.asyncLayoutOnce = nil;
+        asyncDrawOnceing = NO;
+      }
+    });
+  }
 }
 
-- (void)wrapRawContents:(NSMutableArray *)contents align:(UITextAlignment)align
-                   font:(UIFont *)font {
-  for (int i = 0; i < contents.count; i++) {
-    id item = contents[i];
-    if ([item isKindOfClass:NSString.class]) {
-      UILabel *label = [self makeLabel:item align:align font:font];
-      contents[i] = label;
+- (void)wrapRawContents:(NSMutableArray *)items
+              placement:(MGItemPlacement)placement {
+  for (int i = 0; i < items.count; i++) {
+    id item = items[i];
+    if ([item isKindOfClass:NSString.class]
+        || [item isKindOfClass:NSAttributedString.class]) {
+      items[i] = [self makeLabel:item placement:placement];
     } else if ([item isKindOfClass:UIImage.class]) {
-      UIImageView *view = [[UIImageView alloc] initWithImage:item];
-      contents[i] = view;
+      items[i] = [[UIImageView alloc] initWithImage:item];
     }
   }
 }
@@ -180,7 +201,7 @@
   NSMutableSet *gone = [MGLayoutManager findViewsInView:self
       notInSet:self.boxes].mutableCopy;
 
-  // intersect views not items arrays
+  // intersect views not in items arrays
   [gone intersectSet:[MGLayoutManager findViewsInView:self
       notInSet:self.allItems]];
 
@@ -210,7 +231,7 @@
     }
 
     if ([view conformsToProtocol:@protocol(MGLayoutBox)]
-        && [(id <MGLayoutBox>)view boxLayoutMode] == MGBoxLayoutAttached) {
+        && [(id)view boxLayoutMode] == MGBoxLayoutAttached) {
       continue;
     }
 
@@ -370,7 +391,7 @@
     newHeight = MIN(newHeight, self.maxHeight);
   }
   if (newHeight != self.height) {
-    self.height = newHeight;
+    self.height = ceilf(newHeight);
   }
 }
 
@@ -420,7 +441,7 @@
       break; // yep, out of space
     }
 
-    // self made UILabels can be resized
+    // UILabels made by MGLine can be resized
     if ([item isKindOfClass:UILabel.class] && item.tag == -1) {
       UILabel *label = (id)item;
 
@@ -428,8 +449,27 @@
       if (!label.numberOfLines) {
         CGFloat maxHeight = self.maxHeight ? self.maxHeight - self.topPadding
             - self.bottomPadding : FLT_MAX;
-        label.size = [label.text sizeWithFont:label.font
-            constrainedToSize:(CGSize){limit - used, maxHeight}];
+
+        // attributed string?
+        if ([label respondsToSelector:@selector(attributedText)]) {
+          CGSize maxSize = (CGSize){limit - used, maxHeight};
+          CGSize size = [label.attributedText boundingRectWithSize:maxSize
+              options:NSStringDrawingUsesLineFragmentOrigin
+                  | NSStringDrawingUsesFontLeading context:nil].size;
+          size.width = ceilf(size.width);
+          size.height = ceilf(size.height);
+
+          // for auto resizing margin sanity, make height odd/even match with self
+          if ((int)size.height % 2 && !((int)self.height % 2)) {
+            size.height += 1;
+          }
+          label.size = size;
+
+          // plain old string
+        } else {
+          label.size = [label.text sizeWithFont:label.font
+              constrainedToSize:(CGSize){limit - used, maxHeight}];
+        }
 
         // single line
       } else {
@@ -495,93 +535,225 @@
   return used;
 }
 
-- (UILabel *)makeLabel:(NSString *)text align:(UITextAlignment)align {
-  UIFont *font = align == UITextAlignmentRight && self.rightFont
-      ? self.rightFont
-      : self.font;
-  return [self makeLabel:text align:align font:font];
-}
+#pragma mark - Label factory
 
-- (UILabel *)makeLabel:(NSString *)text align:(UITextAlignment)align
-                  font:(UIFont *)font {
+- (UILabel *)makeLabel:(id)text placement:(MGItemPlacement)placement {
+
+  // base label
   UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
   label.backgroundColor = UIColor.clearColor;
-  label.text = text;
-  label.font = font ? font : self.font;
-  label.textAlignment = align;
-  label.textColor = self.textColor;
-  label.shadowColor = self.textShadowColor;
-  label.shadowOffset = CGSizeMake(0, 1);
 
-  // final resizing will be done at layout time
-  label.size = [label.text sizeWithFont:label.font];
-
-  // tag as modifiable
-  label.tag = -1;
+  // styling
+  switch (placement) {
+    case MGLeft:
+      label.font = self.font;
+      label.textAlignment = self.leftItemsTextAlignment;
+      label.shadowOffset = self.leftTextShadowOffset;
+      label.shadowColor = self.textShadowColor;
+      label.textColor = self.textColor;
+      break;
+    case MGMiddle:
+      label.font = FALLBACK(self.middleFont, self.font);
+      label.textAlignment = self.middleItemsTextAlignment;
+      label.shadowOffset = self.middleTextShadowOffset;
+      label.shadowColor
+          = FALLBACK(self.middleTextShadowColor, self.textShadowColor);
+      label.textColor = FALLBACK(self.middleTextColor, self.textColor);
+      break;
+    case MGRight:
+      label.font = FALLBACK(self.rightFont, self.font);
+      label.textAlignment = self.rightItemsTextAlignment;
+      label.shadowOffset = self.rightTextShadowOffset;
+      label.shadowColor
+          = FALLBACK(self.rightTextShadowColor, self.textShadowColor);
+      label.textColor = FALLBACK(self.rightTextColor, self.textColor);
+      break;
+  }
 
   // newline chars trigger a multiline label
-  if ([text rangeOfString:@"\n"].location != NSNotFound) {
+  NSString *plain = [text isKindOfClass:NSAttributedString.class]
+      ? [text string]
+      : text;
+  if ([plain rangeOfString:@"\n"].location != NSNotFound) {
     label.lineBreakMode = NSLineBreakByWordWrapping;
     label.numberOfLines = 0;
+
+    // trim newlines off start and end
+    id ws = NSCharacterSet.whitespaceAndNewlineCharacterSet;
+    if ([text isKindOfClass:NSAttributedString.class]) {
+      text = [text attributedStringByTrimming:ws];
+    } else {
+      text = [text stringByTrimmingCharactersInSet:ws];
+    }
+
+    // single line
   } else {
     label.lineBreakMode = NSLineBreakByTruncatingTail;
   }
 
+  // turn mush strings into attributed strings
+  if ([text isKindOfClass:NSString.class] && [text hasSuffix:@"|mush"]) {
+    text = [text substringToIndex:[text length] - 5];
+    text = [MGMushParser attributedStringFromMush:text font:label.font
+        color:label.textColor];
+  }
+
+  // attributed string?
+  if ([text isKindOfClass:NSAttributedString.class]) {
+    if ([label respondsToSelector:@selector(attributedText)]) {
+      label.attributedText = text;
+    } else {
+      label.text = [text string];
+    }
+  } else {
+    label.text = text;
+  }
+
+  // final resizing will be done at layout time
+  if ([label respondsToSelector:@selector(attributedText)]) {
+    CGSize maxSize = (CGSize){self.width, 0};
+    CGSize size = [label.attributedText boundingRectWithSize:maxSize
+        options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
+    size.width = ceilf(size.width);
+    size.height = ceilf(size.height);
+
+    // for auto resizing margin sanity, make height odd/even match with self
+    if ((int)size.height % 2 && !((int)self.height % 2)) {
+      size.height += 1;
+    }
+    label.size = size;
+  } else {
+    label.size = [label.text sizeWithFont:label.font];
+  }
+
+  // tag as modifiable
+  label.tag = -1;
+
   return label;
 }
 
-#pragma mark - Setters
+#pragma mark - Style setters
 
 - (void)setFrame:(CGRect)frame {
   super.frame = frame;
   self.underlineType = self.underlineType;
 }
 
+// this may disappear in future. use MGBox borders instead
 - (void)setUnderlineType:(MGUnderlineType)type {
   _underlineType = type;
   switch (_underlineType) {
-  case MGUnderlineTop:
-    self.solidUnderline.frame = CGRectMake(0, 0, self.width, 2);
-    [self.layer addSublayer:self.solidUnderline];
-    break;
-  case MGUnderlineBottom:
-    self.solidUnderline.frame = CGRectMake(0, self.height - 2, self.width, 2);
-    [self.layer addSublayer:self.solidUnderline];
-    break;
-  case MGUnderlineNone:
-  default:
-    [self.solidUnderline removeFromSuperlayer];
-    break;
+    case MGUnderlineTop:
+      self.solidUnderline.frame = CGRectMake(0, 0, self.width, 2);
+      [self.layer addSublayer:self.solidUnderline];
+      break;
+    case MGUnderlineBottom:
+      self.solidUnderline.frame = CGRectMake(0, self.height - 2, self.width, 2);
+      [self.layer addSublayer:self.solidUnderline];
+      break;
+    case MGUnderlineNone:
+    default:
+      [self.solidUnderline removeFromSuperlayer];
+      break;
   }
 }
 
-- (void)setTextColor:(UIColor *)textColor {
-  _textColor = textColor;
-  for (UILabel *label in self.subviews) {
-    if ([label isKindOfClass:UILabel.class]) {
-      label.textColor = textColor;
-    }
+- (void)setTextColor:(UIColor *)color {
+  _textColor = color;
+  NSMutableArray *items = self.leftItems.mutableCopy;
+  if (!self.middleTextColor) {
+    [items addObjectsFromArray:self.middleItems];
   }
-  for (UILabel *label in self.allItems) {
-    if ([label isKindOfClass:UILabel.class]) {
-      label.textColor = textColor;
+  if (!self.rightTextColor) {
+    [items addObjectsFromArray:self.rightItems];
+  }
+  for (UILabel *label in items) {
+    if ([label isKindOfClass:UILabel.class] && label.tag == -1) {
+      label.textColor = color;
     }
   }
 }
 
-- (void)setTextShadowColor:(UIColor *)textShadowColor {
-  _textShadowColor = textShadowColor;
-  for (UILabel *label in self.subviews) {
-    if ([label isKindOfClass:UILabel.class]) {
-      label.shadowColor = textShadowColor;
-    }
-  }
-  for (UILabel *label in self.allItems) {
-    if ([label isKindOfClass:UILabel.class]) {
-      label.shadowColor = textShadowColor;
+- (void)setMiddleTextColor:(UIColor *)color {
+  _middleTextColor = color;
+  for (UILabel *label in self.middleItems) {
+    if ([label isKindOfClass:UILabel.class] && label.tag == -1) {
+      label.textColor = color;
     }
   }
 }
+
+- (void)setRightTextColor:(UIColor *)color {
+  _rightTextColor = color;
+  for (UILabel *label in self.rightItems) {
+    if ([label isKindOfClass:UILabel.class] && label.tag == -1) {
+      label.textColor = color;
+    }
+  }
+}
+
+- (void)setTextShadowColor:(UIColor *)color {
+  _textShadowColor = color;
+  NSMutableArray *items = self.leftItems.mutableCopy;
+  if (!self.middleTextShadowColor) {
+    [items addObjectsFromArray:self.middleItems];
+  }
+  if (!self.rightTextShadowColor) {
+    [items addObjectsFromArray:self.rightItems];
+  }
+  for (UILabel *label in items) {
+    if ([label isKindOfClass:UILabel.class] && label.tag == -1) {
+      label.shadowColor = color;
+    }
+  }
+}
+
+- (void)setMiddleTextShadowColor:(UIColor *)color {
+  _middleTextShadowColor = color;
+  for (UILabel *label in self.middleItems) {
+    if ([label isKindOfClass:UILabel.class] && label.tag == -1) {
+      label.shadowColor = color;
+    }
+  }
+}
+
+- (void)setRightTextShadowColor:(UIColor *)color {
+  _rightTextShadowColor = color;
+  for (UILabel *label in self.rightItems) {
+    if ([label isKindOfClass:UILabel.class] && label.tag == -1) {
+      label.shadowColor = color;
+    }
+  }
+}
+
+- (void)setLeftTextShadowOffset:(CGSize)offset {
+  _leftTextShadowOffset = offset;
+  for (UILabel *label in self.leftItems) {
+    if ([label isKindOfClass:UILabel.class] && label.tag == -1) {
+      label.shadowOffset = offset;
+    }
+  }
+}
+
+- (void)setMiddleTextShadowOffset:(CGSize)offset {
+  _middleTextShadowOffset = offset;
+  for (UILabel *label in self.middleItems) {
+    if ([label isKindOfClass:UILabel.class] && label.tag == -1) {
+      label.shadowOffset = offset;
+    }
+  }
+}
+
+- (void)setRightTextShadowOffset:(CGSize)offset {
+  _rightTextShadowOffset = offset;
+  for (UILabel *label in self.rightItems) {
+    if ([label isKindOfClass:UILabel.class] && label.tag == -1) {
+      label.shadowOffset = offset;
+    }
+  }
+}
+
+#pragma mark - Content setters
 
 - (void)setLeftItems:(id)items {
   if (!items) {
@@ -621,7 +793,7 @@
 
 - (void)setMultilineLeft:(NSString *)text {
   if ([text rangeOfString:@"\n"].location == NSNotFound) {
-    self.leftItems = (id)[text stringByAppendingString:@"\n"];
+    self.leftItems = (id)[@"\n" stringByAppendingString:text];
   } else {
     self.leftItems = (id)text;
   }
@@ -629,7 +801,7 @@
 
 - (void)setMultilineMiddle:(NSString *)text {
   if ([text rangeOfString:@"\n"].location == NSNotFound) {
-    self.middleItems = (id)[text stringByAppendingString:@"\n"];
+    self.middleItems = (id)[@"\n" stringByAppendingString:text];
   } else {
     self.middleItems = (id)text;
   }
@@ -637,7 +809,7 @@
 
 - (void)setMultilineRight:(NSString *)text {
   if ([text rangeOfString:@"\n"].location == NSNotFound) {
-    self.rightItems = (id)[text stringByAppendingString:@"\n"];
+    self.rightItems = (id)[@"\n" stringByAppendingString:text];
   } else {
     self.rightItems = (id)text;
   }

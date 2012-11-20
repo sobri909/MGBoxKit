@@ -10,6 +10,11 @@
 		3307137FAF1435B4ECA15024 /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 330715EF12EC184937E5FA7E /* add@2x.png */; };
 		33071941672C2D8830257E32 /* PhotoBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3307132EC7E612F5B422461B /* PhotoBox.m */; };
 		330719F40060E9DDC87FB9C7 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 33071767DF74FC852F68B7FE /* add.png */; };
+		C92E023A164E0B4500275DEC /* MGLineStyled.m in Sources */ = {isa = PBXBuildFile; fileRef = C92E0238164E0B4500275DEC /* MGLineStyled.m */; };
+		C92E023E164E0B7200275DEC /* MGMushParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C92E023C164E0B7200275DEC /* MGMushParser.m */; };
+		C92E0240164E0BDC00275DEC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92E023F164E0BDC00275DEC /* CoreText.framework */; };
+		C9599D32164DFFD700318F30 /* NSAttributedString+MGTrim.m in Sources */ = {isa = PBXBuildFile; fileRef = C9599D2F164DFFD700318F30 /* NSAttributedString+MGTrim.m */; };
+		C98CB552165B0337009579EF /* UIColor+MGExpanded.m in Sources */ = {isa = PBXBuildFile; fileRef = C98CB551165B0337009579EF /* UIColor+MGExpanded.m */; };
 		C992B2521637F6130015F5B0 /* UIControl+MGEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = C992B2501637F6130015F5B0 /* UIControl+MGEvents.m */; };
 		C992B2561637F6320015F5B0 /* UIResponder+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C992B2541637F6320015F5B0 /* UIResponder+FirstResponder.m */; };
 		C9968EBB1610CDEF00D113FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9968EBA1610CDEF00D113FB /* UIKit.framework */; };
@@ -44,6 +49,15 @@
 		330714AD1C35930E7498DCE3 /* PhotoBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoBox.h; sourceTree = "<group>"; };
 		330715EF12EC184937E5FA7E /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add@2x.png"; sourceTree = "<group>"; };
 		33071767DF74FC852F68B7FE /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
+		C92E0238164E0B4500275DEC /* MGLineStyled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLineStyled.m; sourceTree = "<group>"; };
+		C92E0239164E0B4500275DEC /* MGLineStyled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLineStyled.h; sourceTree = "<group>"; };
+		C92E023C164E0B7200275DEC /* MGMushParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMushParser.m; sourceTree = "<group>"; };
+		C92E023D164E0B7200275DEC /* MGMushParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMushParser.h; sourceTree = "<group>"; };
+		C92E023F164E0BDC00275DEC /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		C9599D2F164DFFD700318F30 /* NSAttributedString+MGTrim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MGTrim.m"; sourceTree = "<group>"; };
+		C9599D30164DFFD700318F30 /* NSAttributedString+MGTrim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MGTrim.h"; sourceTree = "<group>"; };
+		C98CB550165B0337009579EF /* UIColor+MGExpanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MGExpanded.h"; sourceTree = "<group>"; };
+		C98CB551165B0337009579EF /* UIColor+MGExpanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MGExpanded.m"; sourceTree = "<group>"; };
 		C992B2501637F6130015F5B0 /* UIControl+MGEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+MGEvents.m"; sourceTree = "<group>"; };
 		C992B2511637F6130015F5B0 /* UIControl+MGEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+MGEvents.h"; sourceTree = "<group>"; };
 		C992B2541637F6320015F5B0 /* UIResponder+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponder.m"; sourceTree = "<group>"; };
@@ -97,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C92E0240164E0BDC00275DEC /* CoreText.framework in Frameworks */,
 				C9968F6D1610EDEF00D113FB /* QuartzCore.framework in Frameworks */,
 				C9968EBB1610CDEF00D113FB /* UIKit.framework in Frameworks */,
 				C9968EBD1610CDEF00D113FB /* Foundation.framework in Frameworks */,
@@ -139,6 +154,7 @@
 		C9968EB91610CDEF00D113FB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C92E023F164E0BDC00275DEC /* CoreText.framework */,
 				C9968F6C1610EDEF00D113FB /* QuartzCore.framework */,
 				C9968EBA1610CDEF00D113FB /* UIKit.framework */,
 				C9968EBC1610CDEF00D113FB /* Foundation.framework */,
@@ -192,6 +208,10 @@
 				C9968F041610D3A600D113FB /* MGLayoutManager.m */,
 				C9968F051610D3A600D113FB /* MGLine.h */,
 				C9968F061610D3A600D113FB /* MGLine.m */,
+				C92E0239164E0B4500275DEC /* MGLineStyled.h */,
+				C92E0238164E0B4500275DEC /* MGLineStyled.m */,
+				C92E023D164E0B7200275DEC /* MGMushParser.h */,
+				C92E023C164E0B7200275DEC /* MGMushParser.m */,
 				C9968F071610D3A600D113FB /* MGScrollView.h */,
 				C9968F081610D3A600D113FB /* MGScrollView.m */,
 				C9968F091610D3A600D113FB /* MGTableBox.h */,
@@ -206,12 +226,16 @@
 		C9968F361610D84300D113FB /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				C992B2541637F6320015F5B0 /* UIResponder+FirstResponder.m */,
-				C992B2551637F6320015F5B0 /* UIResponder+FirstResponder.h */,
-				C992B2501637F6130015F5B0 /* UIControl+MGEvents.m */,
-				C992B2511637F6130015F5B0 /* UIControl+MGEvents.h */,
+				C9599D30164DFFD700318F30 /* NSAttributedString+MGTrim.h */,
+				C9599D2F164DFFD700318F30 /* NSAttributedString+MGTrim.m */,
 				C9968F371610D84300D113FB /* NSObject+MGEvents.h */,
 				C9968F381610D84300D113FB /* NSObject+MGEvents.m */,
+				C98CB550165B0337009579EF /* UIColor+MGExpanded.h */,
+				C98CB551165B0337009579EF /* UIColor+MGExpanded.m */,
+				C992B2511637F6130015F5B0 /* UIControl+MGEvents.h */,
+				C992B2501637F6130015F5B0 /* UIControl+MGEvents.m */,
+				C992B2551637F6320015F5B0 /* UIResponder+FirstResponder.h */,
+				C992B2541637F6320015F5B0 /* UIResponder+FirstResponder.m */,
 				C9968F391610D84300D113FB /* UIView+MGEasyFrame.h */,
 				C9968F3A1610D84300D113FB /* UIView+MGEasyFrame.m */,
 			);
@@ -325,6 +349,10 @@
 				33071941672C2D8830257E32 /* PhotoBox.m in Sources */,
 				C992B2521637F6130015F5B0 /* UIControl+MGEvents.m in Sources */,
 				C992B2561637F6320015F5B0 /* UIResponder+FirstResponder.m in Sources */,
+				C9599D32164DFFD700318F30 /* NSAttributedString+MGTrim.m in Sources */,
+				C92E023A164E0B4500275DEC /* MGLineStyled.m in Sources */,
+				C92E023E164E0B7200275DEC /* MGMushParser.m in Sources */,
+				C98CB552165B0337009579EF /* UIColor+MGExpanded.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

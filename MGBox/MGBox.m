@@ -6,6 +6,7 @@
 
 #import "MGBox.h"
 #import "MGLayoutManager.h"
+#import "UIColor+MGExpanded.h"
 
 @implementation MGBox {
   BOOL fixedPositionEstablished;
@@ -51,6 +52,7 @@
 - (void)setup {
 
   // defaults
+  self.borderStyle = MGBorderNone;
   self.boxLayoutMode = MGBoxLayoutAutomatic;
   self.contentLayoutMode = MGLayoutTableStyle;
   self.sizingMode = MGResizingNone;
@@ -159,6 +161,16 @@
 
 #pragma mark - Setters
 
+- (void)setRasterize:(BOOL)should {
+  _rasterize = should;
+  if (should) {
+    self.layer.shouldRasterize = YES;
+    self.layer.rasterizationScale = UIScreen.mainScreen.scale;
+  } else {
+    self.layer.shouldRasterize = NO;
+  }
+}
+
 - (void)setMargin:(UIEdgeInsets)_margin {
   self.topMargin = _margin.top;
   self.rightMargin = _margin.right;
@@ -241,6 +253,93 @@
   }
 }
 
+#pragma mark Border and background setters
+
+- (void)setBackgroundColor:(UIColor *)color {
+  super.backgroundColor = color;
+  if (self.borderStyle) {
+    self.borderStyle = self.borderStyle;
+  }
+}
+
+- (void)setBorderStyle:(MGBorderStyle)style {
+  _borderStyle = style;
+  if (style == MGBorderNone) {
+    self.borderColors = UIColor.clearColor;
+    return;
+  }
+  self.topBorderColor = (style & MGBorderEtchedTop) == MGBorderEtchedTop
+      ? [self.backgroundColor colorByAdding:0.16 alpha:-0.5]
+      : UIColor.clearColor;
+  self.bottomBorderColor = (style & MGBorderEtchedBottom) == MGBorderEtchedBottom
+      ? [self.backgroundColor colorByAdding:-0.16 alpha:-0.5]
+      : UIColor.clearColor;
+  self.leftBorderColor = (style & MGBorderEtchedLeft) == MGBorderEtchedLeft
+      ? [self.backgroundColor colorByAdding:0.16 alpha:-0.5]
+      : UIColor.clearColor;
+  self.rightBorderColor = (style & MGBorderEtchedRight) == MGBorderEtchedRight
+      ? [self.backgroundColor colorByAdding:-0.16 alpha:-0.5]
+      : UIColor.clearColor;
+}
+
+- (void)setBorderColors:(id)colors {
+  if ([colors isKindOfClass:UIColor.class]) {
+    self.topBorderColor = colors;
+    self.bottomBorderColor = colors;
+    self.leftBorderColor = colors;
+    self.rightBorderColor = colors;
+  } else if ([colors isKindOfClass:NSArray.class]) {
+    self.topBorderColor = colors[0];
+    self.leftBorderColor = colors[1];
+    self.bottomBorderColor = colors[2];
+    self.rightBorderColor = colors[3];
+  }
+}
+
+- (void)setTopBorderColor:(UIColor *)color {
+  _topBorderColor = color;
+  if (color.alpha) {
+    self.topBorder.backgroundColor = color;
+    [self insertSubview:self.topBorder atIndex:0];
+  } else {
+    [self.topBorder removeFromSuperview];
+    self.topBorder = nil;
+  }
+}
+
+- (void)setBottomBorderColor:(UIColor *)color {
+  _bottomBorderColor = color;
+  if (color.alpha) {
+    self.bottomBorder.backgroundColor = color;
+    [self insertSubview:self.bottomBorder atIndex:0];
+  } else {
+    [self.bottomBorder removeFromSuperview];
+    self.bottomBorder = nil;
+  }
+}
+
+- (void)setLeftBorderColor:(UIColor *)color {
+  _leftBorderColor = color;
+  if (color.alpha) {
+    self.leftBorder.backgroundColor = color;
+    [self insertSubview:self.leftBorder atIndex:0];
+  } else {
+    [self.leftBorder removeFromSuperview];
+    self.leftBorder = nil;
+  }
+}
+
+- (void)setRightBorderColor:(UIColor *)color {
+  _rightBorderColor = color;
+  if (color.alpha) {
+    self.rightBorder.backgroundColor = color;
+    [self insertSubview:self.rightBorder atIndex:0];
+  } else {
+    [self.rightBorder removeFromSuperview];
+    self.rightBorder = nil;
+  }
+}
+
 #pragma mark - Getters
 
 - (NSMutableOrderedSet *)boxes {
@@ -273,6 +372,64 @@
     asyncQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
   }
   return asyncQueue;
+}
+
+#pragma mark - Border getters
+
+- (UIView *)topBorder {
+  if (_topBorder) {
+    return _topBorder;
+  }
+
+  CGRect frame = CGRectMake(0, 0, self.width, 1);
+  _topBorder = [[UIView alloc] initWithFrame:frame];
+  _topBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth
+      | UIViewAutoresizingFlexibleBottomMargin;
+  _topBorder.tag = -2;
+
+  return _topBorder;
+}
+
+- (UIView *)bottomBorder {
+  if (_bottomBorder) {
+    return _bottomBorder;
+  }
+
+  CGRect frame = CGRectMake(0, self.height - 1, self.width, 1);
+  _bottomBorder = [[UIView alloc] initWithFrame:frame];
+  _bottomBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth
+      | UIViewAutoresizingFlexibleTopMargin;
+  _bottomBorder.tag = -2;
+
+  return _bottomBorder;
+}
+
+- (UIView *)leftBorder {
+  if (_leftBorder) {
+    return _leftBorder;
+  }
+
+  CGRect frame = CGRectMake(0, 0, 1, self.height);
+  _leftBorder = [[UIView alloc] initWithFrame:frame];
+  _leftBorder.autoresizingMask = UIViewAutoresizingFlexibleHeight
+      | UIViewAutoresizingFlexibleRightMargin;
+  _leftBorder.tag = -2;
+
+  return _leftBorder;
+}
+
+- (UIView *)rightBorder {
+  if (_rightBorder) {
+    return _rightBorder;
+  }
+
+  CGRect frame = CGRectMake(self.width - 1, 0, 1, self.height);
+  _rightBorder = [[UIView alloc] initWithFrame:frame];
+  _rightBorder.autoresizingMask = UIViewAutoresizingFlexibleHeight
+      | UIViewAutoresizingFlexibleLeftMargin;
+  _rightBorder.tag = -2;
+
+  return _rightBorder;
 }
 
 #pragma mark - Gesture recognisers

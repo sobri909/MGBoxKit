@@ -6,13 +6,13 @@
 //  Copyright (c) 2012 Big Paua. All rights reserved.
 //
 
-@class MGScrollView, MGBox;
+@class MGScrollView, PhotoBox;
 
 @interface DemoViewController : UIViewController
 
 @property (nonatomic, weak) IBOutlet MGScrollView *scroller;
 
-- (MGBox *)photoAddBox;
+- (PhotoBox *)photoAddBox;
 - (BOOL)allPhotosLoaded;
 
 @end
