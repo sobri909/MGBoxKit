@@ -1,6 +1,6 @@
 ## 2.0.0
 
-##### Upgrading
+#### Upgrading
 
 - `MGBox` now requires the `CoreText` framework. Add this to your project.
 - Also add these new files to your project:
@@ -12,32 +12,28 @@
   `MGTableBoxStyled`, replace `MGLine` with `MGLineStyled`, or set your 
   `MGLine` instances to have a `borderStyle` of `MGBorderEtchedTop | MGBorderEdgedBottom`.
 
-##### Enhancements
+#### Enhancements
 
-- Mush Lightweight Markup
+- **Mush Lightweight Markup**
   - Markup similar to Markdown/Textile, providing bold, italic, underline, and 
-    monospace.
-  
-- MGLine Now Accepts NSAttributedStrings
-
-- MGBox Borders
+    monospace.  
+- **MGLine Now Accepts NSAttributedStrings**
+- **MGBox Borders**
   - Set individual border colours with `topBorderColor`, `rightBorderColor`, 
     `bottomBorderColor`, `leftBorderColor`.
   - Set all border colours in one go with `borderColors`.
   - Optionally modify borders directly with `topBorder`, `rightBorder`, 
     `bottomBorder`, `leftBorder`.
-
-- MGBox Etched Border Style
+- **MGBox Etched Border Style**
   - `borderStyle` property replaces the deprecated `underlineType`, and is 
     available in all `MGBox` subclasses. Allows an etched border style 
-    optionally for top/right/bottom/left.
-       
-- New MGLine Text Style Properties
+    optionally for top/right/bottom/left.      
+- **New MGLine Text Style Properties**
   - Properties for left/middle/right text colours, shadow colours, shadow 
     offsets, alignments.
 
 See the documentation for usage examples of the new APIs.
 
-##### Deprecated
+#### Deprecated
 
 - `-[MGLine underlineType]`, replaced by `-[MGBox borderStyle]`
