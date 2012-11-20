@@ -10,9 +10,13 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 
 - Table layouts (similar to `UITableView`, but less fuss)
 - Grid layouts (similar to `UICollectionView`, but less fuss)
-- Table rows automatically layout `NSStrings`, `UIImages`, and multiline text  
-- Animated adding/removing/reordering rows, items, sections, etc
-- Margins, Padding, zIndex, Fixed Positioning, and more
+- Table rows automatically layout `NSStrings`, `UIImages`, 
+  `NSAttributedStrings`, and multiline text
+- Table rows accept `Mush` lightweight markup for bold, italics, underline, and 
+  monospace
+- Animated adding/removing/reordering rows, boxes, sections, etc
+- CSS-like `margin`, `padding`, `zIndex`, `fixedPosition`, and more
+- Separate top/right/bottom/left borders, and optional etched border style
 - Optional asynchronous blocks based layout
 - Automatically keeps input fields above the keyboard  
 - Optional scroll view box edge snapping
@@ -72,17 +76,25 @@ MGTableBoxStyled *section = MGTableBoxStyled.box;
 
 ```objc
 // a default row size
-CGSize rowSize = (CGSize){304, 44};
+CGSize rowSize = (CGSize){304, 40};
 
 // a header row
-MGLine *header = [MGLine lineWithLeft:@"My First Table" right:nil size:rowSize];
+MGLineStyled *header = [MGLineStyled lineWithLeft:@"My First Table" right:nil size:rowSize];
 header.leftPadding = header.rightPadding = 16;
 [section.topLines addObject:header];
 
 // a string on the left and a horse on the right
-MGLine *row = [MGLine lineWithLeft:@"Left text" right:[UIImage imageNamed:@"horse"] size:rowSize];
-row.leftPadding = row.rightPadding = 16;
-[section.topLines addObject:row];
+MGLineStyled *row1 = [MGLineStyled lineWithLeft:@"Left text" 
+  right:[UIImage imageNamed:@"horse"] size:rowSize];
+[section.topLines addObject:row1];
+
+// a string with Mush markup
+MGLineStyled *row2 = MGLineStyled.line;
+row2.multilineLeft = @"This row has **bold** text, //italics// text, __underlined__ text, "
+  "and some `monospaced` text. The text will span more than one line, and the row will "
+  "automatically adjust its height to fit.|mush";
+row2.minHeight = 40;
+[section.topLines addObject:row2];
 ```
 
 #### Animate and Scroll the Section Into View
@@ -204,6 +216,38 @@ Set a box's `fixedPosition` property to a desired `CGPoint` to force it to stay 
 
 Assign another view to a box's `attachedTo` property to force the box to position at the same origin. Optionally adjust the offset by fiddling with the box's top and left margins.
 
+## MGBox Borders
+
+`MGBox` provides setters for individual top/right/bottom/left border colours, as well as a built in etched border style.
+
+Set border colours individually with `topBorderColor`, etc. Set all border colours in one go with `borderColors`, like thus:
+
+```objc
+MGBox *box = MGBox.box;
+
+// all borders the same colour
+box.borderColors = UIColor.redColor;
+
+// individual colours (order is top, left, bottom, right)
+box.borderColors = @[
+  UIColor.redColor, UIColor.greenColor, 
+  UIColor.blueColor, UIColor.blackColor
+];
+```
+
+The `borderStyle` property provides etched borders. Like thus:
+
+```objc
+// just top and bottom etches (as you'd see in a table row)
+box.borderStyle = MGBorderEtchedTop | MGBorderEtchedBottom;
+
+// borders on all sides except left
+box.borderStyle = MGBorderEtchedAll & ~MGBorderEtchedLeft;
+
+// no borders
+box.borderStyle = MGBorderNone;
+```
+
 ## Blocks Based Observers, Custom Events, Control Events, and Gestures
 
 ### Tap, Swipe, and Hold
@@ -316,13 +360,38 @@ Any string containing a newline char will be treated as multiline, so as a short
 MGLine *line = [MGLine lineWithLeft:@"a long string\n" right:nil];
 ```
 
+### MGLine Mush Text Markup and Attributed Strings
+
+`MGLine` can automatically parse Mush markup into bold, italics, underlined, and monospaced attributed strings. It will also accept any given `NSAttributedString`. Append "|mush" to any string to pass to `MGLine` to indicate that you want it parsed.
+
+```objc
+MGLineStyled *line1 = MGLineStyled.line;
+line1.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
+line1.leftItems = (id)@"**Some bold on the left**|mush";
+line1.rightItems = (id)@"//Some italics on the right//|mush";
+
+MGLineStyled *line2 = MGLineStyled.line;
+line2.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
+line2.multilineLeft = @"Pretend this is a //very long string//, and pretend it "
+  "has some reason to include `some monospaced text`.|mush";
+line2.minHeight = 40;
+```
+
+Note that iOS 6 is required to use `NSAttributedString` in a `UILabel`, so `MGLine` will fall back to presenting plain old strings on iOS 5 devices (with the markup stripped out).
+
 ### MGLine Side Precedence
 
 The `sidePrecedence` property decides whether content on the left, right, or middle takes precedence when space runs out. `UILabels` will be shortened to fit. `UIImages` and `UIViews` will be removed from the centre outwards if there's not enough room to fit them in.
 
-### MGLine Fonts and Text Alignment
+### MGLine Fonts, Text Colours, Text Shadows, and Text Alignment
 
-The `font` and `rightFont` properties define what fonts are used to wrap `NSStrings`. The `textColor` property rotates the canvas a random number of degrees. I'm not sure what `textShadowColor` does.
+The `font`, `middleFont`, and `rightFont` properties define what fonts are used to wrap `NSStrings`. If no right or middle font is set, the main `font` value is used.
+
+The `textColor`, `middleTextColor`, and `rightTextColor` properties are fairly self explanatory. Again, if a right or middle colour isn't set, the main `textColor` value is used.
+
+The `textShadowColor`, `middleTextShadowColor`, and `rightTextShadowColor` properties follow the trend.
+
+The `leftTextShadowOffset`, `middleTextShadowOffset`, `rightTextShadowOffset` properties define text shadow offsets. They all default to {0, 1}.
 
 The properties `leftItemsTextAlignment`, `middleItemsTextAlignment`, `rightItemsTextAlignment` are passed on to the labels created for your strings.
 
