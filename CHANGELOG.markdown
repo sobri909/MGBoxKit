@@ -14,22 +14,27 @@
 
 ###### Enhancements
 
-- **Mush Lightweight Markup**
-  Markup similar to Markdown/Textile, providing bold, italic, underline, and monospace.
+- Mush Lightweight Markup
+  - Markup similar to Markdown/Textile, providing bold, italic, underline, and 
+    monospace.
   
-- **MGLine Now Accepts NSAttributedStrings**
+- MGLine Now Accepts NSAttributedStrings
 
-- **MGBox Borders**
+- MGBox Borders
   - Set individual border colours with `topBorderColor`, `rightBorderColor`, 
-    `bottomBorderColor`, `leftBorderColor`. Set all border colours in one go with `borderColors`.
+    `bottomBorderColor`, `leftBorderColor`.
+  - Set all border colours in one go with `borderColors`.
   - Optionally modify borders directly with `topBorder`, `rightBorder`, 
     `bottomBorder`, `leftBorder`.
 
-- **MGBox Etched Border Style**
-  `borderStyle` property replaces the deprecated `underlineType`, and is available in all `MGBox` subclasses. Allows an etched border style optionally for top/right/bottom/left.
+- MGBox Etched Border Style
+  - `borderStyle` property replaces the deprecated `underlineType`, and is 
+    available in all `MGBox` subclasses. Allows an etched border style 
+    optionally for top/right/bottom/left.
        
-- **New MGLine Text Style Properties
-  Properties for left/middle/right text colours, shadow colours, shadow offsets, alignments.
+- New MGLine Text Style Properties
+  - Properties for left/middle/right text colours, shadow colours, shadow 
+    offsets, alignments.
 
 See the documentation for usage examples of the new APIs.
 
