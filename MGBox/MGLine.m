@@ -236,7 +236,7 @@
     }
 
     x += self.itemPadding;
-    CGFloat y = (self.height - view.height) / 2;
+    CGFloat y = self.paddedVerticalCenter - view.height / 2;
 
     // MGLayoutBoxes have margins to deal with
     if ([view conformsToProtocol:@protocol(MGLayoutBox)]) {
@@ -286,7 +286,7 @@
     }
 
     x -= self.itemPadding;
-    CGFloat y = (self.height - view.height) / 2;
+    CGFloat y = self.paddedVerticalCenter - view.height / 2;
 
     // MGLayoutBoxes have margins to deal with
     if ([view conformsToProtocol:@protocol(MGLayoutBox)]) {
@@ -344,7 +344,7 @@
     }
 
     x += self.itemPadding;
-    CGFloat y = (self.height - view.height) / 2;
+    CGFloat y = self.paddedVerticalCenter - view.height / 2;
 
     // MGLayoutBoxes have margins to deal with
     if ([view conformsToProtocol:@protocol(MGLayoutBox)]) {
@@ -857,6 +857,11 @@
     _rightItems = @[].mutableCopy;
   }
   return _rightItems;
+}
+
+- (CGFloat)paddedVerticalCenter {
+  CGFloat innerHeight = self.height - self.topPadding - self.bottomPadding;
+  return innerHeight / 2 + self.topPadding;
 }
 
 @end
