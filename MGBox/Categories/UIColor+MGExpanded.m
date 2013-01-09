@@ -506,7 +506,7 @@ static NSMutableDictionary *colorNameCache = nil;
 #pragma mark UIColor_Expanded initialization
 
 + (void)load {
-  colorNameCache = @{ }.mutableCopy;
+  colorNameCache = [[NSMutableDictionary alloc] init];
 }
 
 @end
