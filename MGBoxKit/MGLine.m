@@ -36,11 +36,13 @@
   self.rightTextShadowOffset = (CGSize){0, 1};
   self.opaqueLabels = NO;
 
-  // default text and view alignments
+  // default horizontal and vertical alignments
   self.leftItemsAlignment = NSTextAlignmentLeft;
   self.middleItemsAlignment = NSTextAlignmentCenter;
   self.rightItemsAlignment = NSTextAlignmentRight;
   self.verticalAlignment = MGVerticalAlignmentCenter;
+
+  // default item layout precedence
   self.sidePrecedence = MGSidePrecedenceLeft;
 
   // default column widths (0 = flexible)
@@ -167,14 +169,49 @@
       break;
 
     case MGSidePrecedenceRight:
-      [self layoutRightWithin:maxWidth];
-      [self layoutLeftWithin:maxWidth - rightUsed];
-      [self layoutMiddleWithin:maxWidth - leftUsed - rightUsed];
+
+      // right first
+      limit = self.rightWidth ? self.rightWidth : maxWidth;
+      used = [self layoutItems:self.rightItems from:self.leftPadding within:limit
+          align:self.rightItemsAlignment];
+      rightUsed = self.rightWidth ? self.rightWidth : used;
+
+      // left second
+      limit = self.leftWidth ? self.leftWidth : maxWidth - rightUsed;
+      used = [self layoutItems:self.leftItems from:self.leftPadding within:limit
+          align:self.leftItemsAlignment];
+      leftUsed = self.leftWidth ? self.leftWidth : used;
+
+      // middle last
+      from = self.leftPadding + leftUsed;
+      limit = self.middleWidth ? self.middleWidth : maxWidth - leftUsed
+          - rightUsed;
+      used = [self layoutItems:self.middleItems from:from within:limit
+          align:self.middleItemsAlignment];
+      middleUsed = self.middleWidth ? self.middleWidth : used;
       break;
+
     case MGSidePrecedenceMiddle:
-      [self layoutMiddleWithin:maxWidth];
-      [self layoutLeftWithin:(maxWidth - middleUsed) / 2];
-      [self layoutRightWithin:(maxWidth - middleUsed) / 2];
+
+      // middle first
+      limit = self.middleWidth ? self.middleWidth : maxWidth;
+      used = [self layoutItems:self.middleItems from:self.leftPadding within:limit
+          align:self.middleItemsAlignment];
+      middleUsed = self.middleWidth ? self.middleWidth : used;
+
+      // left second
+      limit = self.leftWidth ? self.leftWidth : maxWidth - middleUsed;
+      used = [self layoutItems:self.leftItems from:self.leftPadding within:limit
+          align:self.leftItemsAlignment];
+      leftUsed = self.leftWidth ? self.leftWidth : used;
+
+      // right last
+      from = self.leftPadding + leftUsed + middleUsed;
+      limit = self.rightWidth ? self.rightWidth : maxWidth - leftUsed
+          - middleUsed;
+      used = [self layoutItems:self.rightItems from:from within:limit
+          align:self.rightItemsAlignment];
+      rightUsed = self.rightWidth ? self.rightWidth : used;
       break;
   }
 
