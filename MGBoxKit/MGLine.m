@@ -134,7 +134,9 @@
   [self removeOldContents];
 
   // max usable space
-  CGFloat maxWidth = self.width - self.leftPadding - self.rightPadding;
+  CGFloat maxWidth = self.widenAsNeeded
+          ? FLT_MAX
+          :  self.width - self.leftPadding - self.rightPadding;
 
   // assign space for fixed width columns
   leftUsed = self.leftWidth ? self.leftWidth : 0;
@@ -861,7 +863,7 @@
 
   // final resizing will be done at layout time
   if ([label respondsToSelector:@selector(attributedText)]) {
-    CGSize maxSize = (CGSize){self.width, 0};
+    CGSize maxSize = (CGSize){FLT_MAX, 0};
     CGSize size = [label.attributedText boundingRectWithSize:maxSize
         options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
     size.width = ceilf(size.width);
