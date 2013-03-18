@@ -62,7 +62,7 @@ Have a poke around the Demo App to see some of the features in use.
 #### Create a Scroll View:
 
 ```objc
-MGScrollView *scroller = [MGScrollView scrollerWithSize:self.bounds.size];
+MGScrollView *scroller = [MGScrollView scrollerWithSize:self.view.bounds.size];
 [self.view addSubview:scroller];
 ```
 
