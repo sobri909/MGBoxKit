@@ -8,7 +8,8 @@
 #import "MGMushParser.h"
 #import "NSAttributedString+MGTrim.h"
 
-#define FALLBACK(potential, fallback) (potential ? potential : fallback)
+// extra width allowance due to 'boundingRectWithSize' inaccuracy
+#define LABEL_WIDTH_EXTRA 5
 
 @interface MGLine ()
 
@@ -706,7 +707,7 @@
           CGSize size = [label.attributedText boundingRectWithSize:maxSize
               options:NSStringDrawingUsesLineFragmentOrigin
                   | NSStringDrawingUsesFontLeading context:nil].size;
-          size.width = ceilf(size.width) + 5;
+          size.width = ceilf(size.width) + LABEL_WIDTH_EXTRA;
           size.height = ceilf(size.height);
 
           // for auto resizing margin sanity, make height odd/even match with self
@@ -715,10 +716,13 @@
           }
           label.size = size;
 
+          used += (label.width - LABEL_WIDTH_EXTRA);
+
           // plain old string
         } else {
           label.size = [label.text sizeWithFont:label.font
               constrainedToSize:(CGSize){limit - used, maxHeight}];
+          used += label.width;
         }
 
         // single line
@@ -726,9 +730,8 @@
         if (used + label.width > limit) { // needs slimming
           label.width = limit - used;
         }
+        used += label.width;
       }
-
-      used += label.width;
 
       // MGLayoutBoxes have margins to deal with
     } else if ([item conformsToProtocol:@protocol(MGLayoutBox)]) {
@@ -805,20 +808,18 @@
       label.textColor = self.textColor;
       break;
     case MGMiddle:
-      label.font = FALLBACK(self.middleFont, self.font);
+      label.font = self.middleFont ? : self.font;
       label.textAlignment = self.middleItemsAlignment;
       label.shadowOffset = self.middleTextShadowOffset;
-      label.shadowColor
-          = FALLBACK(self.middleTextShadowColor, self.textShadowColor);
-      label.textColor = FALLBACK(self.middleTextColor, self.textColor);
+      label.shadowColor = self.middleTextShadowColor ? : self.textShadowColor;
+      label.textColor = self.middleTextColor ? : self.textColor;
       break;
     case MGRight:
-      label.font = FALLBACK(self.rightFont, self.font);
+      label.font = self.rightFont ? : self.font;
       label.textAlignment = self.rightItemsAlignment;
       label.shadowOffset = self.rightTextShadowOffset;
-      label.shadowColor
-          = FALLBACK(self.rightTextShadowColor, self.textShadowColor);
-      label.textColor = FALLBACK(self.rightTextColor, self.textColor);
+      label.shadowColor = self.rightTextShadowColor ? : self.textShadowColor;
+      label.textColor = self.rightTextColor ? : self.textColor;
       break;
   }
 
