@@ -156,12 +156,12 @@
   // find new top boxes
   NSMutableOrderedSet *newTopBoxes = NSMutableOrderedSet.orderedSet;
   for (UIView <MGLayoutBox> *box in container.boxes) {
-    if (box.replacementFor || box.boxLayoutMode != MGBoxLayoutAutomatic) {
+    if (box.boxLayoutMode != MGBoxLayoutAutomatic) {
       continue;
     }
 
     // found the first existing box
-    if ([container.subviews containsObject:box]) {
+    if ([container.subviews containsObject:box] || box.replacementFor) {
       break;
     }
 
