@@ -20,6 +20,7 @@
 @synthesize padding, topPadding, rightPadding, bottomPadding, leftPadding;
 @synthesize attachedTo, replacementFor, sizingMode;
 @synthesize fixedPosition, zIndex, layingOut, slideBoxesInFromEmpty;
+@synthesize dontLayoutChildren;
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];

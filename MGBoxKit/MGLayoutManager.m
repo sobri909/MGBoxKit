@@ -38,8 +38,10 @@
   }
 
   // children layout first
-  for (id <MGLayoutBox> box in container.boxes) {
-    [box layout];
+  if (!container.dontLayoutChildren) {
+    for (id <MGLayoutBox> box in container.boxes) {
+      [box layout];
+    }
   }
 
   // positioning time
@@ -184,8 +186,10 @@
   }
 
   // children layout first
-  for (id <MGLayoutBox> box in container.boxes) {
-    [box layout];
+  if (!container.dontLayoutChildren) {
+    for (id <MGLayoutBox> box in container.boxes) {
+      [box layout];
+    }
   }
 
   // set origin for new top boxes

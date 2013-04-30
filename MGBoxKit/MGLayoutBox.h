@@ -229,6 +229,7 @@ box with another.
 
 /** @name Layout stage */
 
+@property (nonatomic, assign) BOOL dontLayoutChildren;
 @property (nonatomic, assign) BOOL slideBoxesInFromEmpty;
 @property (nonatomic, assign) BOOL layingOut;
 

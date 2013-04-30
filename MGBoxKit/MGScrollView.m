@@ -26,6 +26,7 @@
 @synthesize padding, topPadding, rightPadding, bottomPadding, leftPadding;
 @synthesize attachedTo, replacementFor, sizingMode;
 @synthesize fixedPosition, zIndex, layingOut, slideBoxesInFromEmpty;
+@synthesize dontLayoutChildren;
 
 // MGLayoutBox protocol optionals
 @synthesize tapper, tappable, onTap;
