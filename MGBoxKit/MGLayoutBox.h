@@ -247,6 +247,7 @@ MGScrollView and [MGBox](MGBox) also provide animated layout methods:
 @optional
 
 // resizing
+@property (nonatomic, assign) CGFloat minWidth;
 @property (nonatomic, assign) CGFloat maxWidth;
 
 /** @name Tap gestures */

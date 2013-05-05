@@ -18,7 +18,7 @@
 @synthesize asyncLayout, asyncLayoutOnce, asyncQueue;
 @synthesize margin, topMargin, bottomMargin, leftMargin, rightMargin;
 @synthesize padding, topPadding, rightPadding, bottomPadding, leftPadding;
-@synthesize attachedTo, replacementFor, sizingMode;
+@synthesize attachedTo, replacementFor, sizingMode, minWidth;
 @synthesize fixedPosition, zIndex, layingOut, slideBoxesInFromEmpty;
 @synthesize dontLayoutChildren;
 

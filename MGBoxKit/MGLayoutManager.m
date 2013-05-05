@@ -304,7 +304,7 @@
       ? [(id)container contentSize]
       : container.size;
   if (container.sizingMode == MGResizingShrinkWrap) {
-    newSize.width = container.leftPadding + maxWidth + container.rightPadding;
+    newSize.width = MAX(container.leftPadding + maxWidth + container.rightPadding, container.minWidth);
     newSize.height = y + container.bottomPadding;
   } else {
     newSize.width = MAX(oldSize.width, container.leftPadding + maxWidth
