@@ -64,7 +64,7 @@
 + (UIColor *)semiRandomColor;
 + (UIColor *)colorWithString:(NSString *)stringToConvert;
 + (UIColor *)colorWithRGBHex:(UInt32)hex;
-+ (UIColor *)colorWithHexString:(NSString *)stringToConvert;
++ (UIColor *)colorWithHexString:(NSString *)hexString;
 + (UIColor *)colorWithName:(NSString *)cssColorName;
 
 @end

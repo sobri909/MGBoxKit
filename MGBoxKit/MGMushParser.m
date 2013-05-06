@@ -3,6 +3,7 @@
 //
 
 #import "MGMushParser.h"
+#import "UIColor+MGExpanded.h"
 
 @implementation MGMushParser {
   NSMutableAttributedString *working;
@@ -64,10 +65,17 @@
     @"attributes":@[@{ }, @{ NSFontAttributeName:monospace }, @{ }]
   };
 
+  id colourParser = @{
+      @"regex":@"(\\{)(.+?)(\\|)(.+?)(\\})",
+      @"replace":@[@"", @"", @"", @3, @""],
+      @"attributes":@[@{ }, @{ }, @{ }, @[@"colour", @1], @{ }]
+  };
+
   [self applyParser:boldParser];
   [self applyParser:italicParser];
   [self applyParser:underlineParser];
   [self applyParser:monospaceParser];
+  [self applyParser:colourParser];
 }
 
 - (void)strip {
@@ -93,10 +101,16 @@
     @"replace":@[@"", @1, @""]
   };
 
+  id colourParser = @{
+      @"regex":@"(\\{)(.+?)(\\|)(.+?)(\\})",
+      @"replace":@[@"", @"", @"", @3, @""]
+  };
+
   [self applyParser:boldParser];
   [self applyParser:italicParser];
   [self applyParser:underlineParser];
   [self applyParser:monospaceParser];
+  [self applyParser:colourParser];
 }
 
 - (void)applyParser:(NSDictionary *)parser {
@@ -131,7 +145,17 @@
         // apply attributes
         for (int i = 0; i < match.numberOfRanges - 1; i++) {
           id attributes = parser[@"attributes"][i];
-          if (attributes) {
+
+          // hard coded colour parser
+          if ([attributes isKindOfClass:NSArray.class]) {
+            NSMutableAttributedString *repl = replacements[i];
+            id hex = [substrs[[attributes[1] intValue]] string];
+            attributes = @{
+                NSForegroundColorAttributeName:[UIColor colorWithHexString:hex]
+            };
+            [repl addAttributes:attributes range:(NSRange){0, repl.length}];
+
+          } else if (attributes) {
             NSMutableAttributedString *repl = replacements[i];
             [repl addAttributes:attributes range:(NSRange){0, repl.length}];
           }

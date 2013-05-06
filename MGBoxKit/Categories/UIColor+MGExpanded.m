@@ -467,10 +467,12 @@ static NSMutableDictionary *colorNameCache = nil;
   return [UIColor colorWithRed:r / 255.0 green:g / 255.0 blue:b / 255.0 alpha:1];
 }
 
-// Returns a UIColor+MGExpanded by scanning the string for a hex number and passing that to +[UIColor+MGExpanded colorWithRGBHex:]
+// Returns a UIColor by scanning the string for a hex number and passing that to +[UIColor+MGExpanded colorWithRGBHex:]
 // Skips any leading whitespace and ignores any trailing characters
-+ (UIColor *)colorWithHexString:(NSString *)stringToConvert {
-  NSScanner *scanner = [NSScanner scannerWithString:stringToConvert];
++ (UIColor *)colorWithHexString:(NSString *)hexString {
+  NSString *clean = [hexString stringByReplacingOccurrencesOfString:@"#"
+      withString:@""];
+  NSScanner *scanner = [NSScanner scannerWithString:clean];
   unsigned hexNum;
   if (![scanner scanHexInt:&hexNum]) {
     return nil;

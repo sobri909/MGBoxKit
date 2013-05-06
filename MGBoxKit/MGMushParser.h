@@ -13,6 +13,7 @@ markup into a resulting `NSAttributedString`.
 - _Italics_ are achieved with //double slashes//
 - <u>Underlining</u> is achieved with \_\_double underscores\_\_
 - `Monospacing` is achieved with \`single backticks\`
+- Coloured text is achieved with {#123456|the coloured text}
 */
 
 @interface MGMushParser : NSObject
