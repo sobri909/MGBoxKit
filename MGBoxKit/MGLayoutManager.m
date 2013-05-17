@@ -241,7 +241,7 @@
   [MGLayoutManager stackByZIndexIn:container];
 
   // animate all to final pos and alpha
-  [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+  [UIView animateWithDuration:speed delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction animations:^{
 
     // gone boxes fade out
     for (UIView <MGLayoutBox> *box in gone) {
