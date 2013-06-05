@@ -9,7 +9,6 @@
 #import "NSAttributedString+MGTrim.h"
 
 // extra width allowance due to 'boundingRectWithSize' inaccuracy
-#define LABEL_WIDTH_EXTRA 5
 
 @interface MGLine ()
 
@@ -701,13 +700,26 @@
         CGFloat maxHeight = self.maxHeight ? self.maxHeight - self.topPadding
             - self.bottomPadding : FLT_MAX;
 
+          
         // attributed string?
         if ([label respondsToSelector:@selector(attributedText)]) {
+            
+            // turn mush strings into attributed strings
+            if ([label.text hasSuffix:@"|mush"]) {
+                NSString *text = label.text;
+                
+                text = [text substringToIndex:[text length] - 5];
+                label.attributedText = [MGMushParser attributedStringFromMush:text font:self.font
+                                                        color:self.textColor];
+                
+            }
+
+            
           CGSize maxSize = (CGSize){limit - used, maxHeight};
           CGSize size = [label.attributedText boundingRectWithSize:maxSize
               options:NSStringDrawingUsesLineFragmentOrigin
                   | NSStringDrawingUsesFontLeading context:nil].size;
-          size.width = ceilf(size.width) + LABEL_WIDTH_EXTRA;
+          size.width = ceilf(size.width);
           size.height = ceilf(size.height);
 
           // for auto resizing margin sanity, make height odd/even match with self
@@ -716,7 +728,7 @@
           }
           label.size = size;
 
-          used += (label.width - LABEL_WIDTH_EXTRA);
+          used += (label.width);
 
           // plain old string
         } else {
@@ -866,8 +878,9 @@
   if ([label respondsToSelector:@selector(attributedText)]) {
     CGSize maxSize = (CGSize){FLT_MAX, 0};
     CGSize size = [label.attributedText boundingRectWithSize:maxSize
-        options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
-    size.width = ceilf(size.width) + 5;
+                                                     options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                     context:nil].size;
+    size.width = ceilf(size.width);
     size.height = ceilf(size.height);
 
     // for auto resizing margin sanity, make height odd/even match with self
