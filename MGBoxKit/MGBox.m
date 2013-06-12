@@ -261,8 +261,20 @@
 
 #pragma mark Border and background setters
 
++ (void)optimizeView:(UIView *)view forColor:(UIColor *)color {
+    if (color.alpha == 1.0f ) {
+        view.opaque = YES;
+        view.clearsContextBeforeDrawing = NO;
+    } else {
+        view.opaque = NO;
+        view.clearsContextBeforeDrawing = YES;
+    }
+}
+
 - (void)setBackgroundColor:(UIColor *)color {
   super.backgroundColor = color;
+  [MGBox optimizeView:self forColor:color];
+    
   if (self.borderStyle) {
     self.borderStyle = self.borderStyle;
   }
@@ -306,6 +318,7 @@
   _topBorderColor = color;
   if (color.alpha) {
     self.topBorder.backgroundColor = color;
+    [MGBox optimizeView:self.topBorder forColor:color];
     [self insertSubview:self.topBorder atIndex:0];
   } else {
     [self.topBorder removeFromSuperview];
@@ -317,6 +330,7 @@
   _bottomBorderColor = color;
   if (color.alpha) {
     self.bottomBorder.backgroundColor = color;
+    [MGBox optimizeView:self.bottomBorder forColor:color];
     [self insertSubview:self.bottomBorder atIndex:0];
   } else {
     [self.bottomBorder removeFromSuperview];
@@ -328,6 +342,7 @@
   _leftBorderColor = color;
   if (color.alpha) {
     self.leftBorder.backgroundColor = color;
+    [MGBox optimizeView:self.leftBorder forColor:color];
     [self insertSubview:self.leftBorder atIndex:0];
   } else {
     [self.leftBorder removeFromSuperview];
@@ -339,6 +354,7 @@
   _rightBorderColor = color;
   if (color.alpha) {
     self.rightBorder.backgroundColor = color;
+    [MGBox optimizeView:self.rightBorder forColor:color];
     [self insertSubview:self.rightBorder atIndex:0];
   } else {
     [self.rightBorder removeFromSuperview];
