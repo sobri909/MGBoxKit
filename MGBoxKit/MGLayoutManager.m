@@ -258,11 +258,11 @@
     // set final positions
     [MGLayoutManager positionBoxesIn:container];
 
-  } completion:^(BOOL done) {
-      
     // release the layout lock
     container.layingOut = NO;
-      
+
+  } completion:^(BOOL done) {
+
     // clean up
     [gone makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
