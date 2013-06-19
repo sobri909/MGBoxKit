@@ -36,7 +36,8 @@
   // apply base colour and font
   id base = @{
     NSForegroundColorAttributeName:self.baseColor,
-    NSFontAttributeName:self.baseFont
+    NSFontAttributeName:self.baseFont,
+    NSParagraphStyleAttributeName:NSParagraphStyle.defaultParagraphStyle
   };
   [working addAttributes:base range:(NSRange){0, working.length}];
 
