@@ -205,13 +205,13 @@
   italic = [UIFont fontWithName:(__bridge NSString *)italicName size:size] ?: font;
 
   monospace = [UIFont fontWithName:@"CourierNewPSMT" size:size];
-  
-  // Release CF objects no longer needed
-  CFRelease(ctBase);
-  CFRelease(ctBold);
-  CFRelease(boldName);
-  CFRelease(ctItalic);
-  CFRelease(italicName);
+
+  if (boldName) {
+    CFRelease(boldName);
+  }
+  if (italicName) {
+    CFRelease(italicName);
+  }
 }
 
 #pragma mark - Getters
