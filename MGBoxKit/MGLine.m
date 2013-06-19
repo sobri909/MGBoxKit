@@ -699,22 +699,9 @@
       if (!label.numberOfLines) {
         CGFloat maxHeight = self.maxHeight ? self.maxHeight - self.topPadding
             - self.bottomPadding : FLT_MAX;
-
           
         // attributed string?
         if ([label respondsToSelector:@selector(attributedText)]) {
-            
-            // turn mush strings into attributed strings
-            if ([label.text hasSuffix:@"|mush"]) {
-                NSString *text = label.text;
-                
-                text = [text substringToIndex:[text length] - 5];
-                label.attributedText = [MGMushParser attributedStringFromMush:text font:self.font
-                                                        color:self.textColor];
-                
-            }
-
-            
           CGSize maxSize = (CGSize){limit - used, maxHeight};
           CGSize size = [label.attributedText boundingRectWithSize:maxSize
               options:NSStringDrawingUsesLineFragmentOrigin
