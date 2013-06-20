@@ -603,12 +603,25 @@
     label.text = text;
   }
 
+  // need to reset text alignment due to being overwritten in the attributed string attribs
+  switch (placement) {
+    case MGLeft:
+      label.textAlignment = self.leftItemsAlignment;
+      break;
+    case MGMiddle:
+      label.textAlignment = self.middleItemsAlignment;
+      break;
+    case MGRight:
+      label.textAlignment = self.rightItemsAlignment;
+      break;
+  }
+
   // final resizing will be done at layout time
   if ([label respondsToSelector:@selector(attributedText)]) {
     CGSize maxSize = (CGSize){FLT_MAX, 0};
     CGSize size = [label.attributedText boundingRectWithSize:maxSize
-                                                     options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                                                     context:nil].size;
+        options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+        context:nil].size;
     size.width = ceilf(size.width);
     size.height = ceilf(size.height);
 
