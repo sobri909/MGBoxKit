@@ -454,34 +454,25 @@
 }
 
 + (void)stackByZIndexIn:(UIView *)container {
-  NSSortDescriptor
-      *sort = [NSSortDescriptor sortDescriptorWithKey:@"zIndex" ascending:YES];
-  NSMutableArray *undies = @[].mutableCopy;
-  NSMutableArray *middles = @[].mutableCopy;
-  NSMutableArray *topsies = @[].mutableCopy;
-  for (id <MGLayoutBox> view in container.subviews) {
-    if ([view conformsToProtocol:@protocol(MGLayoutBox)]) {
-      if (view.zIndex < 0) {
-        [undies addObject:view];
-      } else if (view.zIndex > 0) {
-        [topsies addObject:view];
-      } else {
-        [middles addObject:view];
-      }
-    } else {
-      [middles addObject:view];
+  NSArray *sorted =
+      [container.subviews sortedArrayUsingComparator:^NSComparisonResult(id view1,
+          id view2) {
+        int z1 = [view1 respondsToSelector:@selector(zIndex)] ? [view1 zIndex] : 0;
+        int z2 = [view2 respondsToSelector:@selector(zIndex)] ? [view2 zIndex] : 0;
+        if (z1 > z2) {
+          return NSOrderedDescending;
+        }
+        if (z1 < z2) {
+          return NSOrderedAscending;
+        }
+        return NSOrderedSame;
+      }];
+
+  for (UIView *view in sorted) {
+    int sortedIndex = [sorted indexOfObject:view];
+    if (sortedIndex != [container.subviews indexOfObject:view]) {
+      [container insertSubview:view atIndex:sortedIndex];
     }
-  }
-  [undies sortUsingDescriptors:@[sort]];
-  [topsies sortUsingDescriptors:@[sort]];
-  for (id view in undies) {
-    [container bringSubviewToFront:view];
-  }
-  for (id view in middles) {
-    [container bringSubviewToFront:view];
-  }
-  for (id view in topsies) {
-    [container bringSubviewToFront:view];
   }
 }
 
