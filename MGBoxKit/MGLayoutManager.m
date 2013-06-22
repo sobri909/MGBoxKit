@@ -264,7 +264,11 @@
   } completion:^(BOOL done) {
 
     // clean up
-    [gone makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    for (UIView <MGLayoutBox> *goner in gone) {
+      if (goner.superview == container && ![container.boxes containsObject:goner]) {
+        [goner removeFromSuperview];
+      }
+    }
 
     // completion handler
     if (completion) {
