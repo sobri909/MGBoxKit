@@ -320,6 +320,9 @@ tap.
 */
 - (void)longPressed;
 
+@property (nonatomic, copy) Block onTouchesBegan;
+@property (nonatomic, copy) Block onTouchesCancelled;
+
 // for containers using MGBoxProvider
 - (CGRect)bufferedViewport;
 
