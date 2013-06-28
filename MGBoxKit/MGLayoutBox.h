@@ -322,6 +322,7 @@ tap.
 
 @property (nonatomic, copy) Block onTouchesBegan;
 @property (nonatomic, copy) Block onTouchesCancelled;
+@property (nonatomic, copy) Block onTouchesEnded;
 
 // for containers using MGBoxProvider
 - (CGRect)bufferedViewport;

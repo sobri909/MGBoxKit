@@ -27,7 +27,7 @@
 @synthesize tapper, tappable, onTap;
 @synthesize swiper, swipable, onSwipe;
 @synthesize longPresser, longPressable, onLongPress;
-@synthesize onTouchesBegan, onTouchesCancelled;
+@synthesize onTouchesBegan, onTouchesCancelled, onTouchesEnded;
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -174,10 +174,17 @@
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesCancelled:touches withEvent:event];
     if (self.onTouchesCancelled) {
         self.onTouchesCancelled();
     }
+    [super touchesCancelled:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    if (self.onTouchesEnded) {
+        self.onTouchesEnded();
+    }
+    [super touchesEnded:touches withEvent:event];
 }
 
 #pragma mark - Setters
