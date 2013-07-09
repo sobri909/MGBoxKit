@@ -206,6 +206,15 @@
 
   monospace = [UIFont fontWithName:@"CourierNewPSMT" size:size];
 
+  if (ctBase) {
+    CFRelease(ctBase);
+  }
+  if (ctBold) {
+    CFRelease(ctBold);
+  }
+  if (ctItalic) {
+    CFRelease(ctItalic);
+  }
   if (boldName) {
     CFRelease(boldName);
   }
