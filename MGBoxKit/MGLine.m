@@ -448,7 +448,7 @@
           CGSize size = [label.attributedText boundingRectWithSize:maxSize
               options:NSStringDrawingUsesLineFragmentOrigin
                   | NSStringDrawingUsesFontLeading context:nil].size;
-          size.width = ceilf(size.width);
+          size.width = ceilf(size.width) < maxSize.width ? ceilf(size.width) : maxSize.width;
           size.height = ceilf(size.height);
 
           // for auto resizing margin sanity, make height odd/even match with self
@@ -622,7 +622,7 @@
     CGSize size = [label.attributedText boundingRectWithSize:maxSize
         options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
         context:nil].size;
-    size.width = ceilf(size.width);
+    size.width = ceilf(size.width) < maxSize.width ? ceilf(size.width) : maxSize.width;
     size.height = ceilf(size.height);
 
     // for auto resizing margin sanity, make height odd/even match with self
