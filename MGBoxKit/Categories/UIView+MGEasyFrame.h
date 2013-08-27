@@ -42,6 +42,28 @@
 */
 @property (nonatomic, assign) CGFloat y;
 
+/** @name View edge getters */
+
+/**
+ * Returns the left edge's x coordinate of the view.
+ */
+- (CGFloat)left;
+
+/**
+ * Returns the top edge's y coordinate of the view.
+ */
+- (CGFloat)top;
+
+/**
+ * Returns the bottom edge's y coordinate of the view.
+ */
+- (CGFloat)bottom;
+
+/**
+ * Returns the right edge's x coordinate of the view.
+ */
+- (CGFloat)right;
+
 /** @name View corner getters */
 
 /**

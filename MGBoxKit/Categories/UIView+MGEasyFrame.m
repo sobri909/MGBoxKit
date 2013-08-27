@@ -70,6 +70,22 @@
   return self.origin.y;
 }
 
+- (CGFloat)left {
+  return self.origin.x;
+}
+
+- (CGFloat)top {
+  return self.origin.y;
+}
+
+- (CGFloat)bottom {
+  return self.origin.y + self.size.height;
+}
+
+- (CGFloat)right {
+  return self.origin.x + self.size.width;
+}
+
 - (CGPoint)topLeft {
   return CGPointMake(CGRectGetMinX(self.frame), CGRectGetMinY(self.frame));
 }
