@@ -290,7 +290,7 @@
     y += box.topMargin;
     if (!only || [only containsObject:box]) {
       CGPoint newOrigin = CGPointMake(container.leftPadding + box.leftMargin,
-          roundf(y));
+          roundToPixel(y));
       if (!CGPointEqualToPoint(newOrigin, box.origin)) {
         box.origin = newOrigin;
       }
@@ -345,7 +345,7 @@
     // position
     x += box.leftMargin;
     if (!only || [only containsObject:box]) {
-      box.origin = CGPointMake(roundf(x), roundf(y + box.topMargin));
+      box.origin = CGPointMake(roundToPixel(x), roundToPixel(y + box.topMargin));
     }
 
     x += box.width + box.rightMargin;
@@ -478,6 +478,14 @@
       [container insertSubview:view atIndex:sortedIndex];
     }
   }
+}
+
+float roundToPixel(float value) {
+    if (UIScreen.mainScreen.scale == 1.0f) {
+        return roundf(value);
+    }
+    //retina display, round to nearest half point
+    return roundf(value * 2.0) / 2.0;
 }
 
 @end
