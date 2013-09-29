@@ -7,6 +7,7 @@
 
 static char *MGObserversKey = "MGObserversKey";
 static char *MGEventHandlersKey = "MGEventHandlersKey";
+static char *MGDeallocActionKey = "MGDeallocActionKey";
 
 @interface MGObserver : NSObject
 
@@ -43,6 +44,19 @@ static char *MGEventHandlersKey = "MGEventHandlersKey";
 }
 
 @end
+
+
+@interface MGDeallocAction : NSObject
+@property (nonatomic, copy) Block block;
+@end
+
+@implementation MGDeallocAction
+- (void)dealloc {
+  if (_block)
+    _block();
+}
+@end
+
 
 @implementation NSObject (MGEvents)
 
@@ -114,6 +128,17 @@ static char *MGEventHandlersKey = "MGEventHandlersKey";
   MGObserver
       *observer = [MGObserver observerFor:self keypath:keypath block:block];
   [observers addObject:observer];
+    
+  MGDeallocAction *deallocAction = MGDeallocAction.new;
+  __unsafe_unretained typeof(self) unsafeSelf = self;
+  deallocAction.block = ^{
+      //because we are observing ourself and the MGObserver weak reference gets nilled,
+      //we need to force an obervation removal
+      [unsafeSelf removeObserver:observer forKeyPath:observer.keypath];
+      [observers removeObject:observer];
+  };
+  objc_setAssociatedObject(self, MGDeallocActionKey, deallocAction,
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - Getters
