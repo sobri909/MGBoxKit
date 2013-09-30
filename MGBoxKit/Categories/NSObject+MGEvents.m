@@ -11,8 +11,6 @@ static char *MGDeallocActionKey = "MGDeallocActionKey";
 
 @interface MGObserver : NSObject
 
-@property (nonatomic, weak) NSObject *observee;
-@property (nonatomic, copy) NSString *keypath;
 @property (nonatomic, copy) Block block;
 
 + (MGObserver *)observerFor:(NSObject *)object keypath:(NSString *)keypath
@@ -25,8 +23,6 @@ static char *MGDeallocActionKey = "MGDeallocActionKey";
 + (MGObserver *)observerFor:(NSObject *)object keypath:(NSString *)keypath
                       block:(Block)block {
   MGObserver *observer = [[MGObserver alloc] init];
-  observer.observee = object;
-  observer.keypath = keypath;
   observer.block = block;
   [object addObserver:observer forKeyPath:keypath options:0 context:nil];
   return observer;
@@ -39,22 +35,23 @@ static char *MGDeallocActionKey = "MGDeallocActionKey";
   }
 }
 
-- (void)dealloc {
-  [self.observee removeObserver:self forKeyPath:self.keypath];
-}
-
 @end
 
 
 @interface MGDeallocAction : NSObject
+
 @property (nonatomic, copy) Block block;
+
 @end
 
 @implementation MGDeallocAction
+
 - (void)dealloc {
-  if (_block)
-    _block();
+  if (self.block) {
+    self.block();
+  }
 }
+
 @end
 
 
@@ -129,16 +126,11 @@ static char *MGDeallocActionKey = "MGDeallocActionKey";
       *observer = [MGObserver observerFor:self keypath:keypath block:block];
   [observers addObject:observer];
     
-  MGDeallocAction *deallocAction = MGDeallocAction.new;
-  __unsafe_unretained typeof(self) unsafeSelf = self;
-  deallocAction.block = ^{
-      //because we are observing ourself and the MGObserver weak reference gets nilled,
-      //we need to force an obervation removal
-      [unsafeSelf removeObserver:observer forKeyPath:observer.keypath];
-      [observers removeObject:observer];
+  __unsafe_unretained id _self = self;
+  __unsafe_unretained id _observer = observer;
+  observer.onDealloc = ^{
+      [_self removeObserver:_observer forKeyPath:keypath];
   };
-  objc_setAssociatedObject(self, MGDeallocActionKey, deallocAction,
-                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - Getters
@@ -161,6 +153,11 @@ static char *MGDeallocActionKey = "MGDeallocActionKey";
   return observers;
 }
 
+- (Block)onDealloc {
+  MGDeallocAction *wrapper = objc_getAssociatedObject(self, MGDeallocActionKey);
+  return wrapper.block;
+}
+
 #pragma mark - Setters
 
 - (void)setMGEventHandlers:(NSMutableDictionary *)handlers {
@@ -171,6 +168,16 @@ static char *MGDeallocActionKey = "MGDeallocActionKey";
 - (void)setMGObservers:(NSMutableDictionary *)observers {
   objc_setAssociatedObject(self, MGObserversKey, observers,
       OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void)setOnDealloc:(Block)block {
+  MGDeallocAction *wrapper = objc_getAssociatedObject(self, MGDeallocActionKey);
+  if (!wrapper) {
+    wrapper = MGDeallocAction.new;
+    objc_setAssociatedObject(self, MGDeallocActionKey, wrapper,
+        OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+  }
+  wrapper.block = block;
 }
 
 @end

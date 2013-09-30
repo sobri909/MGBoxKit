@@ -69,4 +69,6 @@ On change of the given keypath, perform the given block.
 */
 - (void)onChangeOf:(NSString *)keypath do:(Block)block;
 
+@property (nonatomic, copy) Block onDealloc;
+
 @end
