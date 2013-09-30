@@ -133,6 +133,26 @@
 
   [self removeOldContents];
 
+  // apply line spacing
+  for (UILabel *label in self.leftItems) {
+    if ([label isKindOfClass:UILabel.class]) {
+      label.attributedText =
+          [self applyLineSpacing:self.leftLineSpacing to:label.attributedText];
+    }
+  }
+  for (UILabel *label in self.middleItems) {
+    if ([label isKindOfClass:UILabel.class]) {
+      label.attributedText =
+          [self applyLineSpacing:self.middleLineSpacing to:label.attributedText];
+    }
+  }
+  for (UILabel *label in self.rightItems) {
+    if ([label isKindOfClass:UILabel.class]) {
+      label.attributedText =
+          [self applyLineSpacing:self.rightLineSpacing to:label.attributedText];
+    }
+  }
+
   // max usable space
   CGFloat maxWidth = self.widenAsNeeded
           ? FLT_MAX
@@ -279,6 +299,24 @@
 
   // now kick 'em out
   [gone makeObjectsPerformSelector:@selector(removeFromSuperview)];
+}
+
+- (NSAttributedString *)applyLineSpacing:(CGFloat)spacing
+    to:(NSAttributedString *)string {
+  if (!string.length) {
+    return string;
+  }
+  NSMutableAttributedString *result = string.mutableCopy;
+  NSMutableParagraphStyle *parastyle =
+      [[string attribute:NSParagraphStyleAttributeName atIndex:0 effectiveRange:NULL]
+          mutableCopy];
+  if (!parastyle) {
+    parastyle = NSParagraphStyle.defaultParagraphStyle.mutableCopy;
+  }
+  parastyle.lineSpacing = spacing;
+  [result addAttribute:NSParagraphStyleAttributeName value:parastyle
+      range:NSMakeRange(0, string.length)];
+  return result;
 }
 
 - (CGFloat)layoutItems:(NSArray *)items from:(CGFloat)x within:(CGFloat)limit

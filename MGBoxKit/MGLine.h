@@ -313,6 +313,23 @@ MGLayoutBox, their [topMargin](-[MGLayoutBox topMargin]) and
 */
 @property (nonatomic, assign) NSTextAlignment rightItemsAlignment;
 
+/** @name Line spacing */
+
+/**
+* The line spacing to use for multiline strings in leftItems.
+*/
+@property (nonatomic, assign) CGFloat leftLineSpacing;
+
+/**
+* The line spacing to use for multiline strings in middleItems.
+*/
+@property (nonatomic, assign) CGFloat middleLineSpacing;
+
+/**
+* The line spacing to use for multiline strings in rightItems.
+*/
+@property (nonatomic, assign) CGFloat rightLineSpacing;
+
 /** @name Column widths */
 
 @property (nonatomic, assign) CGFloat leftWidth;
