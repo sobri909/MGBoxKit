@@ -134,22 +134,24 @@
   [self removeOldContents];
 
   // apply line spacing
-  for (UILabel *label in self.leftItems) {
-    if ([label isKindOfClass:UILabel.class]) {
-      label.attributedText =
-          [self applyLineSpacing:self.leftLineSpacing to:label.attributedText];
+  if ([UILabel instancesRespondToSelector:@selector(attributedText)]) {
+    for (UILabel *label in self.leftItems) {
+      if ([label isKindOfClass:UILabel.class]) {
+        label.attributedText =
+            [self applyLineSpacing:self.leftLineSpacing to:label.attributedText];
+      }
     }
-  }
-  for (UILabel *label in self.middleItems) {
-    if ([label isKindOfClass:UILabel.class]) {
-      label.attributedText =
-          [self applyLineSpacing:self.middleLineSpacing to:label.attributedText];
+    for (UILabel *label in self.middleItems) {
+      if ([label isKindOfClass:UILabel.class]) {
+        label.attributedText =
+            [self applyLineSpacing:self.middleLineSpacing to:label.attributedText];
+      }
     }
-  }
-  for (UILabel *label in self.rightItems) {
-    if ([label isKindOfClass:UILabel.class]) {
-      label.attributedText =
-          [self applyLineSpacing:self.rightLineSpacing to:label.attributedText];
+    for (UILabel *label in self.rightItems) {
+      if ([label isKindOfClass:UILabel.class]) {
+        label.attributedText =
+            [self applyLineSpacing:self.rightLineSpacing to:label.attributedText];
+      }
     }
   }
 
