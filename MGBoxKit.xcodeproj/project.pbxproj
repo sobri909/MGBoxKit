@@ -1,0 +1,407 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C914B0A116E2082C00F12F48 /* MGBoxProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = C914B09F16E2082C00F12F48 /* MGBoxProvider.h */; };
+		C914B0A216E2082C00F12F48 /* MGBoxProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = C914B0A016E2082C00F12F48 /* MGBoxProvider.m */; };
+		C9161DDF16E1F45300F3D70C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9161DDE16E1F45300F3D70C /* Foundation.framework */; };
+		C9161E1516E1F90C00F3D70C /* MGBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161DFB16E1F90C00F3D70C /* MGBlockWrapper.m */; };
+		C9161E1616E1F90C00F3D70C /* MGBox.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161DFD16E1F90C00F3D70C /* MGBox.m */; };
+		C9161E1716E1F90C00F3D70C /* MGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161DFF16E1F90C00F3D70C /* MGButton.m */; };
+		C9161E1816E1F90C00F3D70C /* MGLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E0216E1F90C00F3D70C /* MGLayoutManager.m */; };
+		C9161E1916E1F90C00F3D70C /* MGLine.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E0416E1F90C00F3D70C /* MGLine.m */; };
+		C9161E1A16E1F90C00F3D70C /* MGLineStyled.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E0616E1F90C00F3D70C /* MGLineStyled.m */; };
+		C9161E1B16E1F90C00F3D70C /* MGMushParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E0816E1F90C00F3D70C /* MGMushParser.m */; };
+		C9161E1C16E1F90C00F3D70C /* MGScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E0A16E1F90C00F3D70C /* MGScrollView.m */; };
+		C9161E1D16E1F90C00F3D70C /* MGTableBox.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E0C16E1F90C00F3D70C /* MGTableBox.m */; };
+		C9161E1E16E1F90C00F3D70C /* MGTableBoxStyled.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E0E16E1F90C00F3D70C /* MGTableBoxStyled.m */; };
+		C9161E3416E1FC5000F3D70C /* NSAttributedString+MGTrim.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E2916E1FC5000F3D70C /* NSAttributedString+MGTrim.m */; };
+		C9161E3516E1FC5000F3D70C /* NSObject+MGEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E2B16E1FC5000F3D70C /* NSObject+MGEvents.m */; };
+		C9161E3616E1FC5000F3D70C /* UIColor+MGExpanded.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E2D16E1FC5000F3D70C /* UIColor+MGExpanded.m */; };
+		C9161E3716E1FC5000F3D70C /* UIControl+MGEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E2F16E1FC5000F3D70C /* UIControl+MGEvents.m */; };
+		C9161E3816E1FC5000F3D70C /* UIResponder+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E3116E1FC5000F3D70C /* UIResponder+FirstResponder.m */; };
+		C9161E3916E1FC5000F3D70C /* UIView+MGEasyFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E3316E1FC5000F3D70C /* UIView+MGEasyFrame.m */; };
+		C9161E4716E201B100F3D70C /* NSAttributedString+MGTrim.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E2816E1FC5000F3D70C /* NSAttributedString+MGTrim.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E4916E201B100F3D70C /* NSObject+MGEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E2A16E1FC5000F3D70C /* NSObject+MGEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E4B16E201B100F3D70C /* UIColor+MGExpanded.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E2C16E1FC5000F3D70C /* UIColor+MGExpanded.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E4D16E201B100F3D70C /* UIControl+MGEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E2E16E1FC5000F3D70C /* UIControl+MGEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E4F16E201B100F3D70C /* UIResponder+FirstResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E3016E1FC5000F3D70C /* UIResponder+FirstResponder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E5116E201B100F3D70C /* UIView+MGEasyFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E3216E1FC5000F3D70C /* UIView+MGEasyFrame.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E5316E201B100F3D70C /* MGBase.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161DF916E1F90C00F3D70C /* MGBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E5416E201B100F3D70C /* MGBlockWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161DFA16E1F90C00F3D70C /* MGBlockWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E5616E201B200F3D70C /* MGBox.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161DFC16E1F90C00F3D70C /* MGBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E5816E201B200F3D70C /* MGButton.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161DFE16E1F90C00F3D70C /* MGButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E5A16E201B200F3D70C /* MGLayoutBox.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E0016E1F90C00F3D70C /* MGLayoutBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E5B16E201B200F3D70C /* MGLayoutManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E0116E1F90C00F3D70C /* MGLayoutManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E5D16E201B200F3D70C /* MGLine.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E0316E1F90C00F3D70C /* MGLine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E5F16E201B200F3D70C /* MGLineStyled.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E0516E1F90C00F3D70C /* MGLineStyled.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E6116E201B200F3D70C /* MGMushParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E0716E1F90C00F3D70C /* MGMushParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E6316E201B200F3D70C /* MGScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E0916E1F90C00F3D70C /* MGScrollView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E6516E201B200F3D70C /* MGTableBox.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E0B16E1F90C00F3D70C /* MGTableBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9161E6716E201B200F3D70C /* MGTableBoxStyled.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E0D16E1F90C00F3D70C /* MGTableBoxStyled.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C9161DD916E1F45300F3D70C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C914B09F16E2082C00F12F48 /* MGBoxProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBoxProvider.h; sourceTree = "<group>"; };
+		C914B0A016E2082C00F12F48 /* MGBoxProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBoxProvider.m; sourceTree = "<group>"; };
+		C9161DDB16E1F45300F3D70C /* libMGBoxKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMGBoxKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9161DDE16E1F45300F3D70C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C9161DE216E1F45300F3D70C /* MGBoxKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MGBoxKit-Prefix.pch"; sourceTree = "<group>"; };
+		C9161DF916E1F90C00F3D70C /* MGBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBase.h; sourceTree = "<group>"; };
+		C9161DFA16E1F90C00F3D70C /* MGBlockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBlockWrapper.h; sourceTree = "<group>"; };
+		C9161DFB16E1F90C00F3D70C /* MGBlockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBlockWrapper.m; sourceTree = "<group>"; };
+		C9161DFC16E1F90C00F3D70C /* MGBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBox.h; sourceTree = "<group>"; };
+		C9161DFD16E1F90C00F3D70C /* MGBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBox.m; sourceTree = "<group>"; };
+		C9161DFE16E1F90C00F3D70C /* MGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGButton.h; sourceTree = "<group>"; };
+		C9161DFF16E1F90C00F3D70C /* MGButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGButton.m; sourceTree = "<group>"; };
+		C9161E0016E1F90C00F3D70C /* MGLayoutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLayoutBox.h; sourceTree = "<group>"; };
+		C9161E0116E1F90C00F3D70C /* MGLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLayoutManager.h; sourceTree = "<group>"; };
+		C9161E0216E1F90C00F3D70C /* MGLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLayoutManager.m; sourceTree = "<group>"; };
+		C9161E0316E1F90C00F3D70C /* MGLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLine.h; sourceTree = "<group>"; };
+		C9161E0416E1F90C00F3D70C /* MGLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLine.m; sourceTree = "<group>"; };
+		C9161E0516E1F90C00F3D70C /* MGLineStyled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLineStyled.h; sourceTree = "<group>"; };
+		C9161E0616E1F90C00F3D70C /* MGLineStyled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLineStyled.m; sourceTree = "<group>"; };
+		C9161E0716E1F90C00F3D70C /* MGMushParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMushParser.h; sourceTree = "<group>"; };
+		C9161E0816E1F90C00F3D70C /* MGMushParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMushParser.m; sourceTree = "<group>"; };
+		C9161E0916E1F90C00F3D70C /* MGScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGScrollView.h; sourceTree = "<group>"; };
+		C9161E0A16E1F90C00F3D70C /* MGScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGScrollView.m; sourceTree = "<group>"; };
+		C9161E0B16E1F90C00F3D70C /* MGTableBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableBox.h; sourceTree = "<group>"; };
+		C9161E0C16E1F90C00F3D70C /* MGTableBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableBox.m; sourceTree = "<group>"; };
+		C9161E0D16E1F90C00F3D70C /* MGTableBoxStyled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGTableBoxStyled.h; sourceTree = "<group>"; };
+		C9161E0E16E1F90C00F3D70C /* MGTableBoxStyled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGTableBoxStyled.m; sourceTree = "<group>"; };
+		C9161E2816E1FC5000F3D70C /* NSAttributedString+MGTrim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MGTrim.h"; sourceTree = "<group>"; };
+		C9161E2916E1FC5000F3D70C /* NSAttributedString+MGTrim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MGTrim.m"; sourceTree = "<group>"; };
+		C9161E2A16E1FC5000F3D70C /* NSObject+MGEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MGEvents.h"; sourceTree = "<group>"; };
+		C9161E2B16E1FC5000F3D70C /* NSObject+MGEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MGEvents.m"; sourceTree = "<group>"; };
+		C9161E2C16E1FC5000F3D70C /* UIColor+MGExpanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MGExpanded.h"; sourceTree = "<group>"; };
+		C9161E2D16E1FC5000F3D70C /* UIColor+MGExpanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MGExpanded.m"; sourceTree = "<group>"; };
+		C9161E2E16E1FC5000F3D70C /* UIControl+MGEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+MGEvents.h"; sourceTree = "<group>"; };
+		C9161E2F16E1FC5000F3D70C /* UIControl+MGEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+MGEvents.m"; sourceTree = "<group>"; };
+		C9161E3016E1FC5000F3D70C /* UIResponder+FirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+FirstResponder.h"; sourceTree = "<group>"; };
+		C9161E3116E1FC5000F3D70C /* UIResponder+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponder.m"; sourceTree = "<group>"; };
+		C9161E3216E1FC5000F3D70C /* UIView+MGEasyFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MGEasyFrame.h"; sourceTree = "<group>"; };
+		C9161E3316E1FC5000F3D70C /* UIView+MGEasyFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MGEasyFrame.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C9161DD816E1F45300F3D70C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9161DDF16E1F45300F3D70C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C9161DD216E1F45300F3D70C = {
+			isa = PBXGroup;
+			children = (
+				C9161DE016E1F45300F3D70C /* MGBoxKit */,
+				C9161DDD16E1F45300F3D70C /* Frameworks */,
+				C9161DDC16E1F45300F3D70C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C9161DDC16E1F45300F3D70C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C9161DDB16E1F45300F3D70C /* libMGBoxKit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C9161DDD16E1F45300F3D70C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C9161DDE16E1F45300F3D70C /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C9161DE016E1F45300F3D70C /* MGBoxKit */ = {
+			isa = PBXGroup;
+			children = (
+				C9161DEC16E1F90C00F3D70C /* Categories */,
+				C9161DF916E1F90C00F3D70C /* MGBase.h */,
+				C9161DFA16E1F90C00F3D70C /* MGBlockWrapper.h */,
+				C9161DFB16E1F90C00F3D70C /* MGBlockWrapper.m */,
+				C9161DFC16E1F90C00F3D70C /* MGBox.h */,
+				C9161DFD16E1F90C00F3D70C /* MGBox.m */,
+				C914B09F16E2082C00F12F48 /* MGBoxProvider.h */,
+				C914B0A016E2082C00F12F48 /* MGBoxProvider.m */,
+				C9161DFE16E1F90C00F3D70C /* MGButton.h */,
+				C9161DFF16E1F90C00F3D70C /* MGButton.m */,
+				C9161E0016E1F90C00F3D70C /* MGLayoutBox.h */,
+				C9161E0116E1F90C00F3D70C /* MGLayoutManager.h */,
+				C9161E0216E1F90C00F3D70C /* MGLayoutManager.m */,
+				C9161E0316E1F90C00F3D70C /* MGLine.h */,
+				C9161E0416E1F90C00F3D70C /* MGLine.m */,
+				C9161E0516E1F90C00F3D70C /* MGLineStyled.h */,
+				C9161E0616E1F90C00F3D70C /* MGLineStyled.m */,
+				C9161E0716E1F90C00F3D70C /* MGMushParser.h */,
+				C9161E0816E1F90C00F3D70C /* MGMushParser.m */,
+				C9161E0916E1F90C00F3D70C /* MGScrollView.h */,
+				C9161E0A16E1F90C00F3D70C /* MGScrollView.m */,
+				C9161E0B16E1F90C00F3D70C /* MGTableBox.h */,
+				C9161E0C16E1F90C00F3D70C /* MGTableBox.m */,
+				C9161E0D16E1F90C00F3D70C /* MGTableBoxStyled.h */,
+				C9161E0E16E1F90C00F3D70C /* MGTableBoxStyled.m */,
+				C9161DE116E1F45300F3D70C /* Supporting Files */,
+			);
+			path = MGBoxKit;
+			sourceTree = "<group>";
+		};
+		C9161DE116E1F45300F3D70C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C9161DE216E1F45300F3D70C /* MGBoxKit-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C9161DEC16E1F90C00F3D70C /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				C9161E2816E1FC5000F3D70C /* NSAttributedString+MGTrim.h */,
+				C9161E2916E1FC5000F3D70C /* NSAttributedString+MGTrim.m */,
+				C9161E2A16E1FC5000F3D70C /* NSObject+MGEvents.h */,
+				C9161E2B16E1FC5000F3D70C /* NSObject+MGEvents.m */,
+				C9161E2C16E1FC5000F3D70C /* UIColor+MGExpanded.h */,
+				C9161E2D16E1FC5000F3D70C /* UIColor+MGExpanded.m */,
+				C9161E2E16E1FC5000F3D70C /* UIControl+MGEvents.h */,
+				C9161E2F16E1FC5000F3D70C /* UIControl+MGEvents.m */,
+				C9161E3016E1FC5000F3D70C /* UIResponder+FirstResponder.h */,
+				C9161E3116E1FC5000F3D70C /* UIResponder+FirstResponder.m */,
+				C9161E3216E1FC5000F3D70C /* UIView+MGEasyFrame.h */,
+				C9161E3316E1FC5000F3D70C /* UIView+MGEasyFrame.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		C9161E4616E2019F00F3D70C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9161E4716E201B100F3D70C /* NSAttributedString+MGTrim.h in Headers */,
+				C9161E4916E201B100F3D70C /* NSObject+MGEvents.h in Headers */,
+				C9161E4B16E201B100F3D70C /* UIColor+MGExpanded.h in Headers */,
+				C9161E4D16E201B100F3D70C /* UIControl+MGEvents.h in Headers */,
+				C9161E4F16E201B100F3D70C /* UIResponder+FirstResponder.h in Headers */,
+				C9161E5116E201B100F3D70C /* UIView+MGEasyFrame.h in Headers */,
+				C9161E5316E201B100F3D70C /* MGBase.h in Headers */,
+				C9161E5416E201B100F3D70C /* MGBlockWrapper.h in Headers */,
+				C9161E5616E201B200F3D70C /* MGBox.h in Headers */,
+				C9161E5816E201B200F3D70C /* MGButton.h in Headers */,
+				C9161E5A16E201B200F3D70C /* MGLayoutBox.h in Headers */,
+				C9161E5B16E201B200F3D70C /* MGLayoutManager.h in Headers */,
+				C9161E5D16E201B200F3D70C /* MGLine.h in Headers */,
+				C9161E5F16E201B200F3D70C /* MGLineStyled.h in Headers */,
+				C9161E6116E201B200F3D70C /* MGMushParser.h in Headers */,
+				C9161E6316E201B200F3D70C /* MGScrollView.h in Headers */,
+				C9161E6516E201B200F3D70C /* MGTableBox.h in Headers */,
+				C9161E6716E201B200F3D70C /* MGTableBoxStyled.h in Headers */,
+				C914B0A116E2082C00F12F48 /* MGBoxProvider.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		C9161DDA16E1F45300F3D70C /* MGBoxKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9161DE916E1F45300F3D70C /* Build configuration list for PBXNativeTarget "MGBoxKit" */;
+			buildPhases = (
+				C9161DD716E1F45300F3D70C /* Sources */,
+				C9161DD816E1F45300F3D70C /* Frameworks */,
+				C9161DD916E1F45300F3D70C /* CopyFiles */,
+				C9161E4616E2019F00F3D70C /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MGBoxKit;
+			productName = MGBoxKit;
+			productReference = C9161DDB16E1F45300F3D70C /* libMGBoxKit.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C9161DD316E1F45300F3D70C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Big Paua";
+			};
+			buildConfigurationList = C9161DD616E1F45300F3D70C /* Build configuration list for PBXProject "MGBoxKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C9161DD216E1F45300F3D70C;
+			productRefGroup = C9161DDC16E1F45300F3D70C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C9161DDA16E1F45300F3D70C /* MGBoxKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C9161DD716E1F45300F3D70C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9161E1516E1F90C00F3D70C /* MGBlockWrapper.m in Sources */,
+				C9161E1616E1F90C00F3D70C /* MGBox.m in Sources */,
+				C9161E1716E1F90C00F3D70C /* MGButton.m in Sources */,
+				C9161E1816E1F90C00F3D70C /* MGLayoutManager.m in Sources */,
+				C9161E1916E1F90C00F3D70C /* MGLine.m in Sources */,
+				C9161E1A16E1F90C00F3D70C /* MGLineStyled.m in Sources */,
+				C9161E1B16E1F90C00F3D70C /* MGMushParser.m in Sources */,
+				C9161E1C16E1F90C00F3D70C /* MGScrollView.m in Sources */,
+				C9161E1D16E1F90C00F3D70C /* MGTableBox.m in Sources */,
+				C9161E1E16E1F90C00F3D70C /* MGTableBoxStyled.m in Sources */,
+				C9161E3416E1FC5000F3D70C /* NSAttributedString+MGTrim.m in Sources */,
+				C9161E3516E1FC5000F3D70C /* NSObject+MGEvents.m in Sources */,
+				C9161E3616E1FC5000F3D70C /* UIColor+MGExpanded.m in Sources */,
+				C9161E3716E1FC5000F3D70C /* UIControl+MGEvents.m in Sources */,
+				C9161E3816E1FC5000F3D70C /* UIResponder+FirstResponder.m in Sources */,
+				C9161E3916E1FC5000F3D70C /* UIView+MGEasyFrame.m in Sources */,
+				C914B0A216E2082C00F12F48 /* MGBoxProvider.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C9161DE716E1F45300F3D70C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C9161DE816E1F45300F3D70C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C9161DEA16E1F45300F3D70C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/MGBoxKit.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MGBoxKit/MGBoxKit-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C9161DEB16E1F45300F3D70C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/MGBoxKit.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MGBoxKit/MGBoxKit-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C9161DD616E1F45300F3D70C /* Build configuration list for PBXProject "MGBoxKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9161DE716E1F45300F3D70C /* Debug */,
+				C9161DE816E1F45300F3D70C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9161DE916E1F45300F3D70C /* Build configuration list for PBXNativeTarget "MGBoxKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9161DEA16E1F45300F3D70C /* Debug */,
+				C9161DEB16E1F45300F3D70C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C9161DD316E1F45300F3D70C /* Project object */;
+}
