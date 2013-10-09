@@ -1,10 +1,19 @@
-# MGBox2 - Simple, quick iOS tables, grids, and more
+# MGBoxKit - Simple, quick iOS tables, grids, and more
 
 Designed for rapid table and grid creation with minimal code, easy customisation, attractive default styling, using modern blocks based design patterns, and without need for fidgety tweaking or awkward design patterns. 
 
 Includes blocks based gesture recognisers, observers, control events, and custom events.
 
 `MGBox`, `MGScrollView`, and `MGButton` can also be used as generic `UIView` wrappers to get the benefits of view padding, margins, and zIndex, amongst others.
+
+## API Reference and Guides
+- [API Reference](http://www.bigpaua.com/MGBoxKit/docs/index.html)
+- [Basic Concepts and 
+  Introduction](http://www.bigpaua.com/MGBoxKit/docs/docs/guides/Basic%20Concepts%20and%20Introduction.html)
+- [Positioning and Layout 
+  Guide](http://www.bigpaua.com/MGBoxKit/docs/docs/guides/Positioning%20and%20Layout%20Guide.html)
+- [Blocks Based Events 
+  Guide](http://www.bigpaua.com/MGBoxKit/docs/docs/guides/Blocks%20Based%20Events%20Guide.html)
 
 ## Layout Features
 
