@@ -6,7 +6,7 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 
 `MGBox`, `MGScrollView`, and `MGButton` can also be used as generic `UIView` wrappers to get the benefits of view padding, margins, and zIndex, amongst others.
 
-## API Reference and Guides
+## API Reference, Guides, and Changelog
 
 - [API Reference](http://www.bigpaua.com/MGBoxKit/docs/index.html)
 - [Basic Concepts and 
@@ -15,6 +15,7 @@ Includes blocks based gesture recognisers, observers, control events, and custom
   Guide](http://www.bigpaua.com/MGBoxKit/docs/docs/guides/Positioning%20and%20Layout%20Guide.html)
 - [Blocks Based Events 
   Guide](http://www.bigpaua.com/MGBoxKit/docs/docs/guides/Blocks%20Based%20Events%20Guide.html)
+- [Changelog](https://github.com/sobri909/MGBoxKit/blob/master/CHANGELOG.markdown)
 
 ## Layout Features
 
@@ -84,7 +85,7 @@ MGScrollView *scroller = [MGScrollView scrollerWithSize:self.bounds.size];
 
 #### Add a Table Section:
 
-Note that `MGTableBoxStyled` and `MGLineStyled` provide a default styling similar to iOS 6 grouped tables, so will now look dated. They should only be used as as examples for how to create your own subclasses (of `MGTableBox`, `MGBox`, `MGLine`) with styling suitable for your app. 
+Note that `MGTableBoxStyled` and `MGLineStyled` provide a default styling similar to iOS 6 grouped tables, so will now look dated. They should only be used as code examples for how to create your own subclasses (of `MGTableBox`, `MGBox`, `MGLine`) with styling suitable for your app. 
 
 ```
 MGTableBoxStyled *section = MGTableBoxStyled.box;
