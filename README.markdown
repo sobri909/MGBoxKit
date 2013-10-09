@@ -1,4 +1,4 @@
-# MGBoxKit - Simple, quick iOS tables, grids, and more
+# Simple, quick iOS tables, grids, more
 
 Designed for rapid table and grid creation with minimal code, easy customisation, attractive default styling, using modern blocks based design patterns, and without need for fidgety tweaking or awkward design patterns. 
 
