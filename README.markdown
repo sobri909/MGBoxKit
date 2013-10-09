@@ -84,6 +84,8 @@ MGScrollView *scroller = [MGScrollView scrollerWithSize:self.bounds.size];
 
 #### Add a Table Section:
 
+Note that `MGTableBoxStyled` and `MGLineStyled` provide a default styling similar to iOS 6 grouped tables, so will now look dated. They should only be used as as examples for how to create your own subclasses (of `MGTableBox`, `MGBox`, `MGLine`) with styling suitable for your app. 
+
 ```
 MGTableBoxStyled *section = MGTableBoxStyled.box;
 [scroller.boxes addObject:section];
