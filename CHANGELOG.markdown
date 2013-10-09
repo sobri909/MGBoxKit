@@ -1,3 +1,22 @@
+## 2.1.0
+
+#### Upgrading
+
+- There shouldn't be any backwards compatibility breaks. Please let me know if 
+  you find any!
+- Note that the project, repo, and folders have been renamed to **MGBoxKit**
+
+#### Enhancements
+
+- Optional non-recursive layout: `dontLayoutChildren`
+- Optional `minWidth` property
+- Text colour Mush markup: "this string has {#123456|coloured text}"
+- New block properties for `onTouchesBegan`, `onTouchesEnded`,  
+  `onTouchesCancelled`
+- New UIView convenience CGFloat getters for `top`, `right`, `bottom`, `left`
+- New line spacing properties for MGLine content: `leftLineSpacing`, 
+  `middleLineSpacing`, `rightLineSpacing`
+
 ## 2.0.0
 
 #### Upgrading
