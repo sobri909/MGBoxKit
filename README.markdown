@@ -7,6 +7,7 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 `MGBox`, `MGScrollView`, and `MGButton` can also be used as generic `UIView` wrappers to get the benefits of view padding, margins, and zIndex, amongst others.
 
 ## API Reference and Guides
+
 - [API Reference](http://www.bigpaua.com/MGBoxKit/docs/index.html)
 - [Basic Concepts and 
   Introduction](http://www.bigpaua.com/MGBoxKit/docs/docs/guides/Basic%20Concepts%20and%20Introduction.html)
@@ -38,6 +39,19 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 - Blocks based keypath observers
 - UIView easy frame accessors
 
+## Easy Setup (easy)
+
+1. Add the `MGBoxKit` folder to your project. (ARC required)
+2. Add the `CoreText` and `QuartzCore` frameworks to your project.
+
+## Subproject Setup (not easy)
+
+Optionally you could add **MGBoxKit** to your project as a subproject. Though going this route may or may not, depending on the phase of the moon, lead you down a twisted trail of nonsensical Xcode build errors. If you want to get going quickly and you're new to subprojects, I don't recommend going this way.
+
+1. Drag **MGBoxKit.xcodeproj** into your Xcode project tree.
+2. Add **MGBoxKit** as a target dependency in your project target's **Build Phases**.
+3. Add the **MGBoxKit** folder to your project target's **Framework Search Paths** and **Header Search Paths** under **Build Settings**.
+
 ## Example Screenshots
 
 Complex tables, sections, and grids created with simple code.
@@ -46,25 +60,18 @@ Complex tables, sections, and grids created with simple code.
 
 ![Demo App Screenshot](http://cloud.github.com/downloads/sobri909/MGBox2/DemoApp6.png)
 
-### From [IfAlarm](http://ifalarm.com)
-
-Created with the convenience `-[MGBox screenshot:]` method.
+### From [IfAlarm](http://www.bigpaua.com/ifalarm/)
 
 ![IfAlarm Screenshot 1](http://cloud.github.com/downloads/sobri909/MGBox2/IfAlarm1.png)
 ![IfAlarm Screenshot 2](http://cloud.github.com/downloads/sobri909/MGBox2/IfAlarm2.png)
 
-### From [Flowies](http://flowi.es)
+### From [Flowies](http://www.bigpaua.com/flowies/)
 
 ![Flowies Screenshot 1](http://cloud.github.com/downloads/sobri909/MGBox2/Flowies1.png)
 
-## Setup
-
-1. Add the `MGBox` folder to your project. (ARC and Xcode 4.5 are required)
-2. Add the `CoreText` and `QuartzCore` frameworks to your project. 
-
-Have a poke around the Demo App to see some of the features in use. 
-
 ## Example Usage
+
+**Note:** For more complete documentation and examples please check the [API Reference and Guides](http://www.bigpaua.com/MGBoxKit/docs/index.html).
 
 ### Building a Table (Similar to UITableView)
 
@@ -312,6 +319,19 @@ box.onLongPress = ^{
 }];
 ```
 
+### Blocks Based Touch Event Handlers
+
+`MGBox` provides block properties for touch events: `onTouchesBegan`, `onTouchesEnded`, and `onTouchesCancelled`.
+
+```objc
+box.onTouchesBegan = ^{
+    NSLog(@"the finger is down");
+};
+box.onTouchesEnded = box.onTouchesCancelled = ^{
+    NSLog(@"the finger is up");
+};
+```
+
 ## UIView+MGEasyFrame Category
 
 Fussing about with view frames can be tedious, especially when all you want to do is change a width or height, or know where the bottom right corner is.
@@ -321,9 +341,13 @@ Fussing about with view frames can be tedious, especially when all you want to d
 * `size`, `width`, `height`
 * `origin`, `x`, `y`
 
-And getters for:
+CGPoint getters for:
 
 * `topLeft`, `topRight`, `bottomRight`, `bottomLeft`
+
+And CGFloat getters for:
+
+* `top`, `right`, `bottom`, `left`
 
 ## Subclassing Tips
 
