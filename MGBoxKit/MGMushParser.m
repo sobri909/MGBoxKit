@@ -205,15 +205,6 @@
   italic = [UIFont fontWithName:(__bridge NSString *)italicName size:size] ?: font;
 
   monospace = [UIFont fontWithName:@"CourierNewPSMT" size:size];
-<<<<<<< HEAD:MGBox/MGMushParser.m
-  
-  // Release CF objects no longer needed
-  CFRelease(ctBase);
-  CFRelease(ctBold);
-  CFRelease(boldName);
-  CFRelease(ctItalic);
-  CFRelease(italicName);
-=======
 
   if (ctBase) {
     CFRelease(ctBase);
@@ -230,7 +221,6 @@
   if (italicName) {
     CFRelease(italicName);
   }
->>>>>>> development:MGBoxKit/MGMushParser.m
 }
 
 #pragma mark - Getters
