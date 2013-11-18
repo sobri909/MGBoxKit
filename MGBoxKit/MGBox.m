@@ -110,7 +110,7 @@
 
 #pragma mark - Sugar
 
-- (UIImage *)screenshot:(float)scale {
+- (UIImage *)screenshotWithShadow:(BOOL)shadow scale:(float)scale {
   CGRect frame = CGRectMake(0, 0, self.width + 40, self.height + 40);
 
   // UIImageView of self
@@ -121,6 +121,10 @@
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
   UIGraphicsEndImageContext();
+
+  if (!shadow) {
+      return image;
+  }
 
   // setup the shadow
   CGFloat cx = roundf(frame.size.width / 2), cy = roundf(frame.size.height / 2);
