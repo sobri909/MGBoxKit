@@ -459,8 +459,8 @@
 
 + (void)stackByZIndexIn:(UIView *)container {
   NSArray *sorted =
-      [container.subviews sortedArrayUsingComparator:^NSComparisonResult(id view1,
-          id view2) {
+      [container.subviews sortedArrayUsingComparator:^NSComparisonResult(id<MGLayoutBox> view1,
+          id<MGLayoutBox> view2) {
         int z1 = [view1 respondsToSelector:@selector(zIndex)] ? [view1 zIndex] : 0;
         int z2 = [view2 respondsToSelector:@selector(zIndex)] ? [view2 zIndex] : 0;
         if (z1 > z2) {
