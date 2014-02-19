@@ -473,7 +473,7 @@
       }];
 
   for (UIView *view in sorted) {
-    int sortedIndex = [sorted indexOfObject:view];
+    int sortedIndex = (int)[sorted indexOfObject:view];
     if (sortedIndex != [container.subviews indexOfObject:view]) {
       [container insertSubview:view atIndex:sortedIndex];
     }

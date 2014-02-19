@@ -45,7 +45,7 @@
   }];
 
   // add newly visible indexes to the start
-  int index = visibleIndexes.count ? visibleIndexes.firstIndex : 0;
+  int index = visibleIndexes.count ? (int)visibleIndexes.firstIndex : 0;
   while (index >= 0) {
     if ([visibleIndexes containsIndex:index]) {
       index--;
@@ -67,7 +67,7 @@
   }
 
   // add newly visible indexes to the end
-  index = visibleIndexes.lastIndex;
+  index = (int)visibleIndexes.lastIndex;
   while (index < self.count) {
     if ([visibleIndexes containsIndex:index]) {
       index++;

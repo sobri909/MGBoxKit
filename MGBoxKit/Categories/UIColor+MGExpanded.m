@@ -397,7 +397,7 @@ static NSMutableDictionary *colorNameCache = nil;
 }
 
 - (NSString *)hexStringFromColor {
-  return [NSString stringWithFormat:@"%0.6lx", self.rgbHex];
+  return [NSString stringWithFormat:@"%0.6x", (unsigned int)self.rgbHex];
 }
 
 + (UIColor *)colorWithString:(NSString *)stringToConvert {
@@ -406,7 +406,7 @@ static NSMutableDictionary *colorNameCache = nil;
     return nil;
   }
   const NSUInteger kMaxComponents = 4;
-  CGFloat c[kMaxComponents];
+  float c[kMaxComponents];
   NSUInteger i = 0;
   if (![scanner scanFloat:&c[i++]]) {
     return nil;
