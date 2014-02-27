@@ -79,7 +79,7 @@ Complex tables, sections, and grids created with simple code.
 #### Create a Scroll View:
 
 ```objc
-MGScrollView *scroller = [MGScrollView scrollerWithSize:self.bounds.size];
+MGScrollView *scroller = [MGScrollView scrollerWithSize:self.view.bounds.size];
 [self.view addSubview:scroller];
 ```
 
