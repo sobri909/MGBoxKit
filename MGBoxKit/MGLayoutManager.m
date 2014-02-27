@@ -57,8 +57,9 @@
   // remove boxes that aren't at the given indexes
   for (int i = 0; i < container.boxes.count; i++) {
     if (![indexes containsIndex:i]) {
-      UIView *box = container.boxes[i];
+      UIView <MGLayoutBox> *box = container.boxes[i];
       if ([box isKindOfClass:UIView.class] && box.superview) {
+        [container.boxProvider removeBoxAtIndex:i];
         [box removeFromSuperview];
       }
     }
@@ -83,6 +84,7 @@
       box.parentBox = container;
       [container addSubview:box];
       [box layout];
+
     }
 
     // get and set the origin

@@ -63,7 +63,6 @@
   // defaults
   self.keyboardMargin = KEYBOARD_MARGIN;
   self.keepFirstResponderAboveKeyboard = YES;
-  self.viewportMargin = UIScreen.mainScreen.bounds.size;
   self.boxPositions = @[].mutableCopy;
 
   self.delegate = self;

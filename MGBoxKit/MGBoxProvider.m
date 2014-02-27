@@ -7,6 +7,7 @@
 #import "MGLayoutManager.h"
 
 @implementation MGBoxProvider {
+  NSMutableSet *boxCache;
   NSMutableDictionary *boxes;
   NSMutableIndexSet *visibleIndexes;
 }
@@ -14,6 +15,7 @@
 - (id)init {
   self = [super init];
   boxes = @{}.mutableCopy;
+  boxCache = NSMutableSet.set;
   visibleIndexes = NSMutableIndexSet.indexSet;
   return self;
 }
@@ -24,6 +26,7 @@
 
 - (void)reset {
   [boxes removeAllObjects];
+  [boxCache removeAllObjects];
   [visibleIndexes removeAllIndexes];
   [self.container.boxes removeAllObjects];
 }
@@ -38,7 +41,6 @@
     CGRect frame;
     frame.origin = [MGLayoutManager positionForBoxIn:self.container atIndex:i];
     frame.size = [self sizeForBoxAtIndex:i];
-
     if (!CGRectIntersectsRect(frame, viewport)) {
       [visibleIndexes removeIndex:i];
     }
@@ -46,7 +48,7 @@
 
   // add newly visible indexes to the start
   int index = visibleIndexes.count ? (int)visibleIndexes.firstIndex : 0;
-  while (index >= 0) {
+  while (index >= 0 && index < self.count) {
     if ([visibleIndexes containsIndex:index]) {
       index--;
       continue;
@@ -89,13 +91,29 @@
   }
 }
 
-#pragma mark - Box detail factories
+#pragma mark - Boxes in and out
+
+- (void)removeBoxAtIndex:(NSUInteger)index {
+  id key = @(index);
+  id box = boxes[key];
+  [boxCache addObject:box];
+  [boxes removeObjectForKey:key];
+  self.container.boxes[index] = NSNull.null;
+  NSLog(@"boxCache.count:%d", (int)boxCache.count);
+}
 
 - (UIView <MGLayoutBox> *)boxAtIndex:(NSUInteger)index {
   id key = @(index);
   id box = boxes[key];
   if (!box) {
-    boxes[key] = box = self.boxMaker(index);
+    if (boxCache.count) {
+      box = boxCache.anyObject;
+      [boxCache removeObject:box];
+    } else {
+      box = self.boxMaker();
+    }
+    self.boxCustomiser(box, index);
+    boxes[key] = box;
   }
   return box;
 }
