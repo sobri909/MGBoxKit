@@ -477,7 +477,7 @@ scroller.delegate = self;
 Own up to being a `UIScrollViewDelegate`
 
 ```objc
-@interface ViewController : UIViewController <UIScollViewDelegate>
+@interface ViewController : UIViewController <UIScrollViewDelegate>
 ```
 
 ### In Your ViewController.m:
