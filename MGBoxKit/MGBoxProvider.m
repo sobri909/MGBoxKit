@@ -4,11 +4,11 @@
 
 #import "MGBoxProvider.h"
 #import "MGLayoutBox.h"
-#import "MGLayoutManager.h"
 
 @implementation MGBoxProvider {
   NSMutableSet *boxCache;
   NSMutableDictionary *boxes;
+  NSMutableArray *boxPositions;
   NSMutableIndexSet *visibleIndexes;
 }
 
@@ -16,6 +16,7 @@
   self = [super init];
   boxes = @{}.mutableCopy;
   boxCache = NSMutableSet.set;
+  boxPositions = @[].mutableCopy;
   visibleIndexes = NSMutableIndexSet.indexSet;
   return self;
 }
@@ -38,9 +39,7 @@
 
   // remove any indexes that are no longer visible
   [visibleIndexes enumerateIndexesUsingBlock:^(NSUInteger i, BOOL *stop) {
-    CGRect frame;
-    frame.origin = [MGLayoutManager positionForBoxIn:self.container atIndex:i];
-    frame.size = [self sizeForBoxAtIndex:i];
+    CGRect frame = [self frameForBoxAtIndex:i];
     if (!CGRectIntersectsRect(frame, viewport)) {
       [visibleIndexes removeIndex:i];
     }
@@ -54,11 +53,7 @@
       continue;
     }
 
-    CGRect frame;
-    frame.origin = [MGLayoutManager positionForBoxIn:self.container
-        atIndex:index];
-    frame.size = [self sizeForBoxAtIndex:index];
-
+    CGRect frame = [self frameForBoxAtIndex:index];
     if (CGRectIntersectsRect(frame, viewport)) {
       [visibleIndexes addIndex:index];
     } else {
@@ -76,11 +71,7 @@
       continue;
     }
 
-    CGRect frame;
-    frame.origin = [MGLayoutManager positionForBoxIn:self.container
-        atIndex:index];
-    frame.size = [self sizeForBoxAtIndex:index];
-
+    CGRect frame = [self frameForBoxAtIndex:index];
     if (CGRectIntersectsRect(frame, viewport)) {
       [visibleIndexes addIndex:index];
     } else {
@@ -99,7 +90,6 @@
   [boxCache addObject:box];
   [boxes removeObjectForKey:key];
   self.container.boxes[index] = NSNull.null;
-  NSLog(@"boxCache.count:%d", (int)boxCache.count);
 }
 
 - (UIView <MGLayoutBox> *)boxAtIndex:(NSUInteger)index {
@@ -119,16 +109,18 @@
 }
 
 - (CGSize)sizeForBoxAtIndex:(NSUInteger)index {
-  id key = @(index);
-  UIView <MGLayoutBox> *box = boxes[key];
-  if (box) {
-    CGSize size = box.size;
-    size.width += box.leftMargin + box.rightMargin;
-    size.height += box.topMargin + box.bottomMargin;
-    return size;
-  } else {
     return self.boxSizer(index);
-  }
+}
+
+- (CGPoint)originForBoxAtIndex:(NSUInteger)index {
+    if (index >= self.boxPositions.count) {
+        [self.container layout];
+    }
+    return [self.boxPositions[index] CGPointValue];
+}
+
+- (CGRect)frameForBoxAtIndex:(NSUInteger)index {
+    return (CGRect){[self originForBoxAtIndex:index], [self sizeForBoxAtIndex:index]};
 }
 
 - (NSUInteger)count {
@@ -137,6 +129,10 @@
 
 - (NSIndexSet *)visibleIndexes {
   return visibleIndexes;
+}
+
+- (NSMutableArray *)boxPositions {
+    return boxPositions;
 }
 
 @end

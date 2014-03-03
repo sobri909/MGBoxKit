@@ -9,8 +9,6 @@
 + (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container;
 + (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container
             atIndexes:(NSIndexSet *)indexes;
-+ (CGPoint)positionForBoxIn:(UIView <MGLayoutBox> *)container
-                    atIndex:(NSUInteger)index;
 + (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container
             withSpeed:(NSTimeInterval)speed completion:(Block)completion;
 + (void)positionBoxesIn:(UIView <MGLayoutBox> *)container;

@@ -101,8 +101,6 @@ different priority or perform a bunch of expensive processes in serial.
 
 /** @name Styling and positioning */
 
-@property (nonatomic, retain) NSMutableArray *boxPositions;
-
 /**
 * Provides access to getting and setting all edge margins in a single pass with
 * a `UIEdgeInsets` value. Positive values add an external margin while negative

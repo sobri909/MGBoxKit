@@ -13,7 +13,7 @@
 }
 
 // MGLayoutBox protocol
-@synthesize boxes, boxProvider, boxPositions, parentBox;
+@synthesize boxes, boxProvider, parentBox;
 @synthesize boxLayoutMode, contentLayoutMode;
 @synthesize asyncLayout, asyncLayoutOnce, asyncQueue;
 @synthesize margin, topMargin, bottomMargin, leftMargin, rightMargin;

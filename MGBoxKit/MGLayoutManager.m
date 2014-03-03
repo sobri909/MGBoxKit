@@ -5,15 +5,11 @@
 #import "MGLayoutManager.h"
 #import "MGScrollView.h"
 #import "MGBoxProvider.h"
+#import <tgmath.h>
 
-@interface MGLayoutManager ()
-
-+ (void)stackTableStyle:(UIView <MGLayoutBox> *)container
-               onlyMove:(NSSet *)only;
-+ (void)stackGridStyle:(UIView <MGLayoutBox> *)container
-              onlyMove:(NSSet *)only;
-
-@end
+CGFloat roundToPixel(CGFloat value) {
+  return UIScreen.mainScreen.scale == 1 ? round(value) : round(value * 2.0) / 2.0;
+}
 
 @implementation MGLayoutManager
 
@@ -24,6 +20,15 @@
     return;
   }
   container.layingOut = YES;
+
+  // box provider style layout
+  if (container.boxProvider) {
+    [self positionBoxesIn:container];
+    [container.boxProvider updateVisibleIndexes];
+    [self layoutBoxesIn:container atIndexes:container.boxProvider.visibleIndexes];
+    container.layingOut = NO;
+    return;
+  }
 
   // goners
   NSArray *gone = [MGLayoutManager findBoxesInView:container
@@ -70,12 +75,11 @@
       notInSet:container.boxes];
   [gone makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
-  // add and position boxes at the given indexes
+  // add boxes at the given indexes
   [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
 
     // get the box
-    UIView <MGLayoutBox>
-        *box = index < container.boxes.count ? container.boxes[index] : nil;
+    UIView <MGLayoutBox> *box = index < container.boxes.count ? container.boxes[index] : nil;
     if (!box || (id)box == NSNull.null) {
       container.boxes[index] = box = [container.boxProvider boxAtIndex:index];
     }
@@ -84,11 +88,10 @@
       box.parentBox = container;
       [container addSubview:box];
       [box layout];
-
     }
 
-    // get and set the origin
-    CGPoint origin = [self positionForBoxIn:container atIndex:index];
+    // position it
+    CGPoint origin = [container.boxProvider originForBoxAtIndex:index];
     origin.x += box.leftMargin;
     origin.y += box.topMargin;
     if (!CGPointEqualToPoint(origin, box.origin)) {
@@ -97,55 +100,32 @@
   }];
 }
 
-+ (CGPoint)positionForBoxIn:(UIView <MGLayoutBox> *)container
-                    atIndex:(NSUInteger)index {
-
-  // fill missing positions and boxes
-  if (index >= container.boxes.count) {
-    CGFloat y = container.topPadding;
-    for (int i = 0; i < index; i++) {
-      CGSize size = [container.boxProvider sizeForBoxAtIndex:i];
-      CGPoint origin = (CGPoint){container.leftPadding, y};
-      y += size.height;
-      if (i >= container.boxes.count) {
-        container.boxPositions[i] = [NSValue valueWithCGPoint:origin];
-        container.boxes[i] = NSNull.null;
-      }
-    }
-  }
-
-  // previous box position and size
-  CGPoint prevPos = index
-      ? [container.boxPositions[index - 1] CGPointValue]
-      : CGPointZero;
-  CGSize prevSize = index
-      ? [container.boxProvider sizeForBoxAtIndex:index - 1]
-      : CGSizeZero;
-
-  // calc the position
-  CGPoint pos;
-  pos.x = container.leftPadding;
-  pos.y = prevPos.y + prevSize.height;
-  container.boxPositions[index] = [NSValue valueWithCGPoint:pos];
-
-  return pos;
-}
-
 + (void)positionBoxesIn:(UIView <MGLayoutBox> *)container {
-  switch (container.contentLayoutMode) {
-    case MGLayoutTableStyle:
-      [MGLayoutManager stackTableStyle:container onlyMove:nil];
-      break;
-    case MGLayoutGridStyle:
-      [MGLayoutManager stackGridStyle:container onlyMove:nil];
-      break;
-  }
+    if (container.boxProvider) {
+        switch (container.contentLayoutMode) {
+            case MGLayoutTableStyle:
+                [self stackTableStyle:container];
+                break;
+            case MGLayoutGridStyle:
+                [self stackGridStyle:container];
+                break;
+        }
+    } else {
+        switch (container.contentLayoutMode) {
+            case MGLayoutTableStyle:
+                [self stackTableStyle:container onlyMove:nil];
+                break;
+            case MGLayoutGridStyle:
+                [self stackGridStyle:container onlyMove:nil];
+                break;
+        }
 
-  // position attached and replacement boxes
-  [MGLayoutManager positionAttachedBoxesIn:container];
+        // position attached and replacement boxes
+        [MGLayoutManager positionAttachedBoxesIn:container];
 
-  // zindex time
-  [self stackByZIndexIn:container];
+        // zindex time
+        [self stackByZIndexIn:container];
+    }
 }
 
 + (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container
@@ -277,6 +257,47 @@
       completion();
     }
   }];
+}
+
+#pragma mark - Layout strategies
+
++ (void)stackGridStyle:(UIView <MGLayoutBox> *)container {
+    CGFloat x = container.leftPadding, y = container.topPadding, maxHeight = 0;
+
+    for (int i = 0; i < container.boxProvider.count; i++) {
+        CGSize size = [container.boxProvider sizeForBoxAtIndex:i];
+
+        // next row?
+        if (x + size.width > container.width) {
+            x = container.leftPadding, y = maxHeight;
+        }
+
+        // calc position
+        CGPoint origin = (CGPoint){roundToPixel(x), roundToPixel(y)};
+        x += size.width, maxHeight = MAX(maxHeight, origin.y + size.height);
+        container.boxProvider.boxPositions[i] = [NSValue valueWithCGPoint:origin];
+
+        // pad the boxes array
+        if (i >= container.boxes.count) {
+            container.boxes[i] = NSNull.null;
+        }
+    }
+}
+
++ (void)stackTableStyle:(UIView <MGLayoutBox> *)container {
+    CGFloat y = container.topPadding;
+
+    for (int i = 0; i < container.boxProvider.count; i++) {
+        CGSize size = [container.boxProvider sizeForBoxAtIndex:i];
+        CGPoint origin = (CGPoint){container.leftPadding, y};
+        container.boxProvider.boxPositions[i] = [NSValue valueWithCGPoint:origin];
+        y += size.height;
+
+        // pad the boxes array
+        if (i >= container.boxes.count) {
+            container.boxes[i] = NSNull.null;
+        }
+    }
 }
 
 + (void)stackTableStyle:(UIView <MGLayoutBox> *)container
@@ -480,14 +501,6 @@
       [container insertSubview:view atIndex:sortedIndex];
     }
   }
-}
-
-float roundToPixel(float value) {
-    if (UIScreen.mainScreen.scale == 1.0f) {
-        return roundf(value);
-    }
-    //retina display, round to nearest half point
-    return roundf(value * 2.0) / 2.0;
 }
 
 @end
