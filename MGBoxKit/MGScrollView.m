@@ -119,13 +119,14 @@
 }
 
 - (void)updateContentSize {
-  CGSize contentSize = (CGSize){self.width, self.topPadding + self.bottomPadding};
+  CGSize contentSize = (CGSize){self.width, self.topPadding};
   for (int i = 0; i < self.boxProvider.count; i++) {
     CGSize boxSize = [self.boxProvider sizeForBoxAtIndex:i];
     CGPoint origin = [self.boxProvider originForBoxAtIndex:i];
     contentSize.width = MAX(origin.x + boxSize.width, contentSize.width);
     contentSize.height = MAX(origin.y + boxSize.height, contentSize.height);
   }
+  contentSize.height += self.bottomPadding;
   self.contentSize = contentSize;
 }
 
