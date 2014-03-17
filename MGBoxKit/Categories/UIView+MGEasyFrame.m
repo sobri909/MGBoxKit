@@ -44,6 +44,55 @@
   self.origin = origin;
 }
 
+- (void)setLeft:(CGFloat)left {
+  CGPoint origin = self.origin;
+  origin.x = left;
+  self.origin = origin;
+}
+
+- (void)setTop:(CGFloat)top {
+  CGPoint origin = self.origin;
+  origin.y = top;
+  self.origin = origin;
+}
+
+- (void)setBottom:(CGFloat)bottom {
+  CGPoint origin = self.origin;
+  origin.y = bottom - self.height;
+  self.origin = origin;
+}
+
+- (void)setRight:(CGFloat)right {
+  CGPoint origin = self.origin;
+  origin.x = right - self.width;
+  self.origin = origin;
+}
+
+- (void)setTopLeft:(CGPoint)topLeft {
+  self.origin = topLeft;
+}
+
+- (void)setTopRight:(CGPoint)topRight {
+  CGPoint origin = self.origin;
+  origin.x = topRight.x - self.width;
+  origin.y = topRight.y;
+  self.origin = origin;
+}
+
+- (void)setBottomLeft:(CGPoint)bottomLeft {
+  CGPoint origin = self.origin;
+  origin.x = bottomLeft.x;
+  origin.y = bottomLeft.y - self.height;
+  self.origin = origin;
+}
+
+- (void)setBottomRight:(CGPoint)bottomRight {
+  CGPoint origin = self.origin;
+  origin.x = bottomRight.x - self.width;
+  origin.y = bottomRight.y - self.height;
+  self.origin = origin;
+}
+
 #pragma mark - Getters
 
 - (CGSize)size {

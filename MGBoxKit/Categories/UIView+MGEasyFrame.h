@@ -42,48 +42,48 @@
 */
 @property (nonatomic, assign) CGFloat y;
 
-/** @name View edge getters */
+/** @name View edge getters and setters */
 
 /**
- * Returns the left edge's x coordinate of the view.
+ * Get and set the left edge's x coordinate of the view.
  */
-- (CGFloat)left;
+@property (nonatomic, assign) CGFloat left;
 
 /**
- * Returns the top edge's y coordinate of the view.
+ * Get and set the top edge's y coordinate of the view.
  */
-- (CGFloat)top;
+@property (nonatomic, assign) CGFloat top;
 
 /**
- * Returns the bottom edge's y coordinate of the view.
+ * Get and set the bottom edge's y coordinate of the view.
  */
-- (CGFloat)bottom;
+@property (nonatomic, assign) CGFloat bottom;
 
 /**
- * Returns the right edge's x coordinate of the view.
+ * Get and set the right edge's x coordinate of the view.
  */
-- (CGFloat)right;
+@property (nonatomic, assign) CGFloat right;
 
-/** @name View corner getters */
-
-/**
-* Returns the top left point of the view.
-*/
-- (CGPoint)topLeft;
+/** @name View corner getters and setters */
 
 /**
-* Returns the top right point of the view.
+ * Get and set the top left point of the view.
 */
-- (CGPoint)topRight;
+@property (nonatomic, assign) CGPoint topLeft;
 
 /**
-* Returns the bottom right point of the view.
+ * Get and set the top right point of the view.
 */
-- (CGPoint)bottomRight;
+@property (nonatomic, assign) CGPoint topRight;
 
 /**
-* Returns the bottom left point of the view.
+ * Get and set the bottom right point of the view.
 */
-- (CGPoint)bottomLeft;
+@property (nonatomic, assign) CGPoint bottomRight;
+
+/**
+ * Get and set the bottom left point of the view.
+*/
+@property (nonatomic, assign) CGPoint bottomLeft;
 
 @end
