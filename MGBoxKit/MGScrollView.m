@@ -115,7 +115,7 @@
 }
 
 - (void)layoutSubviews {
-
+  [super layoutSubviews];
   // deal with fixed position
   for (UIView <MGLayoutBox> *box in self.subviews) {
     if ([box conformsToProtocol:@protocol(MGLayoutBox)] && box.boxLayoutMode
