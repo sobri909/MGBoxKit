@@ -1,3 +1,17 @@
+## 3.0.0
+
+### Upgrading
+
+- the `screenshot:` method changed signature to `screenshotWithShadow:scale:`
+
+### Enhancements
+
+- `MGBoxProvider` box reuse and offscreen culling, allowing for much larger 
+  tables/grids
+- `MGLine` can auto resize the width of `UITextField` items to fit
+- new setters for `top`, `right`, `bottom`, `topLeft` etc
+- arm64 fixes
+
 ## 2.1.0
 
 #### Upgrading
