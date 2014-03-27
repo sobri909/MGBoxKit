@@ -4,7 +4,8 @@
 
 @protocol MGLayoutBox;
 
-typedef UIView <MGLayoutBox> *(^MGBoxMaker)(NSUInteger index);
+typedef UIView <MGLayoutBox> *(^MGBoxMaker)();
+typedef void (^MGBoxCustomiser)(id box, NSUInteger index);
 typedef CGSize(^MGBoxSizer)(NSUInteger index);
 typedef NSUInteger(^MGCounter)();
 
@@ -17,8 +18,10 @@ typedef NSUInteger(^MGCounter)();
 
 @property (nonatomic, weak) UIView <MGLayoutBox> *container;
 @property (nonatomic, readonly) NSIndexSet *visibleIndexes;
+@property (nonatomic, readonly) NSMutableArray *boxPositions;
 
 @property (nonatomic, copy) MGBoxMaker boxMaker;
+@property (nonatomic, copy) MGBoxCustomiser boxCustomiser;
 @property (nonatomic, copy) MGBoxSizer boxSizer;
 @property (nonatomic, copy) MGCounter counter;
 
@@ -27,10 +30,13 @@ typedef NSUInteger(^MGCounter)();
 - (void)reset;
 - (void)updateVisibleIndexes;
 
+- (void)removeBoxAtIndex:(NSUInteger)index;
 - (UIView <MGLayoutBox> *)boxAtIndex:(NSUInteger)index;
-- (CGSize)sizeForBoxAtIndex:(NSUInteger)index;
 - (NSUInteger)count;
 
-
+// note: size, origin, rect include margins
+- (CGSize)sizeForBoxAtIndex:(NSUInteger)index;
+- (CGPoint)originForBoxAtIndex:(NSUInteger)index;
+- (CGRect)frameForBoxAtIndex:(NSUInteger)index;
 
 @end

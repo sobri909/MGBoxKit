@@ -167,6 +167,6 @@ Possible `MGBorderStyle` values:
 /**
 * A convenience method to return a screenshot of the box, with added drop shadow.
 */
-- (UIImage *)screenshot:(float)scale;
+- (UIImage *)screenshotWithShadow:(BOOL)shadow scale:(float)scale;
 
 @end

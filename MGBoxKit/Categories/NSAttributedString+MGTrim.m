@@ -12,13 +12,13 @@
 - (NSAttributedString *)attributedStringByTrimming:(NSCharacterSet *)set {
   NSCharacterSet *invertedSet = set.invertedSet;
   NSString *string = self.string;
-  unsigned loc, len;
+  unsigned int loc, len;
 
   NSRange range = [string rangeOfCharacterFromSet:invertedSet];
-  loc = (range.length > 0) ? range.location : 0;
+  loc = (range.length > 0) ? (int)range.location : 0;
 
   range = [string rangeOfCharacterFromSet:invertedSet options:NSBackwardsSearch];
-  len = (range.length > 0) ? NSMaxRange(range) - loc : string.length - loc;
+  len = (range.length > 0) ? (int)NSMaxRange(range) - loc : (int)string.length - loc;
 
   return [self attributedSubstringFromRange:NSMakeRange(loc, len)];
 }

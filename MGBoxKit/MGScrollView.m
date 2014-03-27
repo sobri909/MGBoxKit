@@ -19,7 +19,7 @@
 }
 
 // MGLayoutBox protocol
-@synthesize boxes, boxProvider, boxPositions, parentBox;
+@synthesize boxes, boxProvider, parentBox;
 @synthesize boxLayoutMode, contentLayoutMode;
 @synthesize asyncLayout, asyncLayoutOnce, asyncQueue;
 @synthesize margin, topMargin, bottomMargin, leftMargin, rightMargin;
@@ -63,8 +63,6 @@
   // defaults
   self.keyboardMargin = KEYBOARD_MARGIN;
   self.keepFirstResponderAboveKeyboard = YES;
-  self.viewportMargin = UIScreen.mainScreen.bounds.size;
-  self.boxPositions = @[].mutableCopy;
 
   self.delegate = self;
 
@@ -80,17 +78,12 @@
 #pragma mark - Layout
 
 - (void)layout {
+  [MGLayoutManager layoutBoxesIn:self];
 
-  // box provider style layout
   if (self.boxProvider) {
     [self updateContentSize];
-    [self.boxProvider updateVisibleIndexes];
-    [MGLayoutManager layoutBoxesIn:self
-        atIndexes:self.boxProvider.visibleIndexes];
     return;
   }
-
-  [MGLayoutManager layoutBoxesIn:self];
 
   // async draws
   if (self.asyncLayout || self.asyncLayoutOnce) {
@@ -126,12 +119,15 @@
 }
 
 - (void)updateContentSize {
-  CGSize size = (CGSize){self.width, self.topPadding + self.bottomPadding};
+  CGSize contentSize = (CGSize){self.width, self.topPadding};
   for (int i = 0; i < self.boxProvider.count; i++) {
     CGSize boxSize = [self.boxProvider sizeForBoxAtIndex:i];
-    size.height += boxSize.height;
+    CGPoint origin = [self.boxProvider originForBoxAtIndex:i];
+    contentSize.width = MAX(origin.x + boxSize.width, contentSize.width);
+    contentSize.height = MAX(origin.y + boxSize.height, contentSize.height);
   }
-  self.contentSize = size;
+  contentSize.height += self.bottomPadding;
+  self.contentSize = contentSize;
 }
 
 #pragma mark - Interaction

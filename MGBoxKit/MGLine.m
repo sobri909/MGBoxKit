@@ -514,6 +514,13 @@
         used += label.width;
       }
 
+      // UITextFields can be resized
+    } else if ([item isKindOfClass:UITextField.class]) {
+      if (used + item.width > limit) { // needs slimming
+          item.width = limit - used;
+      }
+      used += item.width;
+
       // MGLayoutBoxes have margins to deal with
     } else if ([item conformsToProtocol:@protocol(MGLayoutBox)]) {
       UIView <MGLayoutBox> *box = (id)item;

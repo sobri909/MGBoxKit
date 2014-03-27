@@ -4,16 +4,19 @@
 
 #import "MGBoxProvider.h"
 #import "MGLayoutBox.h"
-#import "MGLayoutManager.h"
 
 @implementation MGBoxProvider {
+  NSMutableSet *boxCache;
   NSMutableDictionary *boxes;
+  NSMutableArray *boxPositions;
   NSMutableIndexSet *visibleIndexes;
 }
 
 - (id)init {
   self = [super init];
   boxes = @{}.mutableCopy;
+  boxCache = NSMutableSet.set;
+  boxPositions = @[].mutableCopy;
   visibleIndexes = NSMutableIndexSet.indexSet;
   return self;
 }
@@ -24,6 +27,7 @@
 
 - (void)reset {
   [boxes removeAllObjects];
+  [boxCache removeAllObjects];
   [visibleIndexes removeAllIndexes];
   [self.container.boxes removeAllObjects];
 }
@@ -35,28 +39,21 @@
 
   // remove any indexes that are no longer visible
   [visibleIndexes enumerateIndexesUsingBlock:^(NSUInteger i, BOOL *stop) {
-    CGRect frame;
-    frame.origin = [MGLayoutManager positionForBoxIn:self.container atIndex:i];
-    frame.size = [self sizeForBoxAtIndex:i];
-
+    CGRect frame = [self frameForBoxAtIndex:i];
     if (!CGRectIntersectsRect(frame, viewport)) {
       [visibleIndexes removeIndex:i];
     }
   }];
 
   // add newly visible indexes to the start
-  int index = visibleIndexes.count ? visibleIndexes.firstIndex : 0;
-  while (index >= 0) {
+  int index = visibleIndexes.count ? (int)visibleIndexes.firstIndex : 0;
+  while (index >= 0 && index < self.count) {
     if ([visibleIndexes containsIndex:index]) {
       index--;
       continue;
     }
 
-    CGRect frame;
-    frame.origin = [MGLayoutManager positionForBoxIn:self.container
-        atIndex:index];
-    frame.size = [self sizeForBoxAtIndex:index];
-
+    CGRect frame = [self frameForBoxAtIndex:index];
     if (CGRectIntersectsRect(frame, viewport)) {
       [visibleIndexes addIndex:index];
     } else {
@@ -67,18 +64,14 @@
   }
 
   // add newly visible indexes to the end
-  index = visibleIndexes.lastIndex;
+  index = (int)visibleIndexes.lastIndex;
   while (index < self.count) {
     if ([visibleIndexes containsIndex:index]) {
       index++;
       continue;
     }
 
-    CGRect frame;
-    frame.origin = [MGLayoutManager positionForBoxIn:self.container
-        atIndex:index];
-    frame.size = [self sizeForBoxAtIndex:index];
-
+    CGRect frame = [self frameForBoxAtIndex:index];
     if (CGRectIntersectsRect(frame, viewport)) {
       [visibleIndexes addIndex:index];
     } else {
@@ -89,28 +82,45 @@
   }
 }
 
-#pragma mark - Box detail factories
+#pragma mark - Boxes in and out
+
+- (void)removeBoxAtIndex:(NSUInteger)index {
+  id key = @(index);
+  id box = boxes[key];
+  [boxCache addObject:box];
+  [boxes removeObjectForKey:key];
+  self.container.boxes[index] = NSNull.null;
+}
 
 - (UIView <MGLayoutBox> *)boxAtIndex:(NSUInteger)index {
   id key = @(index);
   id box = boxes[key];
   if (!box) {
-    boxes[key] = box = self.boxMaker(index);
+    if (boxCache.count) {
+      box = boxCache.anyObject;
+      [boxCache removeObject:box];
+    } else {
+      box = self.boxMaker();
+    }
+    self.boxCustomiser(box, index);
+    boxes[key] = box;
   }
   return box;
 }
 
 - (CGSize)sizeForBoxAtIndex:(NSUInteger)index {
-  id key = @(index);
-  UIView <MGLayoutBox> *box = boxes[key];
-  if (box) {
-    CGSize size = box.size;
-    size.width += box.leftMargin + box.rightMargin;
-    size.height += box.topMargin + box.bottomMargin;
-    return size;
-  } else {
     return self.boxSizer(index);
-  }
+}
+
+- (CGPoint)originForBoxAtIndex:(NSUInteger)index {
+    if (index >= self.boxPositions.count) {
+        [self.container layout];
+    }
+    return [self.boxPositions[index] CGPointValue];
+}
+
+- (CGRect)frameForBoxAtIndex:(NSUInteger)index {
+    return (CGRect){[self originForBoxAtIndex:index], [self sizeForBoxAtIndex:index]};
 }
 
 - (NSUInteger)count {
@@ -119,6 +129,10 @@
 
 - (NSIndexSet *)visibleIndexes {
   return visibleIndexes;
+}
+
+- (NSMutableArray *)boxPositions {
+    return boxPositions;
 }
 
 @end
