@@ -12,7 +12,7 @@
   self.height = 0;
 
   // refresh
-  self.boxes = self.allLines.mutableCopy;
+  self.boxes = self.allLines.array.mutableCopy;
 
   // and all together now
   [super layout];
@@ -21,7 +21,7 @@
 - (void)layoutWithSpeed:(NSTimeInterval)speed completion:(Block)completion {
 
   // refresh
-  self.boxes = self.allLines.mutableCopy;
+  self.boxes = self.allLines.array.mutableCopy;
 
   // and smoothly together now
   [super layoutWithSpeed:speed completion:completion];
