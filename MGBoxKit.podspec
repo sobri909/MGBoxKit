@@ -11,7 +11,6 @@ Pod::Spec.new do |s|
   s.framework  = 'QuartzCore', 'CoreText'
   s.requires_arc = true
   s.subspec 'Categories' do |ss|
-    ss.public_header_files = 'MGBoxKit/*.h'
     ss.source_files = 'MGBoxKit/Categories/*.{h,m}'
   end
 end
