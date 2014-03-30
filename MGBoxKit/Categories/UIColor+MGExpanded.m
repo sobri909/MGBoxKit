@@ -4,13 +4,13 @@
 //
 
 #import "UIColor+MGExpanded.h"
-#import "MGBase.h"
 
 #define EPSILON     0.001f
 #define MIN3(x,y,z) ((y) <= (z) ? ((x) <= (y) ? (x) : (y)) : ((x) <= (z) ? (x) : (z)))
 #define MAX3(x,y,z) ((y) >= (z) ? ((x) >= (y) ? (x) : (y)) : ((x) >= (z) ? (x) : (z)))
 #define EQUALS(x,y) (fabsf((x) - (y)) < (EPSILON))
 #define SQRT3       1.732050807568877f
+#define CLAMP(x,low,high) (((x) > (high)) ? (high) : (((x) < (low)) ? (low) : (x)))
 
 // Static cache of looked up color names. Used with +colorWithName:
 static NSMutableDictionary *colorNameCache = nil;
