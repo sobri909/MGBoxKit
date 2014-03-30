@@ -3,7 +3,6 @@
 //
 
 #import "MGBase.h"
-#import "UIView+MGEasyFrame.h"
 
 @class MGBoxProvider;
 
