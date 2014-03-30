@@ -3,6 +3,7 @@ Pod::Spec.new do |s|
   s.version      = "3.0.1"
   s.summary      = "Simple, quick iOS tables, grids, and more."
   s.homepage     = "https://github.com/sobri909/MGBoxKit"
+  s.documentation_url = 'http://www.bigpaua.com/MGBoxKit/docs/index.html'
   s.license      = 'Copyright 2013, Matt Greenfield'
   s.author       = { "Matt Greenfield" => "matt@bigpaua.com" }
   s.source       = { :git => "https://github.com/sobri909/MGBoxKit.git", :tag => "3.0.1" }
