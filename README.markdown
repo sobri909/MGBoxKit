@@ -1,6 +1,6 @@
 # Simple, quick iOS tables, grids, more
 
-Designed for rapid table and grid creation with minimal code, easy customisation, attractive default styling, using modern blocks based design patterns, and without need for fidgety tweaking or awkward design patterns. 
+Designed for rapid table and grid creation with minimal code, easy customisation, using modern blocks based design patterns, and without need for fidgety tweaking or awkward design patterns.
 
 Includes blocks based gesture recognisers, observers, control events, and custom events.
 
@@ -21,13 +21,14 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 
 - Table layouts (similar to `UITableView`, but less fuss)
 - Grid layouts (similar to `UICollectionView`, but less fuss)
+- Optional box offscreen culling and reuse
 - Table rows automatically layout `NSStrings`, `UIImages`, 
   `NSAttributedStrings`, and multiline text
 - Table rows accept `Mush` lightweight markup for bold, italics, underline, and 
   monospace
 - Animated adding/removing/reordering rows, boxes, sections, etc
 - CSS-like `margin`, `padding`, `zIndex`, `fixedPosition`, and more
-- Separate top/right/bottom/left borders, and optional etched border style
+- Separate top/right/bottom/left borders
 - Optional asynchronous blocks based layout
 - Automatically keeps input fields above the keyboard  
 - Optional scroll view box edge snapping
@@ -44,14 +45,6 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 
 1. Add the `MGBoxKit` folder to your project. (ARC required)
 2. Add the `CoreText` and `QuartzCore` frameworks to your project.
-
-## Subproject Setup (not easy)
-
-Optionally you could add **MGBoxKit** to your project as a subproject. Though going this route may or may not, depending on the phase of the moon, lead you down a twisted trail of nonsensical Xcode build errors. If you want to get going quickly and you're new to subprojects, I don't recommend going this way.
-
-1. Drag **MGBoxKit.xcodeproj** into your Xcode project tree.
-2. Add **MGBoxKit** as a target dependency in your project target's **Build Phases**.
-3. Add the **MGBoxKit** folder to your project target's **Framework Search Paths** and **Header Search Paths** under **Build Settings**.
 
 ## Example Screenshots
 
@@ -85,10 +78,8 @@ MGScrollView *scroller = [MGScrollView scrollerWithSize:self.bounds.size];
 
 #### Add a Table Section:
 
-Note that `MGTableBoxStyled` and `MGLineStyled` provide a default styling similar to iOS 6 grouped tables, so will now look dated. They should only be used as code examples for how to create your own subclasses (of `MGTableBox`, `MGBox`, `MGLine`) with styling suitable for your app. 
-
 ```
-MGTableBoxStyled *section = MGTableBoxStyled.box;
+MGBox *section = MGBox.box;
 [scroller.boxes addObject:section];
 ```
 
@@ -99,22 +90,22 @@ MGTableBoxStyled *section = MGTableBoxStyled.box;
 CGSize rowSize = (CGSize){304, 40};
 
 // a header row
-MGLineStyled *header = [MGLineStyled lineWithLeft:@"My First Table" right:nil size:rowSize];
+MGLine *header = [MGLine lineWithLeft:@"My First Table" right:nil size:rowSize];
 header.leftPadding = header.rightPadding = 16;
-[section.topLines addObject:header];
+[section.boxes addObject:header];
 
 // a string on the left and a horse on the right
-MGLineStyled *row1 = [MGLineStyled lineWithLeft:@"Left text" 
+MGLineStyled *row1 = [MGLine lineWithLeft:@"Left text" 
     right:[UIImage imageNamed:@"horse.png"] size:rowSize];
-[section.topLines addObject:row1];
+[section.boxes addObject:row1];
 
 // a string with Mush markup
-MGLineStyled *row2 = MGLineStyled.line;
+MGLine *row2 = MGLine.line;
 row2.multilineLeft = @"This row has **bold** text, //italics// text, __underlined__ text, "
     "and some `monospaced` text. The text will span more than one line, and the row will "
     "automatically adjust its height to fit.|mush";
 row2.minHeight = 40;
-[section.topLines addObject:row2];
+[section.boxes addObject:row2];
 ```
 
 #### Animate and Scroll the Section Into View
@@ -504,8 +495,6 @@ UIImage *screenshot = [box screenshot:0]; // 0 = device scale, 1 = old school, 2
 ## License
 
 No need to give credit or mention `MGBox` in your app. No one reads those things anyway. The license is otherwise BSD standard.
-
-If you want to give back, you could always [buy one of my apps](http://bigpaua.com) ;)
 
 ## More
 
