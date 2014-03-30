@@ -2,7 +2,7 @@
 //  Created by matt on 24/09/12.
 //
 
-#import "MGBase.h"
+#import "MGBlockWrapper.h"
 
 /**
 * Provides lightweight, blocks based keypath observing and custom events.

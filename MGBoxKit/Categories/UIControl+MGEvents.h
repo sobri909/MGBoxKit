@@ -2,7 +2,7 @@
 //  Created by matt on 19/10/12.
 //
 
-#import "MGBase.h"
+#import "MGBlockWrapper.h"
 
 /**
 * Provides lightweight, blocks based control event observing.

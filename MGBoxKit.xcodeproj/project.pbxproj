@@ -10,7 +10,6 @@
 		C914B0A116E2082C00F12F48 /* MGBoxProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = C914B09F16E2082C00F12F48 /* MGBoxProvider.h */; };
 		C914B0A216E2082C00F12F48 /* MGBoxProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = C914B0A016E2082C00F12F48 /* MGBoxProvider.m */; };
 		C9161DDF16E1F45300F3D70C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9161DDE16E1F45300F3D70C /* Foundation.framework */; };
-		C9161E1516E1F90C00F3D70C /* MGBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161DFB16E1F90C00F3D70C /* MGBlockWrapper.m */; };
 		C9161E1616E1F90C00F3D70C /* MGBox.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161DFD16E1F90C00F3D70C /* MGBox.m */; };
 		C9161E1716E1F90C00F3D70C /* MGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161DFF16E1F90C00F3D70C /* MGButton.m */; };
 		C9161E1816E1F90C00F3D70C /* MGLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C9161E0216E1F90C00F3D70C /* MGLayoutManager.m */; };
@@ -33,7 +32,6 @@
 		C9161E4F16E201B100F3D70C /* UIResponder+FirstResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E3016E1FC5000F3D70C /* UIResponder+FirstResponder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9161E5116E201B100F3D70C /* UIView+MGEasyFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E3216E1FC5000F3D70C /* UIView+MGEasyFrame.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9161E5316E201B100F3D70C /* MGBase.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161DF916E1F90C00F3D70C /* MGBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C9161E5416E201B100F3D70C /* MGBlockWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161DFA16E1F90C00F3D70C /* MGBlockWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9161E5616E201B200F3D70C /* MGBox.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161DFC16E1F90C00F3D70C /* MGBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9161E5816E201B200F3D70C /* MGButton.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161DFE16E1F90C00F3D70C /* MGButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9161E5A16E201B200F3D70C /* MGLayoutBox.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E0016E1F90C00F3D70C /* MGLayoutBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -44,6 +42,8 @@
 		C9161E6316E201B200F3D70C /* MGScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E0916E1F90C00F3D70C /* MGScrollView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9161E6516E201B200F3D70C /* MGTableBox.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E0B16E1F90C00F3D70C /* MGTableBox.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9161E6716E201B200F3D70C /* MGTableBoxStyled.h in Headers */ = {isa = PBXBuildFile; fileRef = C9161E0D16E1F90C00F3D70C /* MGTableBoxStyled.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9DB6BE818E7E4BD00473AB1 /* MGBlockWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DB6BE618E7E4BD00473AB1 /* MGBlockWrapper.h */; };
+		C9DB6BE918E7E4BD00473AB1 /* MGBlockWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DB6BE718E7E4BD00473AB1 /* MGBlockWrapper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -65,8 +65,6 @@
 		C9161DDE16E1F45300F3D70C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C9161DE216E1F45300F3D70C /* MGBoxKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MGBoxKit-Prefix.pch"; sourceTree = "<group>"; };
 		C9161DF916E1F90C00F3D70C /* MGBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBase.h; sourceTree = "<group>"; };
-		C9161DFA16E1F90C00F3D70C /* MGBlockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBlockWrapper.h; sourceTree = "<group>"; };
-		C9161DFB16E1F90C00F3D70C /* MGBlockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBlockWrapper.m; sourceTree = "<group>"; };
 		C9161DFC16E1F90C00F3D70C /* MGBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBox.h; sourceTree = "<group>"; };
 		C9161DFD16E1F90C00F3D70C /* MGBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBox.m; sourceTree = "<group>"; };
 		C9161DFE16E1F90C00F3D70C /* MGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGButton.h; sourceTree = "<group>"; };
@@ -98,6 +96,8 @@
 		C9161E3116E1FC5000F3D70C /* UIResponder+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponder.m"; sourceTree = "<group>"; };
 		C9161E3216E1FC5000F3D70C /* UIView+MGEasyFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MGEasyFrame.h"; sourceTree = "<group>"; };
 		C9161E3316E1FC5000F3D70C /* UIView+MGEasyFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MGEasyFrame.m"; sourceTree = "<group>"; };
+		C9DB6BE618E7E4BD00473AB1 /* MGBlockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBlockWrapper.h; sourceTree = "<group>"; };
+		C9DB6BE718E7E4BD00473AB1 /* MGBlockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBlockWrapper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,8 +142,6 @@
 			children = (
 				C9161DEC16E1F90C00F3D70C /* Categories */,
 				C9161DF916E1F90C00F3D70C /* MGBase.h */,
-				C9161DFA16E1F90C00F3D70C /* MGBlockWrapper.h */,
-				C9161DFB16E1F90C00F3D70C /* MGBlockWrapper.m */,
 				C9161DFC16E1F90C00F3D70C /* MGBox.h */,
 				C9161DFD16E1F90C00F3D70C /* MGBox.m */,
 				C914B09F16E2082C00F12F48 /* MGBoxProvider.h */,
@@ -181,6 +179,8 @@
 		C9161DEC16E1F90C00F3D70C /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				C9DB6BE618E7E4BD00473AB1 /* MGBlockWrapper.h */,
+				C9DB6BE718E7E4BD00473AB1 /* MGBlockWrapper.m */,
 				C9161E2816E1FC5000F3D70C /* NSAttributedString+MGTrim.h */,
 				C9161E2916E1FC5000F3D70C /* NSAttributedString+MGTrim.m */,
 				C9161E2A16E1FC5000F3D70C /* NSObject+MGEvents.h */,
@@ -211,7 +211,6 @@
 				C9161E4F16E201B100F3D70C /* UIResponder+FirstResponder.h in Headers */,
 				C9161E5116E201B100F3D70C /* UIView+MGEasyFrame.h in Headers */,
 				C9161E5316E201B100F3D70C /* MGBase.h in Headers */,
-				C9161E5416E201B100F3D70C /* MGBlockWrapper.h in Headers */,
 				C9161E5616E201B200F3D70C /* MGBox.h in Headers */,
 				C9161E5816E201B200F3D70C /* MGButton.h in Headers */,
 				C9161E5A16E201B200F3D70C /* MGLayoutBox.h in Headers */,
@@ -220,6 +219,7 @@
 				C9161E5F16E201B200F3D70C /* MGLineStyled.h in Headers */,
 				C9161E6116E201B200F3D70C /* MGMushParser.h in Headers */,
 				C9161E6316E201B200F3D70C /* MGScrollView.h in Headers */,
+				C9DB6BE818E7E4BD00473AB1 /* MGBlockWrapper.h in Headers */,
 				C9161E6516E201B200F3D70C /* MGTableBox.h in Headers */,
 				C9161E6716E201B200F3D70C /* MGTableBoxStyled.h in Headers */,
 				C914B0A116E2082C00F12F48 /* MGBoxProvider.h in Headers */,
@@ -278,7 +278,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9161E1516E1F90C00F3D70C /* MGBlockWrapper.m in Sources */,
 				C9161E1616E1F90C00F3D70C /* MGBox.m in Sources */,
 				C9161E1716E1F90C00F3D70C /* MGButton.m in Sources */,
 				C9161E1816E1F90C00F3D70C /* MGLayoutManager.m in Sources */,
@@ -289,6 +288,7 @@
 				C9161E1D16E1F90C00F3D70C /* MGTableBox.m in Sources */,
 				C9161E1E16E1F90C00F3D70C /* MGTableBoxStyled.m in Sources */,
 				C9161E3416E1FC5000F3D70C /* NSAttributedString+MGTrim.m in Sources */,
+				C9DB6BE918E7E4BD00473AB1 /* MGBlockWrapper.m in Sources */,
 				C9161E3516E1FC5000F3D70C /* NSObject+MGEvents.m in Sources */,
 				C9161E3616E1FC5000F3D70C /* UIColor+MGExpanded.m in Sources */,
 				C9161E3716E1FC5000F3D70C /* UIControl+MGEvents.m in Sources */,
