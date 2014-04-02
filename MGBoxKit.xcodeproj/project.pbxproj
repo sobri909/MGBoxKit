@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3307101DF01AE12A8F7181C9 /* MGDeallocAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 33071B20CE8A100CF53E6077 /* MGDeallocAction.m */; };
+		3307160B5F8E348DB8EBFE8D /* MGDeallocAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 33071D9FDCBA5244054A0FD5 /* MGDeallocAction.h */; };
+		330717226D0D1C2AAF1E0FDC /* MGObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 330714ECA1DD106E5E6AB0A2 /* MGObserver.h */; };
+		33071A26541009FE1D58ADFC /* MGWeakHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 3307196E2AAB6CE4BF579A12 /* MGWeakHandler.h */; };
+		33071A61AFE3BE6B66617303 /* MGWeakHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3307161811F025021071DA25 /* MGWeakHandler.m */; };
+		33071FF87CAC7EA68125C336 /* MGObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 3307122812C0F2F772925258 /* MGObserver.m */; };
 		C914B0A116E2082C00F12F48 /* MGBoxProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = C914B09F16E2082C00F12F48 /* MGBoxProvider.h */; };
 		C914B0A216E2082C00F12F48 /* MGBoxProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = C914B0A016E2082C00F12F48 /* MGBoxProvider.m */; };
 		C9161DDF16E1F45300F3D70C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9161DDE16E1F45300F3D70C /* Foundation.framework */; };
@@ -59,6 +65,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3307122812C0F2F772925258 /* MGObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGObserver.m; sourceTree = "<group>"; };
+		330714ECA1DD106E5E6AB0A2 /* MGObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGObserver.h; sourceTree = "<group>"; };
+		3307161811F025021071DA25 /* MGWeakHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGWeakHandler.m; sourceTree = "<group>"; };
+		3307196E2AAB6CE4BF579A12 /* MGWeakHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGWeakHandler.h; sourceTree = "<group>"; };
+		33071B20CE8A100CF53E6077 /* MGDeallocAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGDeallocAction.m; sourceTree = "<group>"; };
+		33071D9FDCBA5244054A0FD5 /* MGDeallocAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGDeallocAction.h; sourceTree = "<group>"; };
 		C914B09F16E2082C00F12F48 /* MGBoxProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBoxProvider.h; sourceTree = "<group>"; };
 		C914B0A016E2082C00F12F48 /* MGBoxProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBoxProvider.m; sourceTree = "<group>"; };
 		C9161DDB16E1F45300F3D70C /* libMGBoxKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMGBoxKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +205,12 @@
 				C9161E3116E1FC5000F3D70C /* UIResponder+FirstResponder.m */,
 				C9161E3216E1FC5000F3D70C /* UIView+MGEasyFrame.h */,
 				C9161E3316E1FC5000F3D70C /* UIView+MGEasyFrame.m */,
+				3307122812C0F2F772925258 /* MGObserver.m */,
+				330714ECA1DD106E5E6AB0A2 /* MGObserver.h */,
+				33071B20CE8A100CF53E6077 /* MGDeallocAction.m */,
+				33071D9FDCBA5244054A0FD5 /* MGDeallocAction.h */,
+				3307161811F025021071DA25 /* MGWeakHandler.m */,
+				3307196E2AAB6CE4BF579A12 /* MGWeakHandler.h */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -223,6 +241,9 @@
 				C9161E6516E201B200F3D70C /* MGTableBox.h in Headers */,
 				C9161E6716E201B200F3D70C /* MGTableBoxStyled.h in Headers */,
 				C914B0A116E2082C00F12F48 /* MGBoxProvider.h in Headers */,
+				330717226D0D1C2AAF1E0FDC /* MGObserver.h in Headers */,
+				3307160B5F8E348DB8EBFE8D /* MGDeallocAction.h in Headers */,
+				33071A26541009FE1D58ADFC /* MGWeakHandler.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +316,9 @@
 				C9161E3816E1FC5000F3D70C /* UIResponder+FirstResponder.m in Sources */,
 				C9161E3916E1FC5000F3D70C /* UIView+MGEasyFrame.m in Sources */,
 				C914B0A216E2082C00F12F48 /* MGBoxProvider.m in Sources */,
+				33071FF87CAC7EA68125C336 /* MGObserver.m in Sources */,
+				3307101DF01AE12A8F7181C9 /* MGDeallocAction.m in Sources */,
+				33071A61AFE3BE6B66617303 /* MGWeakHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

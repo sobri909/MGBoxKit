@@ -40,6 +40,9 @@ The block may potentially be provided a context object.
 */
 - (void)on:(NSString *)eventName doWithContext:(BlockWithContext)handler;
 
+- (void)when:(id)object does:(NSString *)eventName do:(Block)handler;
+- (void)when:(id)object does:(NSString *)eventName doWithContext:(BlockWithContext)handler;
+
 /** @name Custom event triggering */
 
 /**

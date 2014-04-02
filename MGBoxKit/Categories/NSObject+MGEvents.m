@@ -3,57 +3,16 @@
 //
 
 #import "NSObject+MGEvents.h"
+#import "MGObserver.h"
+#import "MGWeakHandler.h"
+#import "MGDeallocAction.h"
 #import <objc/runtime.h>
 
 static char *MGObserversKey = "MGObserversKey";
 static char *MGEventHandlersKey = "MGEventHandlersKey";
 static char *MGDeallocActionKey = "MGDeallocActionKey";
 
-@interface MGObserver : NSObject
-
-@property (nonatomic, copy) Block block;
-
-+ (MGObserver *)observerFor:(NSObject *)object keypath:(NSString *)keypath
-                      block:(Block)block;
-
-@end
-
-@implementation MGObserver
-
-+ (MGObserver *)observerFor:(NSObject *)object keypath:(NSString *)keypath
-                      block:(Block)block {
-  MGObserver *observer = [[MGObserver alloc] init];
-  observer.block = block;
-  [object addObserver:observer forKeyPath:keypath options:0 context:nil];
-  return observer;
-}
-
-- (void)observeValueForKeyPath:(NSString *)keypath ofObject:(id)object
-                        change:(NSDictionary *)change context:(void *)context {
-  if (self.block) {
-    self.block();
-  }
-}
-
-@end
-
-
-@interface MGDeallocAction : NSObject
-
-@property (nonatomic, copy) Block block;
-
-@end
-
-@implementation MGDeallocAction
-
-- (void)dealloc {
-  if (self.block) {
-    self.block();
-  }
-}
-
-@end
-
+#define MGProxyHandlers @"MGProxyHandlers"
 
 @implementation NSObject (MGEvents)
 
@@ -89,24 +48,68 @@ static char *MGDeallocActionKey = "MGDeallocActionKey";
   }
 }
 
+- (void)when:(id)object does:(NSString *)eventName do:(Block)handler {
+    [self when:object does:eventName do:handler context:NO];
+}
+
+- (void)when:(id)object does:(NSString *)eventName doWithContext:(BlockWithContext)handler {
+    [self when:object does:eventName do:(Block)handler context:YES];
+}
+
+- (void)when:(NSObject *)object does:(NSString *)eventName do:(Block)handler
+      context:(BOOL)isContextBlock {
+
+    // get the proxy handlers array
+    NSMutableArray *handlers = self.MGEventHandlers[MGProxyHandlers];
+    if (!handlers) {
+        handlers = @[].mutableCopy;
+        self.MGEventHandlers[MGProxyHandlers] = handlers;
+    }
+
+    // get the target object's handlers array
+    NSMutableArray *theirHandlers = object.MGEventHandlers[eventName];
+    if (!theirHandlers) {
+        theirHandlers = @[].mutableCopy;
+        object.MGEventHandlers[eventName] = theirHandlers;
+    }
+
+    id handlerDict = isContextBlock
+          ? @{@"blockWithContext":[handler copy], @"once":@NO}
+          : @{@"block":[handler copy], @"once":@NO};
+
+    // store the handler dict locally
+    [handlers addObject:handlerDict];
+
+    // give the target object a weak reference to it, so that if we dealloc
+    // it goes away with us, instead of lingering forever
+    [theirHandlers addObject:[MGWeakHandler handlerWithDict:handlerDict]];
+}
+
 - (void)trigger:(NSString *)eventName {
   [self trigger:eventName withContext:nil];
 }
 
 - (void)trigger:(NSString *)eventName withContext:(id)context {
   NSMutableArray *handlers = self.MGEventHandlers[eventName];
-  for (NSDictionary *handler in handlers.copy) {
-    if (handler[@"blockWithContext"]) {
-      BlockWithContext block = handler[@"blockWithContext"];
-      block(context);
-    } else {
-      Block block = handler[@"block"];
-      block();
+    for (id handler in handlers.copy) {
+        NSDictionary *handlerDict = [handler isKindOfClass:MGWeakHandler.class]
+              ? [handler dict]
+              : handler;
+        if (!handlerDict) {
+            [handlers removeObject:handler];
+            continue;
+        }
+        if (handlerDict[@"blockWithContext"]) {
+            BlockWithContext block = handlerDict[@"blockWithContext"];
+            block(context);
+        } else if (handlerDict[@"block"]) {
+            Block block = handlerDict[@"block"];
+            block();
+        }
+        if ([handlerDict[@"once"] boolValue]) {
+            [handlers removeObject:handler];
+        }
     }
-    if ([handler[@"once"] boolValue]) {
-      [handlers removeObject:handler];
-    }
-  }
 }
 
 #pragma mark - Property observing
@@ -122,8 +125,7 @@ static char *MGDeallocActionKey = "MGDeallocActionKey";
   }
 
   // make and store an observer
-  MGObserver
-      *observer = [MGObserver observerFor:self keypath:keypath block:block];
+  MGObserver *observer = [MGObserver observerFor:self keypath:keypath block:block];
   [observers addObject:observer];
     
   __unsafe_unretained id _self = self;
