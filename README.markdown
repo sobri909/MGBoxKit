@@ -41,27 +41,10 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 - Blocks based keypath observers
 - UIView easy frame accessors
 
-## Easy Setup (easy)
+## Setup
 
 1. Add the `MGBoxKit` folder to your project. (ARC required)
 2. Add the `CoreText` and `QuartzCore` frameworks to your project.
-
-## Example Screenshots
-
-Complex tables, sections, and grids created with simple code.
-
-### From the Demo App
-
-![Demo App Screenshot](http://cloud.github.com/downloads/sobri909/MGBox2/DemoApp6.png)
-
-### From [IfAlarm](http://www.bigpaua.com/ifalarm/)
-
-![IfAlarm Screenshot 1](http://cloud.github.com/downloads/sobri909/MGBox2/IfAlarm1.png)
-![IfAlarm Screenshot 2](http://cloud.github.com/downloads/sobri909/MGBox2/IfAlarm2.png)
-
-### From [Flowies](http://www.bigpaua.com/flowies/)
-
-![Flowies Screenshot 1](http://cloud.github.com/downloads/sobri909/MGBox2/Flowies1.png)
 
 ## Example Usage
 
