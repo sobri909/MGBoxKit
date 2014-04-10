@@ -45,7 +45,7 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 
 ### CocoaPods
 
-Add `pod "MGBoxKit"` to your `Podfile`
+Add `pod 'MGBoxKit'` to your `Podfile`
 
 ### Manual
 
