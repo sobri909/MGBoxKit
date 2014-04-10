@@ -97,6 +97,14 @@ CGFloat roundToPixel(CGFloat value) {
     if (!CGPointEqualToPoint(origin, box.origin)) {
       box.origin = origin;
     }
+
+      // size it
+      CGSize size = [container.boxProvider sizeForBoxAtIndex:index];
+      size.width -= (box.leftMargin + box.rightMargin);
+      size.height -= (box.topMargin + box.bottomMargin);
+      if (!CGSizeEqualToSize(size, box.size)) {
+          box.size = size;
+      }
   }];
 }
 
