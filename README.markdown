@@ -43,6 +43,12 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 
 ## Setup
 
+### CocoaPods
+
+Add `pod "MGBoxKit"` to your `Podfile`
+
+### Manual
+
 1. Add the `MGBoxKit` folder to your project. (ARC required)
 2. Add the `CoreText` and `QuartzCore` frameworks to your project.
 
