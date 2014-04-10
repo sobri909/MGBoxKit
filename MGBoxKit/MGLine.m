@@ -495,6 +495,12 @@
           if ((int)size.height % 2 && !((int)self.height % 2)) {
             size.height += 1;
           }
+          
+          // counter weird (boundingRectWithSize?) bug, where width can exceed maxSize:
+          if (size.width > maxSize.width) {
+            size.width = maxSize.width;
+          }
+
           label.size = size;
 
           used += (label.width);
