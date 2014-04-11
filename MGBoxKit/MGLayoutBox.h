@@ -333,11 +333,31 @@ tap.
 */
 - (void)longPressed;
 
+#pragma mark - UIResponder touch events
+
+/** @name UIResponder touch events */
+
+/**
+* A block assigned to this property to will be executed when
+* `touchesBegan:withEvent:` fires.
+*/
 @property (nonatomic, copy) Block onTouchesBegan;
+
+/**
+* A block assigned to this property to will be executed when
+* `touchesCancelled:withEvent:` fires.
+*/
 @property (nonatomic, copy) Block onTouchesCancelled;
+
+/**
+* A block assigned to this property to will be executed when
+* `touchesEnded:withEvent:` fires.
+*/
 @property (nonatomic, copy) Block onTouchesEnded;
 
 #pragma mark - Box reuse / offscreen culling
+
+/** @name Box reuse / offscreen culling */
 
 - (CGRect)bufferedViewport;
 

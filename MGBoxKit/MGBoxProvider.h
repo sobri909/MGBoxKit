@@ -10,8 +10,8 @@ typedef CGSize(^MGBoxSizer)(NSUInteger index);
 typedef NSUInteger(^MGCounter)();
 
 /**
-* A work-in-progress implementation of box caching/reuse, conceptually similar to
-* `UITableView` cell reuse.
+* Provides box reuse / offscreen culling, conceptually similar to `UITableView`
+* cell reuse.
 */
 
 @interface MGBoxProvider : NSObject
@@ -25,7 +25,7 @@ typedef NSUInteger(^MGCounter)();
 @property (nonatomic, copy) MGBoxSizer boxSizer;
 @property (nonatomic, copy) MGCounter counter;
 
-+ (MGBoxProvider *)provider;
++ (instancetype)provider;
 
 - (void)reset;
 - (void)updateVisibleIndexes;

@@ -21,7 +21,7 @@
   return self;
 }
 
-+ (MGBoxProvider *)provider {
++ (instancetype)provider {
   return [[self alloc] init];
 }
 
