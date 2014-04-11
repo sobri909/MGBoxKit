@@ -66,6 +66,9 @@ CGFloat roundToPixel(CGFloat value) {
       if ([box isKindOfClass:UIView.class] && box.superview) {
         [container.boxProvider removeBoxAtIndex:i];
         [box removeFromSuperview];
+          if ([box respondsToSelector:@selector(disappeared)]) {
+              [box disappeared];
+          }
       }
     }
   }
@@ -84,12 +87,6 @@ CGFloat roundToPixel(CGFloat value) {
       container.boxes[index] = box = [container.boxProvider boxAtIndex:index];
     }
 
-    if (!box.superview) {
-      box.parentBox = container;
-      [container addSubview:box];
-      [box layout];
-    }
-
     // position it
     CGPoint origin = [container.boxProvider originForBoxAtIndex:index];
     origin.x += box.leftMargin;
@@ -104,6 +101,16 @@ CGFloat roundToPixel(CGFloat value) {
       size.height -= (box.topMargin + box.bottomMargin);
       if (!CGSizeEqualToSize(size, box.size)) {
           box.size = size;
+      }
+
+      // add it
+      if (box.superview != container) {
+          box.parentBox = container;
+          [container addSubview:box];
+          [box layout];
+          if ([box respondsToSelector:@selector(appeared)]) {
+              [box appeared];
+          }
       }
   }];
 }

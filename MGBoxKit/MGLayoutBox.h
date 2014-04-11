@@ -40,6 +40,8 @@ typedef enum {
 
 @protocol MGLayoutBox <NSObject>
 
+#pragma mark - Relationships
+
 /** @name Relationships */
 
 /**
@@ -58,6 +60,8 @@ typedef enum {
 * Similar to `superview`, although in some cases may have a different value.
 */
 @property (nonatomic, weak) UIView <MGLayoutBox> *parentBox;
+
+#pragma mark - Async drawing
 
 /** @name Async drawing */
 
@@ -97,6 +101,8 @@ different priority or perform a bunch of expensive processes in serial.
     }
 */
 @property (nonatomic, assign) dispatch_queue_t asyncQueue;
+
+#pragma mark - Styling and positioning
 
 /** @name Styling and positioning */
 
@@ -179,6 +185,8 @@ box with another.
 */
 @property (nonatomic, assign) int zIndex;
 
+#pragma mark - Child positioning
+
 /** @name Child positioning */
 
 /**
@@ -224,6 +232,8 @@ box with another.
 */
 @property (nonatomic, assign) MGContentLayoutMode contentLayoutMode;
 
+#pragma mark - Layout stage
+
 /** @name Layout stage */
 
 @property (nonatomic, assign) BOOL dontLayoutChildren;
@@ -246,6 +256,8 @@ MGScrollView and [MGBox](MGBox) also provide animated layout methods:
 // resizing
 @property (nonatomic, assign) CGFloat minWidth;
 @property (nonatomic, assign) CGFloat maxWidth;
+
+#pragma mark - Tap gestures
 
 /** @name Tap gestures */
 
@@ -271,6 +283,8 @@ tap.
 */
 - (void)tapped;
 
+#pragma mark - Swipe gestures
+
 /** @name Swipe gestures */
 
 /**
@@ -293,6 +307,8 @@ tap.
 * executes the <onSwipe> block.
 */
 - (void)swiped;
+
+#pragma mark - Long press gestures
 
 /** @name Long press gestures */
 
@@ -321,7 +337,32 @@ tap.
 @property (nonatomic, copy) Block onTouchesCancelled;
 @property (nonatomic, copy) Block onTouchesEnded;
 
-// for containers using MGBoxProvider
+#pragma mark - Box reuse / offscreen culling
+
 - (CGRect)bufferedViewport;
+
+/**
+* A block assigned to this property to will be executed when the box is
+* added due to being inside the viewport.
+*/
+@property (nonatomic, copy) Block onAppear;
+
+/**
+* This method fires when the box is added due to being inside the viewport.
+* The default implementation executes the <onAppear> block.
+*/
+- (void)appeared;
+
+/**
+* A block assigned to this property to will be executed when the box is
+* removed due to going outside the viewport.
+*/
+@property (nonatomic, copy) Block onDisappear;
+
+/**
+* This method fires when the box is removed due to going outside the viewport.
+* The default implementation executes the <onDisappear> block.
+*/
+- (void)disappeared;
 
 @end

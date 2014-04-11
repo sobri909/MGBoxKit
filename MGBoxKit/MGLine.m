@@ -8,8 +8,6 @@
 #import "MGMushParser.h"
 #import "NSAttributedString+MGTrim.h"
 
-// extra width allowance due to 'boundingRectWithSize' inaccuracy
-
 @interface MGLine ()
 
 @property (nonatomic, retain) NSMutableArray *dontFit;

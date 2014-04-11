@@ -65,10 +65,6 @@ typedef enum {
 */
 - (void)layoutWithSpeed:(NSTimeInterval)speed completion:(Block)completion;
 
-// ignore these. they're not really here yet
-- (void)willEnterViewport;
-- (void)didLeaveViewport;
-
 /** @name Performance */
 
 /**

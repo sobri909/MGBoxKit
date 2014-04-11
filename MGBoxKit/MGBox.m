@@ -24,10 +24,26 @@
 @synthesize dontLayoutChildren;
 
 // MGLayoutBox protocol optionals
+@synthesize onAppear, onDisappear;
 @synthesize tapper, tappable, onTap;
 @synthesize swiper, swipable, onSwipe;
 @synthesize longPresser, longPressable, onLongPress;
 @synthesize onTouchesBegan, onTouchesCancelled, onTouchesEnded;
+
+#pragma mark - Factories
+
++ (instancetype)box {
+    MGBox *box = [[self alloc] initWithFrame:CGRectZero];
+    return box;
+}
+
++ (instancetype)boxWithSize:(CGSize)size {
+    CGRect frame = CGRectMake(0, 0, size.width, size.height);
+    MGBox *box = [[self alloc] initWithFrame:frame];
+    return box;
+}
+
+#pragma mark - Init and setup
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -41,17 +57,6 @@
   return self;
 }
 
-+ (id)box {
-  MGBox *box = [[self alloc] initWithFrame:CGRectZero];
-  return box;
-}
-
-+ (id)boxWithSize:(CGSize)size {
-  CGRect frame = CGRectMake(0, 0, size.width, size.height);
-  MGBox *box = [[self alloc] initWithFrame:frame];
-  return box;
-}
-
 - (void)setup {
 
   // defaults
@@ -60,6 +65,8 @@
   self.contentLayoutMode = MGLayoutTableStyle;
   self.sizingMode = MGResizingNone;
 }
+
+#pragma mark - Layout
 
 - (void)layout {
   [MGLayoutManager layoutBoxesIn:self];
@@ -104,9 +111,17 @@
   }
 }
 
-- (void)willEnterViewport { }
+- (void)appeared {
+    if (self.onAppear) {
+        self.onAppear();
+    }
+}
 
-- (void)didLeaveViewport { }
+- (void)disappeared {
+    if (self.onDisappear) {
+        self.onDisappear();
+    }
+}
 
 #pragma mark - Sugar
 

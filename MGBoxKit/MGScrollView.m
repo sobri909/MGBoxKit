@@ -29,6 +29,7 @@
 @synthesize dontLayoutChildren;
 
 // MGLayoutBox protocol optionals
+@synthesize onAppear, onDisappear;
 @synthesize tapper, tappable, onTap;
 
 #pragma mark - Factories
@@ -129,6 +130,18 @@
   }
   contentSize.height += self.bottomPadding;
   self.contentSize = contentSize;
+}
+
+- (void)appeared {
+    if (self.onAppear) {
+        self.onAppear();
+    }
+}
+
+- (void)disappeared {
+    if (self.onDisappear) {
+        self.onDisappear();
+    }
 }
 
 #pragma mark - Interaction
