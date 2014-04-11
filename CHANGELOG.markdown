@@ -1,3 +1,18 @@
+## 3.2.0 
+
+### Enhancements
+
+- Added `appeared` and `disappeared` methods and `onAppear` and `onDisappear` 
+  block properties which fire when a box is automatically added or removed 
+  during box reuse / offscreen culling.
+
+## 3.1.0
+
+### Enhancements
+
+- Added `[self when:object does:Something do:Thing]` custom event observing. 
+  See [#118](https://github.com/sobri909/MGBoxKit/issues/118) for details.
+
 ## 3.0.0
 
 ### Upgrading
