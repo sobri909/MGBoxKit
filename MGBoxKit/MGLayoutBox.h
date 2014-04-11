@@ -33,9 +33,7 @@ typedef enum {
 * features (margins, padding, zIndex, etc).
 *
 * You should not implement this protocol yourself, but instead use or subclass
-* <MGBox>, <MGLine>, <MGTableBox>, or <MGScrollView> (or the provided example
-* subclasses, <MGTableBoxStyled>, <MGLineStyled>), which already implement
-* the protocol.
+* <MGBox>, <MGLine>, or <MGScrollView>.
 */
 
 @protocol MGLayoutBox <NSObject>
