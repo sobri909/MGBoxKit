@@ -1,3 +1,9 @@
+## 3.2.1
+
+### Enhancements
+
+- `MGBoxProvider` bug fix for updating visible indexes during fast scrolling 
+
 ## 3.2.0 
 
 ### Enhancements
