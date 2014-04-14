@@ -35,51 +35,18 @@
 #pragma mark - Box visibility
 
 - (void)updateVisibleIndexes {
-  CGRect viewport = self.container.bufferedViewport;
-
-  // remove any indexes that are no longer visible
-  [visibleIndexes enumerateIndexesUsingBlock:^(NSUInteger i, BOOL *stop) {
-    CGRect frame = [self frameForBoxAtIndex:i];
-    if (!CGRectIntersectsRect(frame, viewport)) {
-      [visibleIndexes removeIndex:i];
+    CGRect viewport = self.container.bufferedViewport;
+    for (int i = 0; i < self.count; i++) {
+        CGRect frame = [self frameForBoxAtIndex:i];
+        BOOL visible = CGRectIntersectsRect(frame, viewport);
+        BOOL have = [visibleIndexes containsIndex:i];
+        if (visible && !have) {
+            [visibleIndexes addIndex:i];
+        }
+        if (!visible && have) {
+            [visibleIndexes removeIndex:i];
+        }
     }
-  }];
-
-  // add newly visible indexes to the start
-  int index = visibleIndexes.count ? (int)visibleIndexes.firstIndex : 0;
-  while (index >= 0 && index < self.count) {
-    if ([visibleIndexes containsIndex:index]) {
-      index--;
-      continue;
-    }
-
-    CGRect frame = [self frameForBoxAtIndex:index];
-    if (CGRectIntersectsRect(frame, viewport)) {
-      [visibleIndexes addIndex:index];
-    } else {
-      break;
-    }
-
-    index--;
-  }
-
-  // add newly visible indexes to the end
-  index = (int)visibleIndexes.lastIndex;
-  while (index < self.count) {
-    if ([visibleIndexes containsIndex:index]) {
-      index++;
-      continue;
-    }
-
-    CGRect frame = [self frameForBoxAtIndex:index];
-    if (CGRectIntersectsRect(frame, viewport)) {
-      [visibleIndexes addIndex:index];
-    } else {
-      break;
-    }
-
-    index++;
-  }
 }
 
 #pragma mark - Boxes in and out
