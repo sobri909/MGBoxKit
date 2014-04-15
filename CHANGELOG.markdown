@@ -1,6 +1,13 @@
+## 3.2.2
+
+### Fixes
+
+- `MGBoxProvider` and `MGLayoutManager` fixes for keeping internal box reuse 
+  data clean
+ 
 ## 3.2.1
 
-### Enhancements
+### Fixes
 
 - `MGBoxProvider` bug fix for updating visible indexes during fast scrolling 
 
