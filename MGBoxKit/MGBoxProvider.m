@@ -7,14 +7,12 @@
 
 @implementation MGBoxProvider {
   NSMutableSet *boxCache;
-  NSMutableDictionary *boxes;
   NSMutableArray *boxPositions;
   NSMutableIndexSet *visibleIndexes;
 }
 
 - (id)init {
   self = [super init];
-  boxes = @{}.mutableCopy;
   boxCache = NSMutableSet.set;
   boxPositions = @[].mutableCopy;
   visibleIndexes = NSMutableIndexSet.indexSet;
@@ -26,7 +24,6 @@
 }
 
 - (void)reset {
-  [boxes removeAllObjects];
   [boxCache removeAllObjects];
   [visibleIndexes removeAllIndexes];
   [self.container.boxes removeAllObjects];
@@ -47,32 +44,40 @@
             [visibleIndexes removeIndex:i];
         }
     }
+
+    // prune any indexes beyond the end
+    [visibleIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        if (index >= self.count) {
+            [visibleIndexes removeIndex:index];
+        }
+    }];
 }
 
 #pragma mark - Boxes in and out
 
 - (void)removeBoxAtIndex:(NSUInteger)index {
-  id key = @(index);
-  id box = boxes[key];
-  [boxCache addObject:box];
-  [boxes removeObjectForKey:key];
-  self.container.boxes[index] = NSNull.null;
+    id box = self.container.boxes[index];
+    [box removeFromSuperview];
+    self.container.boxes[index] = NSNull.null;
+    if ([box respondsToSelector:@selector(disappeared)]) {
+        [box disappeared];
+    }
+    [boxCache addObject:box];
 }
 
 - (UIView <MGLayoutBox> *)boxAtIndex:(NSUInteger)index {
-  id key = @(index);
-  id box = boxes[key];
-  if (!box) {
-    if (boxCache.count) {
-      box = boxCache.anyObject;
-      [boxCache removeObject:box];
-    } else {
-      box = self.boxMaker();
+    id box = self.container.boxes[index];
+    if ([box isKindOfClass:NSNull.class]) {
+        if (boxCache.count) {
+            box = boxCache.anyObject;
+            [boxCache removeObject:box];
+        } else {
+            box = self.boxMaker();
+        }
+        self.container.boxes[index] = box;
+        self.boxCustomiser(box, index);
     }
-    self.boxCustomiser(box, index);
-    boxes[key] = box;
-  }
-  return box;
+    return box;
 }
 
 - (CGSize)sizeForBoxAtIndex:(NSUInteger)index {
