@@ -12,10 +12,14 @@
 #define KEYBOARD_MARGIN 8
 
 @implementation MGScrollView {
-  CGFloat keyboardNudge;
-  BOOL fixedPositionEstablished;
-  BOOL asyncDrawing, asyncDrawOnceing;
-  CGRect keyboardFrame;
+    CGFloat keyboardNudge;
+    BOOL fixedPositionEstablished;
+    BOOL asyncDrawing, asyncDrawOnceing;
+    CGRect keyboardFrame;
+    CGRect _previousFrame;
+    CGSize _previousContentSize;
+    CGPoint _previousContentOffset;
+    UIEdgeInsets _previousContentInset;
 }
 
 // MGLayoutBox protocol
@@ -173,14 +177,14 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  if (self.boxProvider) {
-    [self.boxProvider updateVisibleIndexes];
-    [MGLayoutManager layoutBoxesIn:self atIndexes:self.boxProvider.visibleIndexes];
+    if (self.boxProvider) {
+        [self.boxProvider updateVisibleIndexes];
+        [MGLayoutManager layoutBoxesIn:self atIndexes:self.boxProvider.visibleIndexes];
 
-    // Apple bug workaround
-    self.showsVerticalScrollIndicator = NO;
-    self.showsVerticalScrollIndicator = YES;
-  }
+        // Apple bug workaround
+        self.showsVerticalScrollIndicator = NO;
+        self.showsVerticalScrollIndicator = YES;
+    }
 }
 
 #pragma mark - Edge snapping
@@ -325,6 +329,46 @@
 - (BOOL)                         gestureRecognizer:(UIGestureRecognizer *)me
 shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)other {
   return self.scrollEnabled;
+}
+
+#pragma mark - Scroll Offset Handling
+
+- (void)restoreScrollOffset {
+    CGSize sizeMinusInsets = CGSizeMake(_previousFrame.size.width -
+                                        _previousContentInset.right -
+                                        _previousContentInset.left,
+                                        _previousFrame.size.height -
+                                        _previousContentInset.top -
+                                        _previousContentInset.bottom);
+
+    CGPoint minOffset = CGPointMake(_previousContentInset.left, _previousContentInset.top);
+    CGPoint maxOffset = CGPointMake(minOffset.x + MAX(sizeMinusInsets.width, _previousContentSize.width) - sizeMinusInsets.width,
+                                    minOffset.y + MAX(sizeMinusInsets.height, _previousContentSize.height) - sizeMinusInsets.height);
+
+    CGPoint scrollRange = CGPointMake(maxOffset.x - minOffset.x, maxOffset.y - minOffset.y);
+    CGPoint scrollRatio = CGPointMake(scrollRange.x > 0 ? _previousContentOffset.x / scrollRange.x : 0,
+                                      scrollRange.y > 0 ? _previousContentOffset.y / scrollRange.y : 0);
+
+    sizeMinusInsets = CGSizeMake(self.frame.size.width -
+                                 self.contentInset.right -
+                                 self.contentInset.left,
+                                 self.frame.size.height -
+                                 self.contentInset.top -
+                                 self.contentInset.bottom);
+
+    minOffset = CGPointMake(self.contentInset.left, self.contentInset.top);
+    maxOffset = CGPointMake(minOffset.x + MAX(sizeMinusInsets.width, self.contentSize.width) - sizeMinusInsets.width,
+                            minOffset.y + MAX(sizeMinusInsets.height, self.contentSize.height) - sizeMinusInsets.height);
+
+    self.contentOffset = CGPointMake(scrollRatio.x * (maxOffset.x - minOffset.x),
+                                     scrollRatio.y * (maxOffset.y - minOffset.y));
+}
+
+- (void)saveScrollOffset {
+    _previousFrame = self.frame;
+    _previousContentOffset = self.contentOffset;
+    _previousContentSize = self.contentSize;
+    _previousContentInset = self.contentInset;
 }
 
 #pragma mark - Setters

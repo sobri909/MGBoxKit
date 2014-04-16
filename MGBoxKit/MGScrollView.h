@@ -65,6 +65,18 @@
 */
 - (void)scrollToView:(UIView *)view withMargin:(CGFloat)margin;
 
+/**
+ * Called to save the scroll view offset at the current time.
+ * Most commonly called in willRotateToInterfaceOrientation
+ */
+- (void)saveScrollOffset;
+
+/**
+ * Called to restore the previously stored scroll offset.
+ * Most commonly called in willAnimateRotationToInterfaceOrientation after a call to layout
+ */
+- (void)restoreScrollOffset;
+
 /** @name Box edge snapping */
 
 /**
