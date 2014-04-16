@@ -34,7 +34,7 @@
 - (void)updateVisibleIndexes {
     CGRect viewport = self.container.bufferedViewport;
     for (int i = 0; i < self.count; i++) {
-        CGRect frame = [self frameForBoxAtIndex:i];
+        CGRect frame = [self footprintForBoxAtIndex:i];
         BOOL visible = CGRectIntersectsRect(frame, viewport);
         BOOL have = [visibleIndexes containsIndex:i];
         if (visible && !have) {
@@ -55,14 +55,16 @@
 
 #pragma mark - Boxes in and out
 
-- (void)removeBoxAtIndex:(NSUInteger)index {
-    id box = self.container.boxes[index];
+- (void)removeBox:(UIView <MGLayoutBox> *)box {
+    NSUInteger index = [self.container.boxes indexOfObject:box];
+    if (index != NSNotFound) {
+        self.container.boxes[index] = NSNull.null;
+        [boxCache addObject:box];
+    }
     [box removeFromSuperview];
-    self.container.boxes[index] = NSNull.null;
     if ([box respondsToSelector:@selector(disappeared)]) {
         [box disappeared];
     }
-    [boxCache addObject:box];
 }
 
 - (UIView <MGLayoutBox> *)boxAtIndex:(NSUInteger)index {
@@ -91,8 +93,18 @@
     return [self.boxPositions[index] CGPointValue];
 }
 
-- (CGRect)frameForBoxAtIndex:(NSUInteger)index {
+- (CGRect)footprintForBoxAtIndex:(NSUInteger)index {
     return (CGRect){[self originForBoxAtIndex:index], [self sizeForBoxAtIndex:index]};
+}
+
+- (CGRect)frameForBox:(UIView <MGLayoutBox> *)box {
+    NSUInteger index = [self.container.boxes indexOfObject:box];
+    CGRect frame = [self footprintForBoxAtIndex:index];
+    frame.origin.x += box.leftMargin;
+    frame.origin.y += box.topMargin;
+    frame.size.width -= (box.leftMargin + box.rightMargin);
+    frame.size.height -= (box.topMargin + box.bottomMargin);
+    return frame;
 }
 
 - (NSUInteger)count {

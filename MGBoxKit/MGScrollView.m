@@ -64,6 +64,7 @@
   // defaults
   self.keyboardMargin = KEYBOARD_MARGIN;
   self.keepFirstResponderAboveKeyboard = YES;
+    self.sizingMode = MGResizingShrinkWrap;
 
   self.delegate = self;
 
@@ -80,11 +81,6 @@
 
 - (void)layout {
   [MGLayoutManager layoutBoxesIn:self];
-
-  if (self.boxProvider) {
-    [self updateContentSize];
-    return;
-  }
 
   // async draws
   if (self.asyncLayout || self.asyncLayoutOnce) {
@@ -122,18 +118,6 @@
       box.y = box.fixedPosition.y + self.contentOffset.y;
     }
   }
-}
-
-- (void)updateContentSize {
-  CGSize contentSize = (CGSize){self.width, self.topPadding};
-  for (int i = 0; i < self.boxProvider.count; i++) {
-    CGSize boxSize = [self.boxProvider sizeForBoxAtIndex:i];
-    CGPoint origin = [self.boxProvider originForBoxAtIndex:i];
-    contentSize.width = MAX(origin.x + boxSize.width, contentSize.width);
-    contentSize.height = MAX(origin.y + boxSize.height, contentSize.height);
-  }
-  contentSize.height += self.bottomPadding;
-  self.contentSize = contentSize;
 }
 
 - (void)appeared {
@@ -178,8 +162,9 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   if (self.boxProvider) {
-    [self.boxProvider updateVisibleIndexes];
-    [MGLayoutManager layoutBoxesIn:self atIndexes:self.boxProvider.visibleIndexes];
+      [self.boxProvider updateVisibleIndexes];
+      [MGLayoutManager layoutBoxesIn:self atIndexes:self.boxProvider.visibleIndexes duration:0
+            completion:nil];
 
     // Apple bug workaround
     self.showsVerticalScrollIndicator = NO;

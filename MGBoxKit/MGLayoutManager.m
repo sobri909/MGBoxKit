@@ -25,7 +25,8 @@ CGFloat roundToPixel(CGFloat value) {
   if (container.boxProvider) {
     [self positionBoxesIn:container];
     [container.boxProvider updateVisibleIndexes];
-    [self layoutBoxesIn:container atIndexes:container.boxProvider.visibleIndexes];
+    [self layoutBoxesIn:container atIndexes:container.boxProvider.visibleIndexes duration:0
+          completion:nil];
     container.layingOut = NO;
     return;
   }
@@ -56,57 +57,87 @@ CGFloat roundToPixel(CGFloat value) {
   container.layingOut = NO;
 }
 
-+ (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container atIndexes:(NSIndexSet *)indexes {
++ (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container atIndexes:(NSIndexSet *)indexes
+      duration:(NSTimeInterval)duration completion:(Block)completion {
+    NSMutableSet *toAdd = NSMutableSet.set;
+    NSMutableSet *toRemove = NSMutableSet.set;
+    NSMutableSet *toUpdate = NSMutableSet.set;
 
     // remove boxes that aren't at the given indexes
     for (int i = 0; i < container.boxes.count; i++) {
         if (![indexes containsIndex:i]) {
             UIView <MGLayoutBox> *box = container.boxes[i];
-            if ([box isKindOfClass:UIView.class]) {
-                [container.boxProvider removeBoxAtIndex:i];
+            if (![box isKindOfClass:NSNull.class]) {
+                [toRemove addObject:box];
             }
         }
     }
 
     // remove boxes no longer in 'boxes'
-    NSArray *goners = [MGLayoutManager findBoxesInView:container notInSet:container.boxes];
-    for (UIView <MGLayoutBox> *box in goners) {
-        [box removeFromSuperview];
-        if ([box respondsToSelector:@selector(disappeared)]) {
-            [box disappeared];
-        }
-    }
+    [toRemove addObjectsFromArray:[MGLayoutManager findBoxesInView:container
+          notInSet:container.boxes]];
 
     // add boxes at the given indexes
     [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
         UIView <MGLayoutBox> *box = [container.boxProvider boxAtIndex:index];
-
-        // position it
-        CGPoint origin = [container.boxProvider originForBoxAtIndex:index];
-        origin.x += box.leftMargin;
-        origin.y += box.topMargin;
-        if (!CGPointEqualToPoint(origin, box.origin)) {
-            box.origin = origin;
-        }
-
-        // size it
-        CGSize size = [container.boxProvider sizeForBoxAtIndex:index];
-        size.width -= (box.leftMargin + box.rightMargin);
-        size.height -= (box.topMargin + box.bottomMargin);
-        if (!CGSizeEqualToSize(size, box.size)) {
-            box.size = size;
-        }
-
-        // add it
-        if (box.superview != container) {
+        if (box.superview == container) {
+            [toUpdate addObject:box];
+        } else {
+            if (duration) {
+                box.alpha = 0;
+            }
+            box.frame = [container.boxProvider frameForBox:box];
             box.parentBox = container;
             [container addSubview:box];
-            [box layout];
+            [toAdd addObject:box];
+        }
+    }];
+
+    Block changes = ^{
+        if (duration) {
+            for (UIView <MGLayoutBox> *box in toRemove) {
+                box.alpha = 0;
+            }
+            for (UIView <MGLayoutBox> *box in toAdd) {
+                box.alpha = 1;
+            }
+        }
+        for (UIView <MGLayoutBox> *box in toUpdate) {
+            CGRect frame = [container.boxProvider frameForBox:box];
+            if (!CGRectEqualToRect(frame, box.frame)) {
+                box.frame = frame;
+            }
+        }
+        [self updateContentSizeFor:container];
+    };
+
+    Block fini = ^{
+        for (UIView <MGLayoutBox> *box in toRemove) {
+            [container.boxProvider removeBox:box];
+            if (duration) {
+                box.alpha = 1;
+            }
+        }
+        for (UIView <MGLayoutBox> *box in toAdd) {
             if ([box respondsToSelector:@selector(appeared)]) {
                 [box appeared];
             }
         }
-    }];
+        if (completion) {
+            completion();
+        }
+    };
+
+    if (duration) {
+        [UIView animateWithDuration:duration delay:0
+              options:UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
+              animations:changes completion:^(BOOL finished) {
+            fini();
+        }];
+    } else {
+        changes();
+        fini();
+    }
 }
 
 + (void)positionBoxesIn:(UIView <MGLayoutBox> *)container {
@@ -145,6 +176,16 @@ CGFloat roundToPixel(CGFloat value) {
     return;
   }
   container.layingOut = YES;
+
+    // box provider style layout
+    if (container.boxProvider) {
+        [self positionBoxesIn:container];
+        [container.boxProvider updateVisibleIndexes];
+        [self layoutBoxesIn:container atIndexes:container.boxProvider.visibleIndexes
+              duration:duration completion:completion];
+        container.layingOut = NO;
+        return;
+    }
 
   // find new top boxes
   NSMutableOrderedSet *newTopBoxes = NSMutableOrderedSet.orderedSet;
@@ -304,11 +345,11 @@ CGFloat roundToPixel(CGFloat value) {
 }
 
 + (void)pruneAndPad:(UIView <MGLayoutBox> *)container {
-    int trueCount = container.boxProvider.count;
+    NSUInteger trueCount = container.boxProvider.count;
 
     // prune boxes
     if (container.boxes.count > trueCount) {
-        int excess = container.boxes.count - trueCount;
+        NSUInteger excess = container.boxes.count - trueCount;
         NSIndexSet *indexes = [[NSIndexSet alloc]
               initWithIndexesInRange:NSMakeRange(container.boxes.count - excess, excess)];
         [container.boxes removeObjectsAtIndexes:indexes];
@@ -316,7 +357,7 @@ CGFloat roundToPixel(CGFloat value) {
 
     // prune positions
     if (container.boxProvider.boxPositions.count > trueCount) {
-        int excess = container.boxProvider.boxPositions.count - trueCount;
+        NSUInteger excess = container.boxProvider.boxPositions.count - trueCount;
         NSIndexSet *indexes = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(
               container.boxProvider.boxPositions.count - excess, excess)];
         [container.boxProvider.boxPositions removeObjectsAtIndexes:indexes];
@@ -354,27 +395,7 @@ CGFloat roundToPixel(CGFloat value) {
     return;
   }
 
-  // update size to fit the children (and possible shrink wrap)
-  CGSize newSize, oldSize = [container isKindOfClass:MGScrollView.class]
-      ? [(id)container contentSize]
-      : container.size;
-  if (container.sizingMode == MGResizingShrinkWrap) {
-    newSize.width = MAX(container.leftPadding + maxWidth + container.rightPadding, container.minWidth);
-    newSize.height = y + container.bottomPadding;
-  } else {
-    newSize.width = MAX(oldSize.width, container.leftPadding + maxWidth
-        + container.rightPadding);
-    newSize.height = MAX(oldSize.height, y + container.bottomPadding);
-  }
-
-  // only update size if it's changed
-  if (!CGSizeEqualToSize(newSize, oldSize)) {
-    if ([container isKindOfClass:MGScrollView.class]) {
-      [(id)container setContentSize:newSize];
-    } else {
-      container.size = newSize;
-    }
-  }
+    [self updateContentSizeFor:container];
 }
 
 + (void)stackGridStyle:(UIView <MGLayoutBox> *)container
@@ -403,25 +424,12 @@ CGFloat roundToPixel(CGFloat value) {
     maxHeight = MAX(maxHeight, y + box.topMargin + box.height + box.bottomMargin);
   }
 
-  // don't update height if we weren't positioning everyone
+  // don't update size if we weren't positioning everyone
   if (only) {
     return;
   }
 
-  // update height to fit the children
-  if ([container isKindOfClass:MGScrollView.class]) {
-    CGSize size = container.size;
-
-    // content size shouldn't be smaller than scroll view size
-    size.height = maxHeight + container.bottomPadding > container.height
-        ? maxHeight + container.bottomPadding
-        : container.height;
-    size.width = size.width > container.width ? size.width : container.width;
-
-    [(id)container setContentSize:size];
-  } else {
-    container.height = maxHeight + container.bottomPadding;
-  }
+    [self updateContentSizeFor:container];
 }
 
 + (void)positionAttachedBoxesIn:(UIView <MGLayoutBox> *)container {
@@ -506,6 +514,44 @@ CGFloat roundToPixel(CGFloat value) {
   }
 
   return gone;
+}
+
++ (void)updateContentSizeFor:(UIView <MGLayoutBox> *)container {
+    CGSize newSize = (CGSize){container.width, container.topPadding};
+    CGSize oldSize = [container isKindOfClass:MGScrollView.class]
+          ? [(id)container contentSize]
+          : container.size;
+
+    if (container.boxProvider) {
+        for (int i = 0; i < container.boxes.count; i++) {
+            CGRect footprint = [container.boxProvider footprintForBoxAtIndex:i];
+            newSize.width = MAX(newSize.width, CGRectGetMaxX(footprint));
+            newSize.height = MAX(newSize.height, CGRectGetMaxY(footprint));
+        }
+
+    } else {
+        for (UIView <MGLayoutBox> *box in container.boxes) {
+            newSize.width = MAX(newSize.width, box.right + box.rightMargin);
+            newSize.height = MAX(newSize.height, box.bottom + box.bottomMargin);
+        }
+    }
+
+    newSize.height += container.bottomPadding;
+    newSize.width += container.rightPadding;
+
+    if (container.sizingMode != MGResizingShrinkWrap) {
+        newSize.width = MAX(newSize.width, oldSize.width);
+        newSize.width = MAX(newSize.height, oldSize.height);
+    }
+
+    // only update size if it's changed
+    if (!CGSizeEqualToSize(newSize, oldSize)) {
+        if ([container isKindOfClass:MGScrollView.class]) {
+            [(id)container setContentSize:newSize];
+        } else {
+            container.size = newSize;
+        }
+    }
 }
 
 + (void)stackByZIndexIn:(UIView *)container {

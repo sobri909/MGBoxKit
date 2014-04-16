@@ -30,13 +30,14 @@ typedef NSUInteger(^MGCounter)();
 - (void)reset;
 - (void)updateVisibleIndexes;
 
-- (void)removeBoxAtIndex:(NSUInteger)index;
+- (void)removeBox:(UIView <MGLayoutBox> *)box;
 - (UIView <MGLayoutBox> *)boxAtIndex:(NSUInteger)index;
 - (NSUInteger)count;
 
 // note: size, origin, rect include margins
 - (CGSize)sizeForBoxAtIndex:(NSUInteger)index;
 - (CGPoint)originForBoxAtIndex:(NSUInteger)index;
-- (CGRect)frameForBoxAtIndex:(NSUInteger)index;
+- (CGRect)footprintForBoxAtIndex:(NSUInteger)index;
+- (CGRect)frameForBox:(UIView <MGLayoutBox> *)box;
 
 @end
