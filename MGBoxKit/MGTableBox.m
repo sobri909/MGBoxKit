@@ -24,7 +24,7 @@
   self.boxes = self.allLines.array.mutableCopy;
 
   // and smoothly together now
-  [super layoutWithSpeed:speed completion:completion];
+  [super layoutWithDuration:speed completion:completion];
 }
 
 #pragma mark - Getters

@@ -137,8 +137,8 @@ CGFloat roundToPixel(CGFloat value) {
     }
 }
 
-+ (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container
-            withSpeed:(NSTimeInterval)speed completion:(Block)completion {
++ (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container duration:(NSTimeInterval)duration
+      completion:(Block)completion {
 
   // layout locked?
   if (container.layingOut) {

@@ -242,10 +242,11 @@ box with another.
 This is the main layout method, which should be called on a container box once
 you have finished adding, removing, positioning, and styling child boxes.
 
-MGScrollView and [MGBox](MGBox) also provide animated layout methods:
+[MGScrollView](MGScrollView) and [MGBox](MGBox) also provide animated layout
+methods:
 
-- -[MGScrollView layoutWithSpeed:completion:]
-- -[MGBox layoutWithSpeed:completion:]
+- -[MGScrollView layoutWithDuration:completion:]
+- -[MGBox layoutWithDuration:completion:]
 */
 - (void)layout;
 

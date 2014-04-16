@@ -89,26 +89,29 @@
   }
 }
 
-- (void)layoutWithSpeed:(NSTimeInterval)speed
-             completion:(Block)completion {
-  [MGLayoutManager layoutBoxesIn:self withSpeed:speed completion:completion];
+- (void)layoutWithDuration:(NSTimeInterval)duration completion:(Block)completion {
+    [MGLayoutManager layoutBoxesIn:self duration:duration completion:completion];
 
-  // async draws
-  if (self.asyncLayout || self.asyncLayoutOnce) {
-    dispatch_async(self.asyncQueue, ^{
-      if (self.asyncLayout && !asyncDrawing) {
-        asyncDrawing = YES;
-        self.asyncLayout();
-        asyncDrawing = NO;
-      }
-      if (self.asyncLayoutOnce && !asyncDrawOnceing) {
-        asyncDrawOnceing = YES;
-        self.asyncLayoutOnce();
-        self.asyncLayoutOnce = nil;
-        asyncDrawOnceing = NO;
-      }
-    });
-  }
+    // async draws
+    if (self.asyncLayout || self.asyncLayoutOnce) {
+        dispatch_async(self.asyncQueue, ^{
+            if (self.asyncLayout && !asyncDrawing) {
+                asyncDrawing = YES;
+                self.asyncLayout();
+                asyncDrawing = NO;
+            }
+            if (self.asyncLayoutOnce && !asyncDrawOnceing) {
+                asyncDrawOnceing = YES;
+                self.asyncLayoutOnce();
+                self.asyncLayoutOnce = nil;
+                asyncDrawOnceing = NO;
+            }
+        });
+    }
+}
+
+- (void)layoutWithSpeed:(NSTimeInterval)speed completion:(Block)completion {
+    [self layoutWithDuration:speed completion:completion];
 }
 
 - (void)appeared {

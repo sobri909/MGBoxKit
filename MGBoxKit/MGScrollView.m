@@ -104,8 +104,12 @@
   }
 }
 
+- (void)layoutWithDuration:(NSTimeInterval)duration completion:(Block)completion {
+    [MGLayoutManager layoutBoxesIn:self duration:duration completion:completion];
+}
+
 - (void)layoutWithSpeed:(NSTimeInterval)speed completion:(Block)completion {
-  [MGLayoutManager layoutBoxesIn:self withSpeed:speed completion:completion];
+    [self layoutWithDuration:speed completion:completion];
 }
 
 - (void)layoutSubviews {

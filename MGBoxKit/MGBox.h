@@ -61,9 +61,12 @@ typedef enum {
 * unanimated [layout](-[MGLayoutBox layout]) method, but with child boxes animated between previous and
 * new computed positions, fading new boxes in, and fading removed boxes out.
 * Child boxes will have their unanimated layout method called. If you want a
-* child box to also animate the positioning of its children in the same drawing pass, call `layoutWithSpeed:completion:` on the child box first.
+* child box to also animate the positioning of its children in the same drawing
+* pass, call `layoutWithDuration:completion:` on the child box first.
 */
-- (void)layoutWithSpeed:(NSTimeInterval)speed completion:(Block)completion;
+- (void)layoutWithDuration:(NSTimeInterval)duration completion:(Block)completion;
+- (void)layoutWithSpeed:(NSTimeInterval)speed completion:(Block)completion
+__deprecated;
 
 /** @name Performance */
 

@@ -9,8 +9,8 @@
 + (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container;
 + (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container
             atIndexes:(NSIndexSet *)indexes;
-+ (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container
-            withSpeed:(NSTimeInterval)speed completion:(Block)completion;
++ (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container duration:(NSTimeInterval)duration
+      completion:(Block)completion;
 + (void)positionBoxesIn:(UIView <MGLayoutBox> *)container;
 + (void)positionAttachedBoxesIn:(UIView <MGLayoutBox> *)container;
 + (NSArray *)findBoxesInView:(UIView *)view notInSet:(id)boxes;

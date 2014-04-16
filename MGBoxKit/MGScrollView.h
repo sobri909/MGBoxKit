@@ -49,10 +49,11 @@
 * unanimated [layout](-[MGLayoutBox layout]) method, but with child boxes animated between previous and
 * new computed positions, fading new boxes in, and fading removed boxes out.
 * Child boxes will have their unanimated layout method called. If you want a
-* child box to also animate the positioning of its children in the same drawing pass, call `layoutWithSpeed:completion:` on the child box first.
+* child box to also animate the positioning of its children in the same drawing pass, call `layoutWithDuration:completion:` on the child box first.
 */
-- (void)layoutWithSpeed:(NSTimeInterval)speed
-             completion:(Block)completion;
+- (void)layoutWithDuration:(NSTimeInterval)duration completion:(Block)completion;
+- (void)layoutWithSpeed:(NSTimeInterval)speed completion:(Block)completion
+__deprecated;
 
 /** @name Scrolling */
 
@@ -81,8 +82,7 @@
 * active input field visible. Default is `YES`.
 */
 @property (nonatomic, assign) BOOL keepFirstResponderAboveKeyboard;
-@property (nonatomic, weak) UIView
-    *keepAboveKeyboard __attribute__ ((deprecated));
+@property (nonatomic, weak) UIView *keepAboveKeyboard __deprecated;
 
 /**
 * The amount of space to allow between the the keyboard and the active input
@@ -92,7 +92,7 @@
 @property (nonatomic, assign) CGFloat keyboardMargin;
 
 - (void)keyboardWillAppear:(NSNotification *)note;
-- (void)restoreAfterKeyboardClose:(Block)completion __attribute__ ((deprecated));
+- (void)restoreAfterKeyboardClose:(Block)completion __deprecated;
 
 // for the upcoming box caching/reuse functionality
 @property (nonatomic, assign) CGSize viewportMargin;
