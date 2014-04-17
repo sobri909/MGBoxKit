@@ -517,10 +517,17 @@ CGFloat roundToPixel(CGFloat value) {
 }
 
 + (void)updateContentSizeFor:(UIView <MGLayoutBox> *)container {
-    CGSize newSize = (CGSize){container.width, container.topPadding};
-    CGSize oldSize = [container isKindOfClass:MGScrollView.class]
+    CGSize newSize, oldSize = [container isKindOfClass:MGScrollView.class]
           ? [(id)container contentSize]
           : container.size;
+    if (container.sizingMode == MGResizingShrinkWrap) {
+        newSize = (CGSize){
+              container.leftPadding + container.rightPadding,
+              container.topPadding + container.bottomPadding
+        };
+    } else {
+        newSize = oldSize;
+    }
 
     if (container.boxProvider) {
         for (int i = 0; i < container.boxes.count; i++) {
@@ -531,17 +538,9 @@ CGFloat roundToPixel(CGFloat value) {
 
     } else {
         for (UIView <MGLayoutBox> *box in container.boxes) {
-            newSize.width = MAX(newSize.width, box.right + box.rightMargin);
-            newSize.height = MAX(newSize.height, box.bottom + box.bottomMargin);
+            newSize.width = MAX(newSize.width, box.right + box.rightMargin + container.rightPadding);
+            newSize.height = MAX(newSize.height, box.bottom + box.bottomMargin + container.bottomPadding);
         }
-    }
-
-    newSize.height += container.bottomPadding;
-    newSize.width += container.rightPadding;
-
-    if (container.sizingMode != MGResizingShrinkWrap) {
-        newSize.width = MAX(newSize.width, oldSize.width);
-        newSize.width = MAX(newSize.height, oldSize.height);
     }
 
     // only update size if it's changed
