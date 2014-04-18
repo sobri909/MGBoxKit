@@ -6,17 +6,20 @@
 #import "MGLayoutBox.h"
 
 @implementation MGBoxProvider {
-  NSMutableSet *boxCache;
-  NSMutableArray *boxPositions;
-  NSMutableIndexSet *visibleIndexes;
+    NSMutableIndexSet *_visibleIndexes;
+    NSDictionary *_previouslyVisibleBoxes;
+    NSArray *_previousDataKeys;
+    NSMutableArray *_dataKeys;
+    NSMutableSet *_boxCache;
 }
 
 - (id)init {
-  self = [super init];
-  boxCache = NSMutableSet.set;
-  boxPositions = @[].mutableCopy;
-  visibleIndexes = NSMutableIndexSet.indexSet;
-  return self;
+    self = [super init];
+    _boxCache = NSMutableSet.set;
+    _boxPositions = @[].mutableCopy;
+    _visibleIndexes = NSMutableIndexSet.indexSet;
+    _dataKeys = @[].mutableCopy;
+    return self;
 }
 
 + (instancetype)provider {
@@ -24,66 +27,98 @@
 }
 
 - (void)reset {
-  [boxCache removeAllObjects];
-  [visibleIndexes removeAllIndexes];
-  [self.container.boxes removeAllObjects];
+    [_boxCache removeAllObjects];
+    [_visibleIndexes removeAllIndexes];
+    [_dataKeys removeAllObjects];
+    _previousDataKeys = nil;
 }
 
-#pragma mark - Box visibility
+#pragma mark - Internal state list updates
+
+- (void)updateDataKeys {
+    _previousDataKeys = _dataKeys.copy;
+    _dataKeys = @[].mutableCopy;
+    for (int i = 0; i < self.count; i++) {
+        [_dataKeys addObject:[self keyForBoxAtIndex:i]];
+    }
+}
 
 - (void)updateVisibleIndexes {
     CGRect viewport = self.container.bufferedViewport;
     for (int i = 0; i < self.count; i++) {
         CGRect frame = [self footprintForBoxAtIndex:i];
         BOOL visible = CGRectIntersectsRect(frame, viewport);
-        BOOL have = [visibleIndexes containsIndex:i];
+        BOOL have = [_visibleIndexes containsIndex:i];
         if (visible && !have) {
-            [visibleIndexes addIndex:i];
+            [_visibleIndexes addIndex:i];
         }
         if (!visible && have) {
-            [visibleIndexes removeIndex:i];
+            [_visibleIndexes removeIndex:i];
         }
     }
 
     // prune any indexes beyond the end
-    [visibleIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+    [_visibleIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
         if (index >= self.count) {
-            [visibleIndexes removeIndex:index];
+            [_visibleIndexes removeIndex:index];
         }
     }];
 }
 
-#pragma mark - Boxes in and out
+- (void)updateVisibleBoxes {
 
-- (void)removeBox:(UIView <MGLayoutBox> *)box {
-    NSUInteger index = [self.container.boxes indexOfObject:box];
-    if (index != NSNotFound) {
-        self.container.boxes[index] = NSNull.null;
-        [boxCache addObject:box];
+    // null pad a new boxes array
+    NSMutableArray *newBoxes = @[].mutableCopy;
+    NSMutableDictionary *visibleBoxes = @{}.mutableCopy;
+    while (newBoxes.count < self.count) {
+        [newBoxes addObject:NSNull.null];
     }
-    [box removeFromSuperview];
-    if ([box respondsToSelector:@selector(disappeared)]) {
-        [box disappeared];
-    }
-}
 
-- (UIView <MGLayoutBox> *)boxAtIndex:(NSUInteger)index {
-    id box = self.container.boxes[index];
-    if ([box isKindOfClass:NSNull.class]) {
-        if (boxCache.count) {
-            box = boxCache.anyObject;
-            [boxCache removeObject:box];
-        } else {
-            box = self.boxMaker();
+    // move existing boxes or make new boxes
+    [_visibleIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        UIView <MGLayoutBox> *box;
+        if ([self dataAtIndexIsExisting:index]) {
+            id dataKey = _dataKeys[index];
+            NSUInteger oldIndex = [_previousDataKeys indexOfObject:dataKey];
+            box = _visibleBoxes[@(oldIndex)];
         }
-        self.container.boxes[index] = box;
-        self.boxCustomiser(box, index);
+        if (!box) {
+            if (_boxCache.count) {
+                box = _boxCache.anyObject;
+                [_boxCache removeObject:box];
+                box.alpha = 1;
+            } else {
+                box = self.boxMaker();
+            }
+            self.boxCustomiser(box, index);
+        }
+        visibleBoxes[@(index)] = box;
+        newBoxes[index] = box;
+    }];
+
+    // throw any gone boxes into the cache
+    for (id box in self.visibleBoxes.allValues) {
+        if (![visibleBoxes.allValues containsObject:box]) {
+            [_boxCache addObject:box];
+        }
     }
-    return box;
+
+    // boxes should now be true to the data
+    _previouslyVisibleBoxes = _visibleBoxes;
+    _visibleBoxes = visibleBoxes;
 }
 
 - (NSUInteger)count {
     return self.counter();
+}
+
+#pragma mark - Individual box state updates
+
+- (id)keyForBoxAtIndex:(NSUInteger)index {
+    if (self.boxKeyMaker) {
+        return self.boxKeyMaker(index);
+    }
+    return @(index);
 }
 
 #pragma mark - Animations
@@ -95,7 +130,7 @@
     } else {
         box.alpha = 0;
         [UIView animateWithDuration:duration delay:0
-              options:UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
+              options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
               animations:^{
                   box.alpha = 1;
               } completion:nil];
@@ -108,7 +143,7 @@
         self.disappearAnimation(box, index, duration, box.frame, box.frame);
     } else {
         [UIView animateWithDuration:duration delay:0
-              options:UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
+              options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
               animations:^{
                   box.alpha = 0;
               } completion:nil];
@@ -121,11 +156,43 @@
         self.moveAnimation(box, index, duration, fromFrame, toFrame);
     } else {
         [UIView animateWithDuration:duration delay:0
-              options:UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
+              options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
               animations:^{
                   box.frame = toFrame;
               } completion:nil];
     }
+}
+
+#pragma mark - Data checking
+
+- (BOOL)dataAtIndexIsOld:(NSUInteger)index {
+    return ![_dataKeys containsObject:_previousDataKeys[index]];
+}
+
+- (BOOL)dataAtIndexIsExisting:(NSUInteger)index {
+    return [_previousDataKeys containsObject:_dataKeys[index]];
+}
+
+- (BOOL)dataAtIndexIsNew:(NSUInteger)index {
+    return ![_previousDataKeys containsObject:_dataKeys[index]];
+}
+
+- (NSUInteger)indexOfBox:(UIView <MGLayoutBox> *)box {
+    for (id key in self.visibleBoxes) {
+        if (self.visibleBoxes[key] == box) {
+            return [key integerValue];
+        }
+    }
+    return NSNotFound;
+}
+
+- (NSUInteger)oldIndexOfBox:(UIView <MGLayoutBox> *)box {
+    for (id key in _previouslyVisibleBoxes) {
+        if (_previouslyVisibleBoxes[key] == box) {
+            return [key integerValue];
+        }
+    }
+    return NSNotFound;
 }
 
 #pragma mark - Frames
@@ -146,23 +213,12 @@
 }
 
 - (CGRect)frameForBox:(UIView <MGLayoutBox> *)box {
-    NSUInteger index = [self.container.boxes indexOfObject:box];
-    CGRect frame = [self footprintForBoxAtIndex:index];
+    CGRect frame = [self footprintForBoxAtIndex:[self indexOfBox:box]];
     frame.origin.x += box.leftMargin;
     frame.origin.y += box.topMargin;
     frame.size.width -= (box.leftMargin + box.rightMargin);
     frame.size.height -= (box.topMargin + box.bottomMargin);
     return frame;
-}
-
-#pragma mark - Misc
-
-- (NSIndexSet *)visibleIndexes {
-  return visibleIndexes;
-}
-
-- (NSMutableArray *)boxPositions {
-    return boxPositions;
 }
 
 @end

@@ -5,6 +5,7 @@
 @protocol MGLayoutBox;
 
 typedef UIView <MGLayoutBox> *(^MGBoxMaker)();
+typedef id (^MGBoxKeyMaker)(NSUInteger index);
 typedef void (^MGBoxCustomiser)(id box, NSUInteger index);
 typedef void (^MGBoxAnimator)(id box, NSUInteger index, NSTimeInterval duration,
       CGRect fromFrame, CGRect toFrame);
@@ -20,9 +21,11 @@ typedef NSUInteger(^MGCounter)();
 
 @property (nonatomic, weak) UIView <MGLayoutBox> *container;
 @property (nonatomic, readonly) NSIndexSet *visibleIndexes;
+@property (nonatomic, readonly) NSDictionary *visibleBoxes;
 @property (nonatomic, readonly) NSMutableArray *boxPositions;
 
 @property (nonatomic, copy) MGBoxMaker boxMaker;
+@property (nonatomic, copy) MGBoxKeyMaker boxKeyMaker;
 @property (nonatomic, copy) MGBoxCustomiser boxCustomiser;
 @property (nonatomic, copy) MGBoxSizer boxSizer;
 @property (nonatomic, copy) MGCounter counter;
@@ -33,11 +36,10 @@ typedef NSUInteger(^MGCounter)();
 
 + (instancetype)provider;
 
-- (void)reset;
+- (void)updateDataKeys;
 - (void)updateVisibleIndexes;
+- (void)updateVisibleBoxes;
 
-- (void)removeBox:(UIView <MGLayoutBox> *)box;
-- (UIView <MGLayoutBox> *)boxAtIndex:(NSUInteger)index;
 - (NSUInteger)count;
 
 // animations
@@ -48,10 +50,19 @@ typedef NSUInteger(^MGCounter)();
 - (void)doMoveAnimationFor:(UIView <MGLayoutBox> *)box atIndex:(NSUInteger)index
       duration:(NSTimeInterval)duration fromFrame:(CGRect)fromFrame toFrame:(CGRect)toFrame;
 
+// data state checking
+- (BOOL)dataAtIndexIsOld:(NSUInteger)index;
+- (BOOL)dataAtIndexIsExisting:(NSUInteger)index;
+- (BOOL)dataAtIndexIsNew:(NSUInteger)index;
+- (NSUInteger)indexOfBox:(UIView <MGLayoutBox> *)box;
+- (NSUInteger)oldIndexOfBox:(UIView <MGLayoutBox> *)box;
+
 // note: size, origin, rect include margins
 - (CGSize)sizeForBoxAtIndex:(NSUInteger)index;
 - (CGPoint)originForBoxAtIndex:(NSUInteger)index;
 - (CGRect)footprintForBoxAtIndex:(NSUInteger)index;
 - (CGRect)frameForBox:(UIView <MGLayoutBox> *)box;
+
+- (void)reset;
 
 @end
