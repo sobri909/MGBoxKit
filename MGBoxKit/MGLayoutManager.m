@@ -83,9 +83,6 @@ CGFloat roundToPixel(CGFloat value) {
         if (box.superview == container) {
             [toUpdate addObject:box];
         } else {
-            if (duration) {
-                box.alpha = 0;
-            }
             box.frame = [container.boxProvider frameForBox:box];
             box.parentBox = container;
             [container addSubview:box];
@@ -93,50 +90,53 @@ CGFloat roundToPixel(CGFloat value) {
         }
     }];
 
-    Block changes = ^{
-        if (duration) {
-            for (UIView <MGLayoutBox> *box in toRemove) {
-                box.alpha = 0;
-            }
-            for (UIView <MGLayoutBox> *box in toAdd) {
-                box.alpha = 1;
-            }
-        }
-        for (UIView <MGLayoutBox> *box in toUpdate) {
-            CGRect frame = [container.boxProvider frameForBox:box];
-            if (!CGRectEqualToRect(frame, box.frame)) {
-                box.frame = frame;
-            }
-        }
-        [self updateContentSizeFor:container];
-    };
-
-    Block fini = ^{
+    // do changes / animations
+    if (duration) {
         for (UIView <MGLayoutBox> *box in toRemove) {
-            [container.boxProvider removeBox:box];
-            if (duration) {
-                box.alpha = 1;
-            }
+            NSUInteger index = [container.boxes indexOfObject:box];
+            [container.boxProvider doDisappearAnimationFor:box atIndex:index
+                  duration:duration];
         }
         for (UIView <MGLayoutBox> *box in toAdd) {
-            if ([box respondsToSelector:@selector(appeared)]) {
-                [box appeared];
+            NSUInteger index = [container.boxes indexOfObject:box];
+            [container.boxProvider doAppearAnimationFor:box atIndex:index duration:duration];
+        }
+    }
+    for (UIView <MGLayoutBox> *box in toUpdate) {
+        CGRect toFrame = [container.boxProvider frameForBox:box];
+        if (!CGRectEqualToRect(toFrame, box.frame)) {
+            if (duration) {
+                NSUInteger index = [container.boxes indexOfObject:box];
+                [container.boxProvider doMoveAnimationFor:box atIndex:index duration:duration
+                      fromFrame:box.frame toFrame:toFrame];
+            } else {
+                box.frame = toFrame;
             }
         }
-        if (completion) {
+    }
+    [self updateContentSizeFor:container];
+
+    // finish up
+    for (UIView <MGLayoutBox> *box in toRemove) {
+        [container.boxProvider removeBox:box];
+        if (duration) {
+            box.alpha = 1;
+        }
+    }
+    for (UIView <MGLayoutBox> *box in toAdd) {
+        if ([box respondsToSelector:@selector(appeared)]) {
+            [box appeared];
+        }
+    }
+    if (completion) {
+        if (duration) {
+            dispatch_time_t delay = dispatch_time(0, (int64_t)duration * NSEC_PER_SEC);
+            dispatch_after(delay, dispatch_get_main_queue(), ^{
+                completion();
+            });
+        } else {
             completion();
         }
-    };
-
-    if (duration) {
-        [UIView animateWithDuration:duration delay:0
-              options:UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
-              animations:changes completion:^(BOOL finished) {
-            fini();
-        }];
-    } else {
-        changes();
-        fini();
     }
 }
 

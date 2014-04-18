@@ -82,6 +82,54 @@
     return box;
 }
 
+- (NSUInteger)count {
+    return self.counter();
+}
+
+#pragma mark - Animations
+
+- (void)doAppearAnimationFor:(UIView <MGLayoutBox> *)box atIndex:(NSUInteger)index
+      duration:(NSTimeInterval)duration {
+    if (self.appearAnimation) {
+        self.appearAnimation(box, index, duration, box.frame, box.frame);
+    } else {
+        box.alpha = 0;
+        [UIView animateWithDuration:duration delay:0
+              options:UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
+              animations:^{
+                  box.alpha = 1;
+              } completion:nil];
+    }
+}
+
+- (void)doDisappearAnimationFor:(UIView <MGLayoutBox> *)box atIndex:(NSUInteger)index
+      duration:(NSTimeInterval)duration {
+    if (self.disappearAnimation) {
+        self.disappearAnimation(box, index, duration, box.frame, box.frame);
+    } else {
+        [UIView animateWithDuration:duration delay:0
+              options:UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
+              animations:^{
+                  box.alpha = 0;
+              } completion:nil];
+    }
+}
+
+- (void)doMoveAnimationFor:(UIView <MGLayoutBox> *)box atIndex:(NSUInteger)index
+      duration:(NSTimeInterval)duration fromFrame:(CGRect)fromFrame toFrame:(CGRect)toFrame {
+    if (self.moveAnimation) {
+        self.moveAnimation(box, index, duration, fromFrame, toFrame);
+    } else {
+        [UIView animateWithDuration:duration delay:0
+              options:UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
+              animations:^{
+                  box.frame = toFrame;
+              } completion:nil];
+    }
+}
+
+#pragma mark - Frames
+
 - (CGSize)sizeForBoxAtIndex:(NSUInteger)index {
     return self.boxSizer(index);
 }
@@ -107,9 +155,7 @@
     return frame;
 }
 
-- (NSUInteger)count {
-  return self.counter();
-}
+#pragma mark - Misc
 
 - (NSIndexSet *)visibleIndexes {
   return visibleIndexes;
