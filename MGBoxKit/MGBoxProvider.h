@@ -7,10 +7,12 @@
 typedef UIView <MGLayoutBox> *(^MGBoxMaker)();
 typedef id (^MGBoxKeyMaker)(NSUInteger index);
 typedef void (^MGBoxCustomiser)(id box, NSUInteger index);
+typedef UIEdgeInsets(^MGBoxMarginMaker)(NSUInteger index);
+typedef CGSize(^MGBoxSizeMaker)(NSUInteger index);
+typedef NSUInteger(^MGCounter)();
+
 typedef void (^MGBoxAnimator)(id box, NSUInteger index, NSTimeInterval duration,
       CGRect fromFrame, CGRect toFrame);
-typedef CGSize(^MGBoxSizer)(NSUInteger index);
-typedef NSUInteger(^MGCounter)();
 
 /**
 * Provides box reuse / offscreen culling, conceptually similar to `UITableView`
@@ -22,12 +24,13 @@ typedef NSUInteger(^MGCounter)();
 @property (nonatomic, weak) UIView <MGLayoutBox> *container;
 @property (nonatomic, readonly) NSIndexSet *visibleIndexes;
 @property (nonatomic, readonly) NSDictionary *visibleBoxes;
-@property (nonatomic, readonly) NSMutableArray *boxPositions;
+@property (nonatomic, readonly) NSArray *boxFrames;
 
 @property (nonatomic, copy) MGBoxMaker boxMaker;
 @property (nonatomic, copy) MGBoxKeyMaker boxKeyMaker;
+@property (nonatomic, copy) MGBoxSizeMaker boxSizeMaker;
+@property (nonatomic, copy) MGBoxMarginMaker boxMarginMaker;
 @property (nonatomic, copy) MGBoxCustomiser boxCustomiser;
-@property (nonatomic, copy) MGBoxSizer boxSizer;
 @property (nonatomic, copy) MGCounter counter;
 
 @property (nonatomic, copy) MGBoxAnimator appearAnimation;
@@ -37,8 +40,11 @@ typedef NSUInteger(^MGCounter)();
 + (instancetype)provider;
 
 - (void)updateDataKeys;
+- (void)updateBoxFrames;
 - (void)updateVisibleIndexes;
 - (void)updateVisibleBoxes;
+- (void)updateOldDataKeys;
+- (void)updateOldBoxFrames;
 
 - (NSUInteger)count;
 
@@ -51,17 +57,18 @@ typedef NSUInteger(^MGCounter)();
       duration:(NSTimeInterval)duration fromFrame:(CGRect)fromFrame toFrame:(CGRect)toFrame;
 
 // data state checking
-- (BOOL)dataAtIndexIsOld:(NSUInteger)index;
-- (BOOL)dataAtIndexIsExisting:(NSUInteger)index;
 - (BOOL)dataAtIndexIsNew:(NSUInteger)index;
+- (BOOL)dataAtIndexIsExisting:(NSUInteger)index;
+- (BOOL)dataAtOldIndexIsOld:(NSUInteger)index;
+
 - (NSUInteger)indexOfBox:(UIView <MGLayoutBox> *)box;
 - (NSUInteger)oldIndexOfBox:(UIView <MGLayoutBox> *)box;
 
-// note: size, origin, rect include margins
+// frames
 - (CGSize)sizeForBoxAtIndex:(NSUInteger)index;
-- (CGPoint)originForBoxAtIndex:(NSUInteger)index;
-- (CGRect)footprintForBoxAtIndex:(NSUInteger)index;
-- (CGRect)frameForBox:(UIView <MGLayoutBox> *)box;
+- (UIEdgeInsets)marginForBoxAtIndex:(NSUInteger)index;
+- (CGRect)frameForBoxAtIndex:(NSUInteger)index;
+- (CGRect)oldFrameForBoxAtIndex:(NSUInteger)index;
 
 - (void)reset;
 

@@ -166,10 +166,11 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (self.boxProvider) {
-        [self.boxProvider updateDataKeys];
         [self.boxProvider updateVisibleIndexes];
         [self.boxProvider updateVisibleBoxes];
         [MGLayoutManager layoutVisibleBoxesIn:self duration:0 completion:nil];
+        [self.boxProvider updateOldDataKeys];
+        [self.boxProvider updateOldBoxFrames];
 
         // Apple bug workaround
         self.showsVerticalScrollIndicator = NO;

@@ -4,19 +4,17 @@
 
 #import "MGBoxProvider.h"
 #import "MGLayoutBox.h"
+#import "MGLayoutManager.h"
 
 @implementation MGBoxProvider {
-    NSMutableIndexSet *_visibleIndexes;
-    NSDictionary *_previouslyVisibleBoxes;
-    NSArray *_previousDataKeys;
-    NSMutableArray *_dataKeys;
+    NSDictionary *_oldVisibleBoxes;
+    NSArray *_dataKeys, *_oldDataKeys, *_oldBoxFrames;
     NSMutableSet *_boxCache;
 }
 
 - (id)init {
     self = [super init];
     _boxCache = NSMutableSet.set;
-    _boxPositions = @[].mutableCopy;
     _visibleIndexes = NSMutableIndexSet.indexSet;
     _dataKeys = @[].mutableCopy;
     return self;
@@ -28,41 +26,44 @@
 
 - (void)reset {
     [_boxCache removeAllObjects];
-    [_visibleIndexes removeAllIndexes];
-    [_dataKeys removeAllObjects];
-    _previousDataKeys = nil;
+    _visibleIndexes = nil;
+    _oldBoxFrames = nil;
+    _oldDataKeys = nil;
+    _dataKeys = nil;
 }
 
 #pragma mark - Internal state list updates
 
 - (void)updateDataKeys {
-    _previousDataKeys = _dataKeys.copy;
-    _dataKeys = @[].mutableCopy;
+    NSMutableArray *dataKeys = @[].mutableCopy;
     for (int i = 0; i < self.count; i++) {
-        [_dataKeys addObject:[self keyForBoxAtIndex:i]];
+        [dataKeys addObject:[self keyForBoxAtIndex:i]];
     }
+    _dataKeys = dataKeys;
+}
+
+- (void)updateBoxFrames {
+    NSArray *boxFrames = [MGLayoutManager framesForBoxesIn:self.container];
+    _boxFrames = boxFrames;
+}
+
+- (void)updateOldDataKeys {
+    _oldDataKeys = _dataKeys;
+}
+
+- (void)updateOldBoxFrames {
+    _oldBoxFrames = _boxFrames;
 }
 
 - (void)updateVisibleIndexes {
     CGRect viewport = self.container.bufferedViewport;
+    NSMutableIndexSet *visibleIndexes = NSMutableIndexSet.indexSet;
     for (int i = 0; i < self.count; i++) {
-        CGRect frame = [self footprintForBoxAtIndex:i];
-        BOOL visible = CGRectIntersectsRect(frame, viewport);
-        BOOL have = [_visibleIndexes containsIndex:i];
-        if (visible && !have) {
-            [_visibleIndexes addIndex:i];
-        }
-        if (!visible && have) {
-            [_visibleIndexes removeIndex:i];
+        if (CGRectIntersectsRect([self frameForBoxAtIndex:i], viewport)) {
+            [visibleIndexes addIndex:i];
         }
     }
-
-    // prune any indexes beyond the end
-    [_visibleIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-        if (index >= self.count) {
-            [_visibleIndexes removeIndex:index];
-        }
-    }];
+    _visibleIndexes = visibleIndexes;
 }
 
 - (void)updateVisibleBoxes {
@@ -79,7 +80,7 @@
         UIView <MGLayoutBox> *box;
         if ([self dataAtIndexIsExisting:index]) {
             id dataKey = _dataKeys[index];
-            NSUInteger oldIndex = [_previousDataKeys indexOfObject:dataKey];
+            NSUInteger oldIndex = [_oldDataKeys indexOfObject:dataKey];
             box = _visibleBoxes[@(oldIndex)];
         }
         if (!box) {
@@ -104,7 +105,7 @@
     }
 
     // boxes should now be true to the data
-    _previouslyVisibleBoxes = _visibleBoxes;
+    _oldVisibleBoxes = _visibleBoxes;
     _visibleBoxes = visibleBoxes;
 }
 
@@ -143,10 +144,9 @@
         self.disappearAnimation(box, index, duration, box.frame, box.frame);
     } else {
         [UIView animateWithDuration:duration delay:0
-              options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
-              animations:^{
-                  box.alpha = 0;
-              } completion:nil];
+              options:UIViewAnimationOptionAllowUserInteraction animations:^{
+            box.alpha = 0;
+        } completion:nil];
     }
 }
 
@@ -156,25 +156,25 @@
         self.moveAnimation(box, index, duration, fromFrame, toFrame);
     } else {
         [UIView animateWithDuration:duration delay:0
-              options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
-              animations:^{
-                  box.frame = toFrame;
-              } completion:nil];
+              options:UIViewAnimationOptionAllowUserInteraction animations:^{
+            box.frame = toFrame;
+        } completion:nil];
     }
 }
 
 #pragma mark - Data checking
 
-- (BOOL)dataAtIndexIsOld:(NSUInteger)index {
-    return ![_dataKeys containsObject:_previousDataKeys[index]];
+
+- (BOOL)dataAtIndexIsNew:(NSUInteger)index {
+    return ![_oldDataKeys containsObject:_dataKeys[index]];
 }
 
 - (BOOL)dataAtIndexIsExisting:(NSUInteger)index {
-    return [_previousDataKeys containsObject:_dataKeys[index]];
+    return [_oldDataKeys containsObject:_dataKeys[index]];
 }
 
-- (BOOL)dataAtIndexIsNew:(NSUInteger)index {
-    return ![_previousDataKeys containsObject:_dataKeys[index]];
+- (BOOL)dataAtOldIndexIsOld:(NSUInteger)index {
+    return ![_dataKeys containsObject:_oldDataKeys[index]];
 }
 
 - (NSUInteger)indexOfBox:(UIView <MGLayoutBox> *)box {
@@ -187,38 +187,33 @@
 }
 
 - (NSUInteger)oldIndexOfBox:(UIView <MGLayoutBox> *)box {
-    for (id key in _previouslyVisibleBoxes) {
-        if (_previouslyVisibleBoxes[key] == box) {
+    for (id key in _oldVisibleBoxes) {
+        if (_oldVisibleBoxes[key] == box) {
             return [key integerValue];
         }
     }
+    NSLog(@"oldIndexOfBox NSNotFound: %@", box);
     return NSNotFound;
 }
 
 #pragma mark - Frames
 
 - (CGSize)sizeForBoxAtIndex:(NSUInteger)index {
-    return self.boxSizer(index);
+    return self.boxSizeMaker(index);
 }
 
-- (CGPoint)originForBoxAtIndex:(NSUInteger)index {
-    if (index >= self.boxPositions.count) {
-        [self.container layout];
-    }
-    return [self.boxPositions[index] CGPointValue];
+- (UIEdgeInsets)marginForBoxAtIndex:(NSUInteger)index {
+    return self.boxMarginMaker ? self.boxMarginMaker(index) : UIEdgeInsetsZero;
 }
 
-- (CGRect)footprintForBoxAtIndex:(NSUInteger)index {
-    return (CGRect){[self originForBoxAtIndex:index], [self sizeForBoxAtIndex:index]};
+- (CGRect)frameForBoxAtIndex:(NSUInteger)index {
+    return [self.boxFrames[index] CGRectValue];
 }
 
-- (CGRect)frameForBox:(UIView <MGLayoutBox> *)box {
-    CGRect frame = [self footprintForBoxAtIndex:[self indexOfBox:box]];
-    frame.origin.x += box.leftMargin;
-    frame.origin.y += box.topMargin;
-    frame.size.width -= (box.leftMargin + box.rightMargin);
-    frame.size.height -= (box.topMargin + box.bottomMargin);
-    return frame;
+- (CGRect)oldFrameForBoxAtIndex:(NSUInteger)index {
+    id dataKey = _dataKeys[index];
+    NSUInteger oldIndex = [_oldDataKeys indexOfObject:dataKey];
+    return [_oldBoxFrames[oldIndex] CGRectValue];
 }
 
 @end

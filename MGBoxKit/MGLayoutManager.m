@@ -23,11 +23,13 @@ CGFloat roundToPixel(CGFloat value) {
 
     // box provider style layout
     if (container.boxProvider) {
-        [self positionBoxesIn:container];
         [container.boxProvider updateDataKeys];
+        [container.boxProvider updateBoxFrames];
         [container.boxProvider updateVisibleIndexes];
         [container.boxProvider updateVisibleBoxes];
         [self layoutVisibleBoxesIn:container duration:0 completion:nil];
+        [container.boxProvider updateOldDataKeys];
+        [container.boxProvider updateOldBoxFrames];
         container.layingOut = NO;
         return;
     }
@@ -62,43 +64,65 @@ CGFloat roundToPixel(CGFloat value) {
       duration:(NSTimeInterval)duration completion:(Block)completion {
     MGBoxProvider *provider = container.boxProvider;
 
-    NSMutableOrderedSet *toAdd = NSMutableOrderedSet.orderedSet;
-    NSMutableOrderedSet *toMove = NSMutableOrderedSet.orderedSet;
-    NSArray *toRemove = [MGLayoutManager findBoxesInView:container
-          notInSet:provider.visibleBoxes.allValues];
+    NSMutableDictionary *toAdd = @{}.mutableCopy;
+    NSMutableDictionary *toMove = @{}.mutableCopy;
+    NSMutableDictionary *toRemove = @{}.mutableCopy;
 
-    // find existing boxes and add new boxes
-    for (UIView <MGLayoutBox> *box in provider.visibleBoxes.allValues) {
-        if (box.superview == container) {
-            [toMove addObject:box];
+    // collate gone boxes
+    NSArray *visibleBoxes = provider.visibleBoxes.allValues;
+    for (UIView <MGLayoutBox> *box in container.subviews) {
+        if (![box conformsToProtocol:@protocol(MGLayoutBox)]) {
+            continue;
+        }
+        if (![visibleBoxes containsObject:box]) {
+            NSUInteger oldIndex = [provider oldIndexOfBox:box];
+            if (oldIndex != NSNotFound) {
+                toRemove[@(oldIndex)] = box;
+            }
+        }
+    }
+
+    // collate existing and new boxes
+    for (id key in provider.visibleBoxes) {
+        UIView <MGLayoutBox> *box = provider.visibleBoxes[key];
+        NSUInteger index = [key integerValue];
+        if ([provider dataAtIndexIsNew:index]) {
+            toAdd[key] = box;
         } else {
-            box.frame = [provider frameForBox:box];
-            box.parentBox = container;
-            [container addSubview:box];
-            [toAdd addObject:box];
+            toMove[key] = box;
         }
     };
 
     // do changes / animations
     if (duration) {
-        for (UIView <MGLayoutBox> *box in toRemove) {
-            NSUInteger index = [provider oldIndexOfBox:box];
-            if (index == NSNotFound || [provider dataAtIndexIsOld:index]) {
-                [provider doDisappearAnimationFor:box atIndex:index duration:duration];
-            }
-        }
-        for (UIView <MGLayoutBox> *box in toAdd) {
-            NSUInteger index = [provider indexOfBox:box];
-            if ([provider dataAtIndexIsNew:index]) {
-                [provider doAppearAnimationFor:box atIndex:index duration:duration];
-            }
+        for (id key in toRemove) {
+            NSUInteger index = [key integerValue];
+            UIView <MGLayoutBox> *box = toRemove[key];
+            [provider doDisappearAnimationFor:box atIndex:index duration:duration];
         }
     }
-    for (UIView <MGLayoutBox> *box in toMove) {
-        CGRect toFrame = [provider frameForBox:box];
+    for (id key in toAdd) {
+        NSUInteger index = [key integerValue];
+        UIView <MGLayoutBox> *box = toAdd[key];
+        box.frame = [provider frameForBoxAtIndex:index];
+        [container addSubview:box];
+        box.parentBox = container;
+        if (duration) {
+            [provider doAppearAnimationFor:box atIndex:index duration:duration];
+        }
+    }
+    for (id key in toMove) {
+        UIView <MGLayoutBox> *box = toMove[key];
+        NSUInteger index = [key integerValue];
+        CGRect toFrame = [provider frameForBoxAtIndex:index];
+
+        if (box.superview != container) {
+            box.frame = [provider oldFrameForBoxAtIndex:index];
+            [container addSubview:box];
+        }
+
         if (!CGRectEqualToRect(toFrame, box.frame)) {
             if (duration) {
-                NSUInteger index = [provider indexOfBox:box];
                 [provider doMoveAnimationFor:box atIndex:index duration:duration
                       fromFrame:box.frame toFrame:toFrame];
             } else {
@@ -106,64 +130,65 @@ CGFloat roundToPixel(CGFloat value) {
             }
         }
     }
+
     [self updateContentSizeFor:container];
 
-    for (UIView <MGLayoutBox> *box in toRemove) {
+    for (UIView <MGLayoutBox> *box in toRemove.allValues) {
         if ([box respondsToSelector:@selector(disappeared)]) {
             [box disappeared];
         }
     }
-    for (UIView <MGLayoutBox> *box in toAdd) {
+    for (UIView <MGLayoutBox> *box in toAdd.allValues) {
         if ([box respondsToSelector:@selector(appeared)]) {
             [box appeared];
         }
     }
 
     Block fini = ^{
-        for (UIView <MGLayoutBox> *box in toRemove) {
+        for (UIView <MGLayoutBox> *box in toRemove.allValues) {
             [box removeFromSuperview];
         }
-        completion();
+        if (completion) {
+            completion();
+        }
     };
 
-    if (completion) {
-        if (duration) {
-            dispatch_time_t delay = dispatch_time(0, (int64_t)duration * NSEC_PER_SEC);
-            dispatch_after(delay, dispatch_get_main_queue(), ^{
-                fini();
-            });
-        } else {
+    if (duration) {
+        dispatch_time_t delay = dispatch_time(0, (int64_t)duration * NSEC_PER_SEC);
+        dispatch_after(delay, dispatch_get_main_queue(), ^{
             fini();
-        }
+        });
+    } else {
+        fini();
+    }
+}
+
++ (NSArray *)framesForBoxesIn:(UIView <MGLayoutBox> *)container {
+    switch (container.contentLayoutMode) {
+        case MGLayoutTableStyle:
+            return [self stackTableStyle:container];
+        case MGLayoutGridStyle:
+            return [self stackGridStyle:container];
+        default:
+            return nil;
     }
 }
 
 + (void)positionBoxesIn:(UIView <MGLayoutBox> *)container {
-    if (container.boxProvider) {
-        switch (container.contentLayoutMode) {
-            case MGLayoutTableStyle:
-                [self stackTableStyle:container];
-                break;
-            case MGLayoutGridStyle:
-                [self stackGridStyle:container];
-                break;
-        }
-    } else {
-        switch (container.contentLayoutMode) {
-            case MGLayoutTableStyle:
-                [self stackTableStyle:container onlyMove:nil];
-                break;
-            case MGLayoutGridStyle:
-                [self stackGridStyle:container onlyMove:nil];
-                break;
-        }
-
-        // position attached and replacement boxes
-        [MGLayoutManager positionAttachedBoxesIn:container];
-
-        // zindex time
-        [self stackByZIndexIn:container];
+    switch (container.contentLayoutMode) {
+        case MGLayoutTableStyle:
+            [self stackTableStyle:container onlyMove:nil];
+            break;
+        case MGLayoutGridStyle:
+            [self stackGridStyle:container onlyMove:nil];
+            break;
     }
+
+    // position attached and replacement boxes
+    [MGLayoutManager positionAttachedBoxesIn:container];
+
+    // zindex time
+    [self stackByZIndexIn:container];
 }
 
 + (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container duration:(NSTimeInterval)duration
@@ -177,11 +202,13 @@ CGFloat roundToPixel(CGFloat value) {
 
     // box provider style layout
     if (container.boxProvider) {
-        [self positionBoxesIn:container];
         [container.boxProvider updateDataKeys];
+        [container.boxProvider updateBoxFrames];
         [container.boxProvider updateVisibleIndexes];
         [container.boxProvider updateVisibleBoxes];
         [self layoutVisibleBoxesIn:container duration:duration completion:completion];
+        [container.boxProvider updateOldDataKeys];
+        [container.boxProvider updateOldBoxFrames];
         container.layingOut = NO;
         return;
     }
@@ -310,43 +337,53 @@ CGFloat roundToPixel(CGFloat value) {
 
 #pragma mark - Layout strategies
 
-+ (void)stackGridStyle:(UIView <MGLayoutBox> *)container {
-    CGFloat x = container.leftPadding, y = container.topPadding, maxHeight = 0;
-    for (int i = 0; i < container.boxProvider.count; i++) {
-        CGSize size = [container.boxProvider sizeForBoxAtIndex:i];
++ (NSArray *)stackGridStyle:(UIView <MGLayoutBox> *)container {
+    MGBoxProvider *boxProvider = container.boxProvider;
+    NSMutableArray *frames = @[].mutableCopy;
+
+    CGFloat x = container.leftPadding, y = container.topPadding, rowBottom = 0;
+    for (int index = 0; index < boxProvider.count; index++) {
+        UIEdgeInsets margin = [boxProvider marginForBoxAtIndex:index];
+        CGRect frame = (CGRect){
+              (CGPoint){roundToPixel(x + margin.left), roundToPixel(y + margin.top)},
+              [boxProvider sizeForBoxAtIndex:index]
+        };
 
         // next row?
-        if (x + size.width > container.width) {
-            x = container.leftPadding, y = maxHeight;
+        if (CGRectGetMaxX(frame) + margin.right > container.width) {
+            frame.origin = (CGPoint){
+                  roundToPixel(container.leftPadding + margin.left),
+                  roundToPixel(rowBottom + margin.top)
+            };
+            y = rowBottom;
         }
 
-        // calc position
-        CGPoint origin = (CGPoint){roundToPixel(x), roundToPixel(y)};
-        x += size.width, maxHeight = MAX(maxHeight, origin.y + size.height);
-        container.boxProvider.boxPositions[i] = [NSValue valueWithCGPoint:origin];
+        // prep for next
+        x = CGRectGetMaxX(frame) + margin.right;
+        rowBottom = MAX(rowBottom, CGRectGetMaxY(frame) + margin.bottom);
+
+        frames[index] = [NSValue valueWithCGRect:frame];
     }
-    [self prunePositionsFor:container];
+
+    return frames;
 }
 
-+ (void)stackTableStyle:(UIView <MGLayoutBox> *)container {
++ (NSArray *)stackTableStyle:(UIView <MGLayoutBox> *)container {
+    MGBoxProvider *boxProvider = container.boxProvider;
+    NSMutableArray *frames = @[].mutableCopy;
+
     CGFloat y = container.topPadding;
-    for (int i = 0; i < container.boxProvider.count; i++) {
-        CGSize size = [container.boxProvider sizeForBoxAtIndex:i];
-        CGPoint origin = (CGPoint){container.leftPadding, y};
-        container.boxProvider.boxPositions[i] = [NSValue valueWithCGPoint:origin];
-        y += size.height;
+    for (int index = 0; index < boxProvider.count; index++) {
+        UIEdgeInsets margin = [boxProvider marginForBoxAtIndex:index];
+        CGRect frame = (CGRect){
+              (CGPoint){container.leftPadding + margin.left, y + margin.top},
+              [boxProvider sizeForBoxAtIndex:index]
+        };
+        y = CGRectGetMaxY(frame) + margin.bottom;
+        frames[index] = [NSValue valueWithCGRect:frame];
     }
-    [self prunePositionsFor:container];
-}
 
-+ (void)prunePositionsFor:(UIView <MGLayoutBox> *)container {
-    NSUInteger trueCount = container.boxProvider.count;
-    if (container.boxProvider.boxPositions.count > trueCount) {
-        NSUInteger excess = container.boxProvider.boxPositions.count - trueCount;
-        NSIndexSet *indexes = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(
-              container.boxProvider.boxPositions.count - excess, excess)];
-        [container.boxProvider.boxPositions removeObjectsAtIndexes:indexes];
-    }
+    return frames;
 }
 
 + (void)stackTableStyle:(UIView <MGLayoutBox> *)container
@@ -510,10 +547,12 @@ CGFloat roundToPixel(CGFloat value) {
     }
 
     if (container.boxProvider) {
-        for (int i = 0; i < container.boxProvider.count; i++) {
-            CGRect footprint = [container.boxProvider footprintForBoxAtIndex:i];
-            newSize.width = MAX(newSize.width, CGRectGetMaxX(footprint));
-            newSize.height = MAX(newSize.height, CGRectGetMaxY(footprint));
+        MGBoxProvider *provider = container.boxProvider;
+        for (int index = 0; index < provider.count; index++) {
+            CGRect frame = [provider frameForBoxAtIndex:index];
+            UIEdgeInsets margin = [provider marginForBoxAtIndex:index];
+            newSize.width = MAX(newSize.width, CGRectGetMaxX(frame) + margin.right);
+            newSize.height = MAX(newSize.height, CGRectGetMaxY(frame) + margin.bottom);
         }
 
     } else {
