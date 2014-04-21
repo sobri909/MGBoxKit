@@ -24,7 +24,6 @@ typedef void (^MGBoxAnimator)(id box, NSUInteger index, NSTimeInterval duration,
 @property (nonatomic, weak) UIView <MGLayoutBox> *container;
 @property (nonatomic, readonly) NSIndexSet *visibleIndexes;
 @property (nonatomic, readonly) NSDictionary *visibleBoxes;
-@property (nonatomic, readonly) NSArray *boxFrames;
 
 @property (nonatomic, copy) MGBoxMaker boxMaker;
 @property (nonatomic, copy) MGBoxKeyMaker boxKeyMaker;

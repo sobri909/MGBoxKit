@@ -8,15 +8,15 @@
 
 @implementation MGBoxProvider {
     NSDictionary *_oldVisibleBoxes;
-    NSArray *_dataKeys, *_oldDataKeys, *_oldBoxFrames;
+    NSOrderedSet *_dataKeys, *_oldDataKeys;
+    NSOrderedSet *_boxFrames, *_oldBoxFrames;
     NSMutableSet *_boxCache;
+    NSUInteger _count;
 }
 
 - (id)init {
     self = [super init];
-    _boxCache = NSMutableSet.set;
-    _visibleIndexes = NSMutableIndexSet.indexSet;
-    _dataKeys = @[].mutableCopy;
+    [self reset];
     return self;
 }
 
@@ -25,11 +25,12 @@
 }
 
 - (void)resetBoxCache {
-    [_boxCache removeAllObjects];
+    _boxCache = NSMutableSet.set;
 }
 
 - (void)reset {
-    [_boxCache removeAllObjects];
+    _count = NSNotFound;
+    _boxCache = NSMutableSet.set;
     _visibleIndexes = nil;
     _oldBoxFrames = nil;
     _oldDataKeys = nil;
@@ -39,7 +40,8 @@
 #pragma mark - Internal state list updates
 
 - (void)updateDataKeys {
-    NSMutableArray *dataKeys = @[].mutableCopy;
+    _count = NSNotFound;
+    NSMutableOrderedSet *dataKeys = [NSMutableOrderedSet orderedSetWithCapacity:self.count];
     for (int i = 0; i < self.count; i++) {
         [dataKeys addObject:[self keyForBoxAtIndex:i]];
     }
@@ -47,8 +49,7 @@
 }
 
 - (void)updateBoxFrames {
-    NSArray *boxFrames = [MGLayoutManager framesForBoxesIn:self.container];
-    _boxFrames = boxFrames;
+    _boxFrames = [MGLayoutManager framesForBoxesIn:self.container];
 }
 
 - (void)updateOldDataKeys {
@@ -114,7 +115,10 @@
 }
 
 - (NSUInteger)count {
-    return self.counter();
+    if (_count == NSNotFound) {
+        _count = self.counter();
+    }
+    return _count;
 }
 
 #pragma mark - Individual box state updates
@@ -211,7 +215,7 @@
 }
 
 - (CGRect)frameForBoxAtIndex:(NSUInteger)index {
-    return [self.boxFrames[index] CGRectValue];
+    return [_boxFrames[index] CGRectValue];
 }
 
 - (CGRect)oldFrameForBoxAtIndex:(NSUInteger)index {

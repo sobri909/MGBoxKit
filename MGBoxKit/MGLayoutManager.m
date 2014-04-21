@@ -28,6 +28,7 @@ CGFloat roundToPixel(CGFloat value) {
         [container.boxProvider updateVisibleIndexes];
         [container.boxProvider updateVisibleBoxes];
         [self layoutVisibleBoxesIn:container duration:0 completion:nil];
+        [self updateContentSizeFor:container];
         [container.boxProvider updateOldDataKeys];
         [container.boxProvider updateOldBoxFrames];
         container.layingOut = NO;
@@ -131,8 +132,6 @@ CGFloat roundToPixel(CGFloat value) {
         }
     }
 
-    [self updateContentSizeFor:container];
-
     for (UIView <MGLayoutBox> *box in toRemove.allValues) {
         if ([box respondsToSelector:@selector(disappeared)]) {
             [box disappeared];
@@ -163,7 +162,7 @@ CGFloat roundToPixel(CGFloat value) {
     }
 }
 
-+ (NSArray *)framesForBoxesIn:(UIView <MGLayoutBox> *)container {
++ (NSOrderedSet *)framesForBoxesIn:(UIView <MGLayoutBox> *)container {
     switch (container.contentLayoutMode) {
         case MGLayoutTableStyle:
             return [self stackTableStyle:container];
@@ -207,6 +206,7 @@ CGFloat roundToPixel(CGFloat value) {
         [container.boxProvider updateVisibleIndexes];
         [container.boxProvider updateVisibleBoxes];
         [self layoutVisibleBoxesIn:container duration:duration completion:completion];
+        [self updateContentSizeFor:container];
         [container.boxProvider updateOldDataKeys];
         [container.boxProvider updateOldBoxFrames];
         container.layingOut = NO;
@@ -337,16 +337,16 @@ CGFloat roundToPixel(CGFloat value) {
 
 #pragma mark - Layout strategies
 
-+ (NSArray *)stackGridStyle:(UIView <MGLayoutBox> *)container {
-    MGBoxProvider *boxProvider = container.boxProvider;
-    NSMutableArray *frames = @[].mutableCopy;
++ (NSOrderedSet *)stackGridStyle:(UIView <MGLayoutBox> *)container {
+    MGBoxProvider *provider = container.boxProvider;
+    NSMutableOrderedSet *frames = [NSMutableOrderedSet orderedSetWithCapacity:provider.count];
 
     CGFloat x = container.leftPadding, y = container.topPadding, rowBottom = 0;
-    for (int index = 0; index < boxProvider.count; index++) {
-        UIEdgeInsets margin = [boxProvider marginForBoxAtIndex:index];
+    for (int index = 0; index < provider.count; index++) {
+        UIEdgeInsets margin = [provider marginForBoxAtIndex:index];
         CGRect frame = (CGRect){
               (CGPoint){roundToPixel(x + margin.left), roundToPixel(y + margin.top)},
-              [boxProvider sizeForBoxAtIndex:index]
+              [provider sizeForBoxAtIndex:index]
         };
 
         // next row?
@@ -368,16 +368,16 @@ CGFloat roundToPixel(CGFloat value) {
     return frames;
 }
 
-+ (NSArray *)stackTableStyle:(UIView <MGLayoutBox> *)container {
-    MGBoxProvider *boxProvider = container.boxProvider;
-    NSMutableArray *frames = @[].mutableCopy;
++ (NSOrderedSet *)stackTableStyle:(UIView <MGLayoutBox> *)container {
+    MGBoxProvider *provider = container.boxProvider;
+    NSMutableOrderedSet *frames = [NSMutableOrderedSet orderedSetWithCapacity:provider.count];
 
     CGFloat y = container.topPadding;
-    for (int index = 0; index < boxProvider.count; index++) {
-        UIEdgeInsets margin = [boxProvider marginForBoxAtIndex:index];
+    for (int index = 0; index < provider.count; index++) {
+        UIEdgeInsets margin = [provider marginForBoxAtIndex:index];
         CGRect frame = (CGRect){
               (CGPoint){container.leftPadding + margin.left, y + margin.top},
-              [boxProvider sizeForBoxAtIndex:index]
+              [provider sizeForBoxAtIndex:index]
         };
         y = CGRectGetMaxY(frame) + margin.bottom;
         frames[index] = [NSValue valueWithCGRect:frame];

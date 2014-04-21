@@ -11,7 +11,7 @@
       completion:(Block)completion;
 + (void)layoutVisibleBoxesIn:(UIView <MGLayoutBox> *)container
       duration:(NSTimeInterval)duration completion:(Block)completion;
-+ (NSArray *)framesForBoxesIn:(UIView <MGLayoutBox> *)container;
++ (NSOrderedSet *)framesForBoxesIn:(UIView <MGLayoutBox> *)container;
 + (void)positionBoxesIn:(UIView <MGLayoutBox> *)container;
 + (void)positionAttachedBoxesIn:(UIView <MGLayoutBox> *)container;
 + (NSArray *)findBoxesInView:(UIView *)view notInSet:(id)boxes;
