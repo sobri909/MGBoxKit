@@ -24,6 +24,10 @@
   return [[self alloc] init];
 }
 
+- (void)resetBoxCache {
+    [_boxCache removeAllObjects];
+}
+
 - (void)reset {
     [_boxCache removeAllObjects];
     _visibleIndexes = nil;

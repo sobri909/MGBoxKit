@@ -16,6 +16,7 @@
 + (void)positionAttachedBoxesIn:(UIView <MGLayoutBox> *)container;
 + (NSArray *)findBoxesInView:(UIView *)view notInSet:(id)boxes;
 + (NSSet *)findViewsInView:(UIView *)view notInSet:(id)boxes;
++ (void)updateContentSizeFor:(UIView <MGLayoutBox> *)container;
 + (void)stackByZIndexIn:(UIView *)container;
 
 @end

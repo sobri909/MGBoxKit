@@ -70,6 +70,7 @@ typedef void (^MGBoxAnimator)(id box, NSUInteger index, NSTimeInterval duration,
 - (CGRect)frameForBoxAtIndex:(NSUInteger)index;
 - (CGRect)oldFrameForBoxAtIndex:(NSUInteger)index;
 
+- (void)resetBoxCache;
 - (void)reset;
 
 @end

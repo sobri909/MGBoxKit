@@ -169,8 +169,6 @@
         [self.boxProvider updateVisibleIndexes];
         [self.boxProvider updateVisibleBoxes];
         [MGLayoutManager layoutVisibleBoxesIn:self duration:0 completion:nil];
-        [self.boxProvider updateOldDataKeys];
-        [self.boxProvider updateOldBoxFrames];
 
         // Apple bug workaround
         self.showsVerticalScrollIndicator = NO;
@@ -325,6 +323,11 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)other 
 #pragma mark - Scroll Offset Handling
 
 - (void)restoreScrollOffset {
+    [self.boxProvider resetBoxCache];
+    [self.boxProvider updateDataKeys];
+    [self.boxProvider updateBoxFrames];
+    [MGLayoutManager updateContentSizeFor:self];
+
     CGSize sizeMinusInsets = CGSizeMake(_previousFrame.size.width -
                                         _previousContentInset.right -
                                         _previousContentInset.left,
@@ -351,8 +354,19 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)other 
     maxOffset = CGPointMake(minOffset.x + MAX(sizeMinusInsets.width, self.contentSize.width) - sizeMinusInsets.width,
                             minOffset.y + MAX(sizeMinusInsets.height, self.contentSize.height) - sizeMinusInsets.height);
 
-    self.contentOffset = CGPointMake(scrollRatio.x * (maxOffset.x - minOffset.x),
-                                     scrollRatio.y * (maxOffset.y - minOffset.y));
+    CGPoint newOffset = (CGPoint){
+          scrollRatio.x * (maxOffset.x - minOffset.x),
+          scrollRatio.y * (maxOffset.y - minOffset.y)
+    };
+
+    if (CGPointEqualToPoint(newOffset, self.contentOffset)) {
+        [self scrollViewDidScroll:self];
+    } else {
+        self.contentOffset = newOffset;
+    }
+
+    [self.boxProvider updateOldBoxFrames];
+    [self.boxProvider updateOldDataKeys];
 }
 
 - (void)saveScrollOffset {
