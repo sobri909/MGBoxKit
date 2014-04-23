@@ -1,3 +1,31 @@
+## 4.0.0
+
+### Enhancements
+
+- When using a `boxProvider`, your data's state is tracked internally, thus 
+  eliminating the need to inform the provider of data changes. To use auto 
+  change tracking, you need to set a `boxProvider.boxKeyMaker` block property
+  that returns a unique key for each data item. Call `layout` or 
+  `layoutWithDuriation:completion:` and the provider will automatically 
+  perform the appropriate appear/move/disappear animations based on data changes.
+  
+- You can now provide custom animations for appear/move/disappear when using a 
+  `boxProvider`. See 
+  [#116](https://github.com/sobri909/MGBoxKit/issues/116#issuecomment-40798628) 
+  for details.
+
+- New `MGScrollView methods `saveScrollOffset` and `restoreScrollOffset` for 
+  ensuring that tables/grids fall in the same visible offset after rotation.  
+  See [#124](https://github.com/sobri909/MGBoxKit/issues/124) for example code.
+
+### Upgrading
+
+- `layoutWithSpeed:completion:` has been deprecated in favour of 
+  `layoutWithDuration:completion:`. I've been wanting to do that since forever.
+
+- `boxProvider.boxSizeMaker` should now return sizes without margins. Margins 
+  are now provided separately by `boxProvider.boxMarginMaker`.
+
 ## 3.2.2
 
 ### Fixes
