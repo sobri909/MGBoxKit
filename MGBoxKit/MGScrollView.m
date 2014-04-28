@@ -335,13 +335,12 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)other 
                                         _previousContentInset.top -
                                         _previousContentInset.bottom);
 
-    CGPoint minOffset = CGPointMake(_previousContentInset.left, _previousContentInset.top);
-    CGPoint maxOffset = CGPointMake(minOffset.x + MAX(sizeMinusInsets.width, _previousContentSize.width) - sizeMinusInsets.width,
-                                    minOffset.y + MAX(sizeMinusInsets.height, _previousContentSize.height) - sizeMinusInsets.height);
+    CGPoint maxOffset = CGPointMake(MAX(sizeMinusInsets.width, _previousContentSize.width) - sizeMinusInsets.width,
+                                    MAX(sizeMinusInsets.height, _previousContentSize.height) - sizeMinusInsets.height);
 
-    CGPoint scrollRange = CGPointMake(maxOffset.x - minOffset.x, maxOffset.y - minOffset.y);
-    CGPoint scrollRatio = CGPointMake(scrollRange.x > 0 ? _previousContentOffset.x / scrollRange.x : 0,
-                                      scrollRange.y > 0 ? _previousContentOffset.y / scrollRange.y : 0);
+    CGPoint scrollRange = CGPointMake(maxOffset.x, maxOffset.y);
+    CGPoint scrollRatio = CGPointMake(scrollRange.x > 0 ? (_previousContentOffset.x + _previousContentInset.left) / scrollRange.x : 0,
+                                      scrollRange.y > 0 ? (_previousContentOffset.y + _previousContentInset.top) / scrollRange.y : 0);
 
     sizeMinusInsets = CGSizeMake(self.frame.size.width -
                                  self.contentInset.right -
@@ -350,13 +349,12 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)other 
                                  self.contentInset.top -
                                  self.contentInset.bottom);
 
-    minOffset = CGPointMake(self.contentInset.left, self.contentInset.top);
-    maxOffset = CGPointMake(minOffset.x + MAX(sizeMinusInsets.width, self.contentSize.width) - sizeMinusInsets.width,
-                            minOffset.y + MAX(sizeMinusInsets.height, self.contentSize.height) - sizeMinusInsets.height);
+    maxOffset = CGPointMake(MAX(sizeMinusInsets.width, self.contentSize.width) - sizeMinusInsets.width,
+                            MAX(sizeMinusInsets.height, self.contentSize.height) - sizeMinusInsets.height);
 
     CGPoint newOffset = (CGPoint){
-          scrollRatio.x * (maxOffset.x - minOffset.x),
-          scrollRatio.y * (maxOffset.y - minOffset.y)
+        -self.contentInset.left + scrollRatio.x * maxOffset.x,
+        -self.contentInset.top + scrollRatio.y * maxOffset.y
     };
 
     if (CGPointEqualToPoint(newOffset, self.contentOffset)) {
