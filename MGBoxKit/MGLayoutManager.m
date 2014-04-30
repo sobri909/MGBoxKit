@@ -557,10 +557,14 @@ CGFloat roundToPixel(CGFloat value) {
 
     } else {
         for (UIView <MGLayoutBox> *box in container.boxes) {
-            newSize.width = MAX(newSize.width, box.right + box.rightMargin + container.rightPadding);
-            newSize.height = MAX(newSize.height, box.bottom + box.bottomMargin + container.bottomPadding);
+            newSize.width = MAX(newSize.width, box.right + box.rightMargin);
+            newSize.height = MAX(newSize.height, box.bottom + box.bottomMargin);
         }
     }
+
+    // add final right and bottom padding
+    newSize.width += container.rightPadding;
+    newSize.height += container.bottomPadding;
 
     // only update size if it's changed
     if (!CGSizeEqualToSize(newSize, oldSize)) {
