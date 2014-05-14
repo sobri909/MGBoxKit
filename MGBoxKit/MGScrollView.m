@@ -315,11 +315,6 @@
   }];
 }
 
-- (BOOL)                         gestureRecognizer:(UIGestureRecognizer *)me
-shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)other {
-  return self.scrollEnabled;
-}
-
 #pragma mark - Scroll Offset Handling
 
 - (void)restoreScrollOffset {
