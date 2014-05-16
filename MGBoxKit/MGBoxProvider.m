@@ -10,7 +10,7 @@
     NSDictionary *_oldVisibleBoxes;
     NSOrderedSet *_dataKeys, *_oldDataKeys;
     NSOrderedSet *_boxFrames, *_oldBoxFrames;
-    NSMutableSet *_boxCache;
+    NSMutableOrderedSet *_boxCache;
     NSUInteger _count;
 }
 
@@ -25,12 +25,12 @@
 }
 
 - (void)resetBoxCache {
-    _boxCache = NSMutableSet.set;
+    _boxCache = NSMutableOrderedSet.orderedSet;
 }
 
 - (void)reset {
     _count = NSNotFound;
-    _boxCache = NSMutableSet.set;
+    _boxCache = NSMutableOrderedSet.orderedSet;
     _visibleIndexes = nil;
     _oldBoxFrames = nil;
     _oldDataKeys = nil;
@@ -89,22 +89,16 @@
             box = _visibleBoxes[@(oldIndex)];
         }
         if (!box) {
-            if (_boxCache.count) {
-                box = _boxCache.anyObject;
-                [_boxCache removeObject:box];
-                box.alpha = 1;
-            } else {
-                box = self.boxMaker();
-            }
-            self.boxCustomiser(box, index);
+            box = self.boxCustomiser(index);
+            [box layout];
         }
         visibleBoxes[@(index)] = box;
         newBoxes[index] = box;
     }];
 
     // throw any gone boxes into the cache
-    for (id box in self.visibleBoxes.allValues) {
-        if (![visibleBoxes.allValues containsObject:box]) {
+    for (UIView <MGLayoutBox> *box in self.visibleBoxes.allValues) {
+        if (![visibleBoxes.allValues containsObject:box] && box.cacheKey) {
             [_boxCache addObject:box];
         }
     }
@@ -119,6 +113,20 @@
         _count = self.counter();
     }
     return _count;
+}
+
+- (UIView <MGLayoutBox> *)boxOfType:(NSString *)type {
+    for (int i = 0; i < _boxCache.count; i++) {
+        UIView <MGLayoutBox> *box = _boxCache[i];
+        if ([box.cacheKey isEqualToString:type]) {
+            [_boxCache removeObject:box];
+            box.alpha = 1;
+            return box;
+        }
+    }
+    UIView <MGLayoutBox> *box = self.boxMaker(type);
+    box.cacheKey = type;
+    return box;
 }
 
 #pragma mark - Individual box state updates

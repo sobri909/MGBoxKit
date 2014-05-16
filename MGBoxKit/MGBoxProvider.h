@@ -4,9 +4,9 @@
 
 @protocol MGLayoutBox;
 
-typedef UIView <MGLayoutBox> *(^MGBoxMaker)();
 typedef id (^MGBoxKeyMaker)(NSUInteger index);
-typedef void (^MGBoxCustomiser)(id box, NSUInteger index);
+typedef UIView <MGLayoutBox> *(^MGBoxMaker)(NSString *type);
+typedef UIView <MGLayoutBox> *(^MGBoxCustomiser)(NSUInteger index);
 typedef UIEdgeInsets(^MGBoxMarginMaker)(NSUInteger index);
 typedef CGSize(^MGBoxSizeMaker)(NSUInteger index);
 typedef NSUInteger(^MGCounter)();
@@ -62,6 +62,8 @@ typedef void (^MGBoxAnimator)(id box, NSUInteger index, NSTimeInterval duration,
 
 - (NSUInteger)indexOfBox:(UIView <MGLayoutBox> *)box;
 - (NSUInteger)oldIndexOfBox:(UIView <MGLayoutBox> *)box;
+
+- (UIView <MGLayoutBox> *)boxOfType:(NSString *)type;
 
 // frames
 - (CGSize)sizeForBoxAtIndex:(NSUInteger)index;

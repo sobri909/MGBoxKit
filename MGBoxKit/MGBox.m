@@ -24,6 +24,7 @@
 @synthesize dontLayoutChildren;
 
 // MGLayoutBox protocol optionals
+@synthesize cacheKey;
 @synthesize onAppear, onDisappear;
 @synthesize tapper, tappable, onTap;
 @synthesize swiper, swipable, onSwipe;

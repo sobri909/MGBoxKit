@@ -356,6 +356,8 @@ tap.
 
 #pragma mark - Box reuse / offscreen culling
 
+@property (nonatomic, copy) NSString *cacheKey;
+
 /** @name Box reuse / offscreen culling */
 
 - (CGRect)bufferedViewport;
