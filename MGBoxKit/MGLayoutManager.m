@@ -94,7 +94,16 @@ CGFloat roundToPixel(CGFloat value) {
         }
     };
 
-    // do changes / animations
+    // add appearing boxes
+    for (id key in toAdd) {
+        NSUInteger index = [key integerValue];
+        UIView <MGLayoutBox> *box = toAdd[key];
+        box.frame = [provider frameForBoxAtIndex:index];
+        [container addSubview:box];
+        box.parentBox = container;
+    }
+
+    // do disappear animations
     if (duration) {
         for (id key in toRemove) {
             NSUInteger index = [key integerValue];
@@ -102,16 +111,20 @@ CGFloat roundToPixel(CGFloat value) {
             [provider doDisappearAnimationFor:box atIndex:index duration:duration];
         }
     }
-    for (id key in toAdd) {
-        NSUInteger index = [key integerValue];
-        UIView <MGLayoutBox> *box = toAdd[key];
-        box.frame = [provider frameForBoxAtIndex:index];
-        [container addSubview:box];
-        box.parentBox = container;
-        if (duration) {
+
+    // zIndex stacking
+    [MGLayoutManager stackByZIndexIn:container];
+
+    // do appear animations
+    if (duration) {
+        for (id key in toAdd) {
+            NSUInteger index = [key integerValue];
+            UIView <MGLayoutBox> *box = toAdd[key];
             [provider doAppearAnimationFor:box atIndex:index duration:duration];
         }
     }
+
+    // do frame changes
     for (id key in toMove) {
         UIView <MGLayoutBox> *box = toMove[key];
         NSUInteger index = [key integerValue];
@@ -132,6 +145,7 @@ CGFloat roundToPixel(CGFloat value) {
         }
     }
 
+    // call appeared and disappeared
     for (UIView <MGLayoutBox> *box in toRemove.allValues) {
         if ([box respondsToSelector:@selector(disappeared)]) {
             [box disappeared];
@@ -143,6 +157,7 @@ CGFloat roundToPixel(CGFloat value) {
         }
     }
 
+    // remove the removeables and finish up
     Block fini = ^{
         for (UIView <MGLayoutBox> *box in toRemove.allValues) {
             [box removeFromSuperview];
