@@ -386,4 +386,28 @@ tap.
 */
 - (void)disappeared;
 
+/**
+ * A block assigned to this property be executed when the box will be moved
+ * by an MGBoxProvider.
+ */
+@property (nonatomic, copy) void(^onWillMoveToIndex)(NSUInteger index);
+
+/**
+ * This method fires when the box will be moved by an MGBoxProvider.
+ * The default implementation executes the <onWillMove> block.
+ */
+- (void)willMoveToIndex:(NSUInteger)index;
+
+/**
+ * A block assigned to this property be executed when the box was moved
+ * by an MGBoxProvider.
+ */
+
+@property (nonatomic, copy) void(^onMovedToIndex)(NSUInteger index);
+/**
+ * This method fires when the box has been moved by an MGBoxProvider.
+ * The default implementation executes the <onMoved> block.
+ */
+- (void)movedToIndex:(NSUInteger)index;
+
 @end

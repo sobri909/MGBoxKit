@@ -90,9 +90,20 @@ CGFloat roundToPixel(CGFloat value) {
         if ([provider dataAtIndexIsNew:index]) {
             toAdd[key] = box;
         } else {
-            toMove[key] = box;
+            if (box.superview != container) {
+                box.frame = [provider frameForBoxAtIndex:index];
+                [container addSubview:box];
+                box.parentBox = container;
+            }
+            NSUInteger oldIndex = [provider oldIndexOfBox:box];
+            if (oldIndex != index) {
+                toMove[key] = box;
+                if ([box respondsToSelector:@selector(willMoveToIndex:)]) {
+                    [box willMoveToIndex:index];
+                }
+            }
         }
-    };
+    }
 
     // add appearing boxes
     for (id key in toAdd) {
@@ -103,6 +114,10 @@ CGFloat roundToPixel(CGFloat value) {
         box.parentBox = container;
     }
 
+
+    // zIndex stacking
+    [MGLayoutManager stackByZIndexIn:container];
+
     // do disappear animations
     if (duration) {
         for (id key in toRemove) {
@@ -111,9 +126,6 @@ CGFloat roundToPixel(CGFloat value) {
             [provider doDisappearAnimationFor:box atIndex:index duration:duration];
         }
     }
-
-    // zIndex stacking
-    [MGLayoutManager stackByZIndexIn:container];
 
     // do appear animations
     if (duration) {
@@ -130,11 +142,6 @@ CGFloat roundToPixel(CGFloat value) {
         NSUInteger index = [key integerValue];
         CGRect toFrame = [provider frameForBoxAtIndex:index];
 
-        if (box.superview != container) {
-            box.frame = [provider oldFrameForBoxAtIndex:index];
-            [container addSubview:box];
-        }
-
         if (!CGRectEqualToRect(toFrame, box.frame)) {
             if (duration) {
                 [provider doMoveAnimationFor:box atIndex:index duration:duration
@@ -142,6 +149,9 @@ CGFloat roundToPixel(CGFloat value) {
             } else {
                 box.frame = toFrame;
             }
+        }
+        if ([box respondsToSelector:@selector(movedToIndex:)]) {
+            [box movedToIndex:index];
         }
     }
 
@@ -168,9 +178,10 @@ CGFloat roundToPixel(CGFloat value) {
     };
 
     if (duration) {
-        dispatch_time_t delay = dispatch_time(0, (int64_t)duration * NSEC_PER_SEC);
-        dispatch_after(delay, dispatch_get_main_queue(), ^{
-            fini();
+        dispatch_after(dispatch_time(0,
+                                     (int64_t)(duration * NSEC_PER_SEC)),
+                                        dispatch_get_main_queue(), ^{
+             fini();
         });
     } else {
         fini();

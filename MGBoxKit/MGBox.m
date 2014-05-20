@@ -25,7 +25,7 @@
 
 // MGLayoutBox protocol optionals
 @synthesize cacheKey;
-@synthesize onAppear, onDisappear;
+@synthesize onAppear, onDisappear, onWillMoveToIndex, onMovedToIndex;
 @synthesize tapper, tappable, onTap;
 @synthesize swiper, swipable, onSwipe;
 @synthesize longPresser, longPressable, onLongPress;
@@ -124,6 +124,18 @@
 - (void)disappeared {
     if (self.onDisappear) {
         self.onDisappear();
+    }
+}
+
+- (void)willMoveToIndex:(NSUInteger)index {
+    if (self.onWillMoveToIndex) {
+        self.onWillMoveToIndex(index);
+    }
+}
+
+- (void)movedToIndex:(NSUInteger)index {
+    if (self.onMovedToIndex) {
+        self.onMovedToIndex(index);
     }
 }
 
