@@ -95,9 +95,9 @@ CGFloat roundToPixel(CGFloat value) {
                 [container addSubview:box];
                 box.parentBox = container;
             }
+            toMove[key] = box;
             NSUInteger oldIndex = [provider oldIndexOfBox:box];
             if (oldIndex != index) {
-                toMove[key] = box;
                 if ([box respondsToSelector:@selector(willMoveToIndex:)]) {
                     [box willMoveToIndex:index];
                 }
@@ -150,8 +150,11 @@ CGFloat roundToPixel(CGFloat value) {
                 box.frame = toFrame;
             }
         }
-        if ([box respondsToSelector:@selector(movedToIndex:)]) {
-            [box movedToIndex:index];
+        NSUInteger oldIndex = [provider oldIndexOfBox:box];
+        if (oldIndex != index) {
+            if ([box respondsToSelector:@selector(movedToIndex:)]) {
+                [box movedToIndex:index];
+            }
         }
     }
 
