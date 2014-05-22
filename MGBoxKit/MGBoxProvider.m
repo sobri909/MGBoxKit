@@ -7,8 +7,8 @@
 #import "MGLayoutManager.h"
 
 @implementation MGBoxProvider {
-    NSDictionary *_oldVisibleBoxes;
-    NSOrderedSet *_dataKeys, *_oldDataKeys;
+    NSMapTable *_boxToIndexMap, *_oldBoxToIndexMap;
+    NSOrderedSet *_dataKeys, *_oldDataKeys, *_removedDataKeys;
     NSOrderedSet *_boxFrames, *_oldBoxFrames;
     NSMutableOrderedSet *_boxCache;
     NSUInteger _count;
@@ -31,9 +31,12 @@
 - (void)reset {
     _count = NSNotFound;
     _boxCache = NSMutableOrderedSet.orderedSet;
+    _oldBoxToIndexMap = nil;
+    _boxToIndexMap = nil;
     _visibleIndexes = nil;
     _oldBoxFrames = nil;
     _oldDataKeys = nil;
+    _removedDataKeys = nil;
     _dataKeys = nil;
 }
 
@@ -46,6 +49,9 @@
         [dataKeys addObject:[self keyForBoxAtIndex:i]];
     }
     _dataKeys = dataKeys;
+    NSMutableOrderedSet *removed = _oldDataKeys.mutableCopy;
+    [removed minusOrderedSet:_dataKeys];
+    _removedDataKeys = removed;
 }
 
 - (void)updateBoxFrames {
@@ -71,30 +77,9 @@
     _visibleIndexes = visibleIndexes;
 }
 
-- (void)updateVisibleBoxes {
-
-    // null pad a new boxes array
-    NSMutableArray *newBoxes = @[].mutableCopy;
-    NSMutableDictionary *visibleBoxes = @{}.mutableCopy;
-    while (newBoxes.count < self.count) {
-        [newBoxes addObject:NSNull.null];
-    }
-
-    // move existing boxes or make new boxes
-    [_visibleIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-        UIView <MGLayoutBox> *box;
-        if ([self dataAtIndexIsExisting:index]) {
-            id dataKey = _dataKeys[index];
-            NSUInteger oldIndex = [_oldDataKeys indexOfObject:dataKey];
-            box = _visibleBoxes[@(oldIndex)];
-        }
-        if (!box) {
-            box = self.boxCustomiser(index);
-            [box layout];
-        }
-        visibleBoxes[@(index)] = box;
-        newBoxes[index] = box;
-    }];
+- (void)updateVisibleBoxes:(NSMutableDictionary *)visibleBoxes
+             boxToIndexMap:(NSMapTable *)boxToIndexMap {
+    _oldBoxToIndexMap = _boxToIndexMap;
 
     // throw any gone boxes into the cache
     for (UIView <MGLayoutBox> *box in self.visibleBoxes.allValues) {
@@ -104,8 +89,9 @@
     }
 
     // boxes should now be true to the data
-    _oldVisibleBoxes = _visibleBoxes;
     _visibleBoxes = visibleBoxes;
+    _boxToIndexMap = boxToIndexMap;
+
 }
 
 - (NSUInteger)count {
@@ -193,23 +179,32 @@
     return ![_dataKeys containsObject:_oldDataKeys[index]];
 }
 
-- (NSUInteger)indexOfBox:(UIView <MGLayoutBox> *)box {
-    for (id key in self.visibleBoxes) {
-        if (self.visibleBoxes[key] == box) {
-            return [key integerValue];
-        }
+- (NSUInteger)oldIndexOfDataAtIndex:(NSUInteger)index {
+    return _oldDataKeys ? [_oldDataKeys indexOfObject:_dataKeys[index]] : NSNotFound;
+}
+
+- (BOOL)dataWasRemovedForBox:(UIView <MGLayoutBox> *)box {
+    NSUInteger index = [self oldIndexOfBox:box];
+    if (index == NSNotFound) {
+        return NO;
     }
-    return NSNotFound;
+    return _removedDataKeys ? [_removedDataKeys containsObject:_oldDataKeys[index]] : NO;
+}
+
+- (NSUInteger)indexOfBox:(UIView <MGLayoutBox> *)box {
+    id value = [_boxToIndexMap objectForKey:box];
+    if (!value) {
+        return NSNotFound;
+    }
+    return [value unsignedIntegerValue];
 }
 
 - (NSUInteger)oldIndexOfBox:(UIView <MGLayoutBox> *)box {
-    for (id key in _oldVisibleBoxes) {
-        if (_oldVisibleBoxes[key] == box) {
-            return [key integerValue];
-        }
+    id value = [_oldBoxToIndexMap objectForKey:box];
+    if (!value) {
+        return NSNotFound;
     }
-    NSLog(@"oldIndexOfBox NSNotFound: %@", box);
-    return NSNotFound;
+    return [value unsignedIntegerValue];
 }
 
 #pragma mark - Frames

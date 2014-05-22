@@ -26,7 +26,6 @@ CGFloat roundToPixel(CGFloat value) {
         [container.boxProvider updateDataKeys];
         [container.boxProvider updateBoxFrames];
         [container.boxProvider updateVisibleIndexes];
-        [container.boxProvider updateVisibleBoxes];
         [self layoutVisibleBoxesIn:container duration:0 completion:nil];
         [self updateContentSizeFor:container];
         [container.boxProvider updateOldDataKeys];
@@ -65,106 +64,141 @@ CGFloat roundToPixel(CGFloat value) {
       duration:(NSTimeInterval)duration completion:(Block)completion {
     MGBoxProvider *provider = container.boxProvider;
 
-    NSMutableDictionary *toAdd = @{}.mutableCopy;
-    NSMutableDictionary *toMove = @{}.mutableCopy;
-    NSMutableDictionary *toRemove = @{}.mutableCopy;
+    NSMapTable *boxToIndexMap = [NSMapTable mapTableWithKeyOptions:NSMapTableObjectPointerPersonality
+                                                      valueOptions:NSMapTableStrongMemory];
+    NSMutableDictionary *visibleBoxes = NSMutableDictionary.new;
 
-    // collate gone boxes
-    NSArray *visibleBoxes = provider.visibleBoxes.allValues;
+    NSMutableOrderedSet *appearingBoxes = NSMutableOrderedSet.new;
+    NSMutableOrderedSet *appearingBoxesWithAnimation = NSMutableOrderedSet.new;
+    NSMutableOrderedSet *disappearingBoxes = NSMutableOrderedSet.new;
+    NSMutableOrderedSet *disappearingBoxesWithAnimation = NSMutableOrderedSet.new;
+    NSMutableOrderedSet *movingBoxes = NSMutableOrderedSet.new;
+
+    // move existing boxes or make new boxes
+    [provider.visibleIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        UIView <MGLayoutBox> *box;
+        BOOL newData = [provider dataAtIndexIsNew:index];
+        if (!newData) {
+            NSUInteger oldIndex = [provider oldIndexOfDataAtIndex:index];
+            box = provider.visibleBoxes[@(oldIndex)];
+        }
+        if (!box) {
+            box = provider.boxCustomiser(index);
+            [box layout];
+        }
+        visibleBoxes[@(index)] = box;
+
+        if (newData) {
+            // fresh data, animate in
+            box.frame = [provider frameForBoxAtIndex:index];
+            [appearingBoxes addObject:box];
+            [appearingBoxesWithAnimation addObject:box];
+        } else {
+            NSUInteger oldIndex = [provider oldIndexOfDataAtIndex:index];
+            if (oldIndex != index && oldIndex != NSNotFound) {
+                // data has actually moved, we'll update the frame to the new pos later
+                [movingBoxes addObject:box];
+                if ([box respondsToSelector:@selector(willMoveToIndex:)]) {
+                    [box willMoveToIndex:index];
+                }
+            } else {
+                CGRect boxFrame = [provider frameForBoxAtIndex:index];
+                // must be a box being recycled onto screen
+                if (box.hidden) {
+                    [box.layer removeAllAnimations];
+                    [UIView performWithoutAnimation:^{
+                        box.frame = boxFrame;
+                    }];
+                    [appearingBoxes addObject:box];
+                } else {
+                    if (!CGRectEqualToRect(boxFrame, box.frame)) {
+                        box.frame = boxFrame;
+                    }
+                }
+            }
+        }
+        if (box.superview != container) {
+            [container addSubview:box];
+            box.parentBox = container;
+            [box.layer removeAllAnimations];
+            [UIView performWithoutAnimation:^{
+                box.frame = [provider frameForBoxAtIndex:index];
+            }];
+        }
+        if (box.hidden) {
+            box.hidden = NO;
+        }
+        if (box.alpha != 1) {
+            box.alpha = 1;
+        }
+        [boxToIndexMap setObject:@(index) forKey:box];
+    }];
+
+    [provider updateVisibleBoxes:visibleBoxes
+                   boxToIndexMap:boxToIndexMap];
+
+    // collate boxes that have scrolled offscreen
     for (UIView <MGLayoutBox> *box in container.subviews) {
         if (![box conformsToProtocol:@protocol(MGLayoutBox)]) {
             continue;
         }
-        if (![visibleBoxes containsObject:box]) {
-            NSUInteger oldIndex = [provider oldIndexOfBox:box];
-            if (oldIndex != NSNotFound) {
-                toRemove[@(oldIndex)] = box;
-            }
-        }
-    }
+        if (![visibleBoxes.allValues containsObject:box]) {
+            // box must have scrolled off-screen
+            if ([provider dataWasRemovedForBox:box]) {
+                // data has disappeared, animate out
+                NSUInteger oldIndex = [provider oldIndexOfBox:box];
+                if (oldIndex != NSNotFound) {
+                    [disappearingBoxesWithAnimation addObject:box];
 
-    // collate existing and new boxes
-    for (id key in provider.visibleBoxes) {
-        UIView <MGLayoutBox> *box = provider.visibleBoxes[key];
-        NSUInteger index = [key integerValue];
-        if ([provider dataAtIndexIsNew:index]) {
-            toAdd[key] = box;
-        } else {
-            if (box.superview != container) {
-                box.frame = [provider frameForBoxAtIndex:index];
-                [container addSubview:box];
-                box.parentBox = container;
-            }
-            toMove[key] = box;
-            NSUInteger oldIndex = [provider oldIndexOfBox:box];
-            if (oldIndex != index) {
-                if ([box respondsToSelector:@selector(willMoveToIndex:)]) {
-                    [box willMoveToIndex:index];
                 }
+            } else if (!box.hidden){
+                box.hidden = YES;
+                [disappearingBoxes addObject:box];
             }
         }
     }
-
-    // add appearing boxes
-    for (id key in toAdd) {
-        NSUInteger index = [key integerValue];
-        UIView <MGLayoutBox> *box = toAdd[key];
-        box.frame = [provider frameForBoxAtIndex:index];
-        [container addSubview:box];
-        box.parentBox = container;
-    }
-
 
     // zIndex stacking
     [MGLayoutManager stackByZIndexIn:container];
 
     // do disappear animations
     if (duration) {
-        for (id key in toRemove) {
-            NSUInteger index = [key integerValue];
-            UIView <MGLayoutBox> *box = toRemove[key];
+        for (UIView <MGLayoutBox> *box in disappearingBoxesWithAnimation) {
+            NSUInteger index = [provider oldIndexOfBox:box];
             [provider doDisappearAnimationFor:box atIndex:index duration:duration];
         }
     }
 
     // do appear animations
     if (duration) {
-        for (id key in toAdd) {
-            NSUInteger index = [key integerValue];
-            UIView <MGLayoutBox> *box = toAdd[key];
+        for (UIView <MGLayoutBox> *box in appearingBoxesWithAnimation) {
+            NSUInteger index = [provider indexOfBox:box];
             [provider doAppearAnimationFor:box atIndex:index duration:duration];
         }
     }
 
-    // do frame changes
-    for (id key in toMove) {
-        UIView <MGLayoutBox> *box = toMove[key];
-        NSUInteger index = [key integerValue];
+    // do move animations
+    for (UIView <MGLayoutBox> *box in movingBoxes) {
+        NSUInteger index = [provider indexOfBox:box];
         CGRect toFrame = [provider frameForBoxAtIndex:index];
-
-        if (!CGRectEqualToRect(toFrame, box.frame)) {
-            if (duration) {
-                [provider doMoveAnimationFor:box atIndex:index duration:duration
-                      fromFrame:box.frame toFrame:toFrame];
-            } else {
-                box.frame = toFrame;
-            }
+        if (duration) {
+            [provider doMoveAnimationFor:box atIndex:index duration:duration
+                               fromFrame:box.frame toFrame:toFrame];
+        } else {
+            box.frame = toFrame;
         }
-        NSUInteger oldIndex = [provider oldIndexOfBox:box];
-        if (oldIndex != index) {
-            if ([box respondsToSelector:@selector(movedToIndex:)]) {
-                [box movedToIndex:index];
-            }
+        if ([box respondsToSelector:@selector(movedToIndex:)]) {
+            [box movedToIndex:index];
         }
     }
 
     // call appeared and disappeared
-    for (UIView <MGLayoutBox> *box in toRemove.allValues) {
+    for (UIView <MGLayoutBox> *box in disappearingBoxes) {
         if ([box respondsToSelector:@selector(disappeared)]) {
             [box disappeared];
         }
     }
-    for (UIView <MGLayoutBox> *box in toAdd.allValues) {
+    for (UIView <MGLayoutBox> *box in appearingBoxes) {
         if ([box respondsToSelector:@selector(appeared)]) {
             [box appeared];
         }
@@ -172,8 +206,8 @@ CGFloat roundToPixel(CGFloat value) {
 
     // remove the removeables and finish up
     Block fini = ^{
-        for (UIView <MGLayoutBox> *box in toRemove.allValues) {
-            [box removeFromSuperview];
+        for (UIView <MGLayoutBox> *box in disappearingBoxesWithAnimation) {
+            box.hidden = YES;
         }
         if (completion) {
             completion();
@@ -233,7 +267,6 @@ CGFloat roundToPixel(CGFloat value) {
         [container.boxProvider updateDataKeys];
         [container.boxProvider updateBoxFrames];
         [container.boxProvider updateVisibleIndexes];
-        [container.boxProvider updateVisibleBoxes];
         [self layoutVisibleBoxesIn:container duration:duration completion:completion];
         [self updateContentSizeFor:container];
         [container.boxProvider updateOldDataKeys];
@@ -606,26 +639,26 @@ CGFloat roundToPixel(CGFloat value) {
 }
 
 + (void)stackByZIndexIn:(UIView *)container {
-  NSArray *sorted =
-      [container.subviews sortedArrayUsingComparator:^NSComparisonResult(id<MGLayoutBox> view1,
-          id<MGLayoutBox> view2) {
-        int z1 = [view1 respondsToSelector:@selector(zIndex)] ? [view1 zIndex] : 0;
-        int z2 = [view2 respondsToSelector:@selector(zIndex)] ? [view2 zIndex] : 0;
-        if (z1 > z2) {
-          return NSOrderedDescending;
-        }
-        if (z1 < z2) {
-          return NSOrderedAscending;
-        }
-        return NSOrderedSame;
-      }];
+    NSArray *sorted =
+        [container.subviews sortedArrayUsingComparator:^NSComparisonResult(id<MGLayoutBox> view1,
+                                                                           id<MGLayoutBox> view2) {
+            int z1 = [view1 respondsToSelector:@selector(zIndex)] ? [view1 zIndex] : 0;
+            int z2 = [view2 respondsToSelector:@selector(zIndex)] ? [view2 zIndex] : 0;
+            if (z1 > z2) {
+                return NSOrderedDescending;
+            }
+            if (z1 < z2) {
+                return NSOrderedAscending;
+            }
+            return NSOrderedSame;
+        }];
 
-  for (UIView *view in sorted) {
-    int sortedIndex = (int)[sorted indexOfObject:view];
-    if (sortedIndex != [container.subviews indexOfObject:view]) {
-      [container insertSubview:view atIndex:sortedIndex];
+    for (int sortedIndex = sorted.count - 1; sortedIndex >= 0; sortedIndex--) {
+        UIView *view = sorted[sortedIndex];
+        if (sortedIndex != [container.subviews indexOfObject:view]) {
+            [container insertSubview:view atIndex:sortedIndex];
+        }
     }
-  }
 }
 
 @end

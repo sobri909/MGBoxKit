@@ -41,7 +41,8 @@ typedef void (^MGBoxAnimator)(id box, NSUInteger index, NSTimeInterval duration,
 - (void)updateDataKeys;
 - (void)updateBoxFrames;
 - (void)updateVisibleIndexes;
-- (void)updateVisibleBoxes;
+- (void)updateVisibleBoxes:(NSMutableDictionary *)visibleBoxes
+             boxToIndexMap:(NSMapTable *)boxToIndexMap;
 - (void)updateOldDataKeys;
 - (void)updateOldBoxFrames;
 
@@ -59,9 +60,11 @@ typedef void (^MGBoxAnimator)(id box, NSUInteger index, NSTimeInterval duration,
 - (BOOL)dataAtIndexIsNew:(NSUInteger)index;
 - (BOOL)dataAtIndexIsExisting:(NSUInteger)index;
 - (BOOL)dataAtOldIndexIsOld:(NSUInteger)index;
+- (NSUInteger)oldIndexOfDataAtIndex:(NSUInteger)index;
 
 - (NSUInteger)indexOfBox:(UIView <MGLayoutBox> *)box;
 - (NSUInteger)oldIndexOfBox:(UIView <MGLayoutBox> *)box;
+- (BOOL)dataWasRemovedForBox:(UIView <MGLayoutBox> *)box;
 
 - (UIView <MGLayoutBox> *)boxOfType:(NSString *)type;
 
