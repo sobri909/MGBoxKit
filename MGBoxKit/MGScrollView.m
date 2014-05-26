@@ -317,10 +317,13 @@
 #pragma mark - Scroll Offset Handling
 
 - (void)restoreScrollOffset {
+    
     [self.boxProvider resetBoxCache];
     [self.boxProvider updateDataKeys];
     [self.boxProvider updateBoxFrames];
+    self.boxProvider.lockVisibleIndexes = YES;
     [MGLayoutManager updateContentSizeFor:self];
+    self.boxProvider.lockVisibleIndexes = NO;
 
     CGSize sizeMinusInsets = CGSizeMake(_previousFrame.size.width -
                                         _previousContentInset.right -
@@ -350,6 +353,7 @@
         -self.contentInset.left + scrollRatio.x * maxOffset.x,
         -self.contentInset.top + scrollRatio.y * maxOffset.y
     };
+
 
     if (CGPointEqualToPoint(newOffset, self.contentOffset)) {
         [self scrollViewDidScroll:self];

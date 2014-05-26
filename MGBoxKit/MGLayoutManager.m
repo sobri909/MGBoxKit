@@ -111,6 +111,13 @@ CGFloat roundToPixel(CGFloat value) {
                     }];
                     [appearingBoxes addObject:box];
                 } else {
+                    CGRect oldFrame = [provider oldFrameForBoxAtIndex:index];
+                    if (!CGRectEqualToRect(oldFrame, box.frame)) {
+                        [box.layer removeAllAnimations];
+                        [UIView performWithoutAnimation:^{
+                            box.frame = oldFrame;
+                        }];
+                    }
                     if (!CGRectEqualToRect(boxFrame, box.frame)) {
                         box.frame = boxFrame;
                     }

@@ -67,6 +67,9 @@
 }
 
 - (void)updateVisibleIndexes {
+    if (self.lockVisibleIndexes) {
+        return;
+    }
     CGRect viewport = self.container.bufferedViewport;
     NSMutableIndexSet *visibleIndexes = NSMutableIndexSet.indexSet;
     for (int i = 0; i < self.count; i++) {
