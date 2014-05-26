@@ -181,52 +181,84 @@
 }
 
 - (void)setBaseFont:(UIFont *)font {
-  _baseFont = font;
+    _baseFont = font;
 
-  if (!font) {
-    return;
-  }
+    if (!font) {
+        return;
+    }
 
-  // base ctfont
-  CGFloat size = font.pointSize;
-  CFStringRef name = (__bridge CFStringRef)font.fontName;
-  CTFontRef ctBase = CTFontCreateWithName(name, size, NULL);
+    CGFloat size = font.pointSize;
+    CFStringRef name = (__bridge CFStringRef)font.fontName;
+    NSString *fontCacheKey = [NSString stringWithFormat:@"%@-%@", name, @(size)];
 
-  // bold font
-  CTFontRef ctBold = CTFontCreateCopyWithSymbolicTraits(ctBase, 0, NULL,
-      kCTFontBoldTrait, kCTFontBoldTrait);
-  CFStringRef boldName = CTFontCopyName(ctBold, kCTFontPostScriptNameKey);
-  bold = [UIFont fontWithName:(__bridge NSString *)boldName size:size] ?: font;
+    monospace = [UIFont fontWithName:@"CourierNewPSMT" size:size];
+    bold = MGMushParser.boldFontCache[fontCacheKey];
+    italic = MGMushParser.italicFontCache[fontCacheKey];
 
-  // italic font
-  CTFontRef ctItalic = CTFontCreateCopyWithSymbolicTraits(ctBase, 0, NULL,
-      kCTFontItalicTrait, kCTFontItalicTrait);
-  CFStringRef italicName = CTFontCopyName(ctItalic, kCTFontPostScriptNameKey);
-  italic = [UIFont fontWithName:(__bridge NSString *)italicName size:size] ?: font;
+    if (!bold || !italic) {
+        // base ctfont
+        CTFontRef ctBase = CTFontCreateWithName(name, size, NULL);
 
-  monospace = [UIFont fontWithName:@"CourierNewPSMT" size:size];
+        // bold ctFont
+        CTFontRef ctBold = CTFontCreateCopyWithSymbolicTraits(ctBase, 0, NULL,
+                                                              kCTFontBoldTrait, kCTFontBoldTrait);
+        CFStringRef boldName = CTFontCopyName(ctBold, kCTFontPostScriptNameKey);
+        bold = [UIFont fontWithName:(__bridge NSString *)boldName size:size] ?: font;
 
-  if (ctBase) {
-    CFRelease(ctBase);
-  }
-  if (ctBold) {
-    CFRelease(ctBold);
-  }
-  if (ctItalic) {
-    CFRelease(ctItalic);
-  }
-  if (boldName) {
-    CFRelease(boldName);
-  }
-  if (italicName) {
-    CFRelease(italicName);
-  }
+        // italic font
+        CTFontRef ctItalic = CTFontCreateCopyWithSymbolicTraits(ctBase, 0, NULL,
+                                                                kCTFontItalicTrait, kCTFontItalicTrait);
+        CFStringRef italicName = CTFontCopyName(ctItalic, kCTFontPostScriptNameKey);
+        italic = [UIFont fontWithName:(__bridge NSString *)italicName size:size] ?: font;
+
+        if (bold) {
+            MGMushParser.boldFontCache[fontCacheKey] = bold;
+        }
+        if (italic) {
+            MGMushParser.italicFontCache[fontCacheKey] = italic;
+        }
+        if (ctBase) {
+            CFRelease(ctBase);
+        }
+        if (ctBold) {
+            CFRelease(ctBold);
+        }
+        if (ctItalic) {
+            CFRelease(ctItalic);
+        }
+        if (boldName) {
+            CFRelease(boldName);
+        }
+        if (italicName) {
+            CFRelease(italicName);
+        }
+    }
 }
 
 #pragma mark - Getters
 
 - (NSAttributedString *)attributedString {
   return working;
+}
+
+#pragma mark - Font Caches
+
++ (NSMutableDictionary *)boldFontCache {
+    static NSMutableDictionary *boldFontCache;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        boldFontCache = NSMutableDictionary.new;
+    });
+    return boldFontCache;
+}
+
++ (NSMutableDictionary *)italicFontCache {
+    static NSMutableDictionary *italicFontCache;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        italicFontCache = NSMutableDictionary.new;
+    });
+    return italicFontCache;
 }
 
 @end
