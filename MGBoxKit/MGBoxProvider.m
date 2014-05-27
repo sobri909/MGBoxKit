@@ -225,6 +225,9 @@
 }
 
 - (CGRect)oldFrameForBoxAtIndex:(NSUInteger)index {
+    if (index >= _oldBoxFrames.count) {
+        return CGRectZero;
+    }
     id dataKey = _dataKeys[index];
     NSUInteger oldIndex = [_oldDataKeys indexOfObject:dataKey];
     return [_oldBoxFrames[oldIndex] CGRectValue];

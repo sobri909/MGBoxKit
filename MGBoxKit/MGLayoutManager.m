@@ -85,11 +85,19 @@ CGFloat roundToPixel(CGFloat value) {
         if (!box) {
             box = provider.boxCustomiser(index);
             [box layout];
+            if (!newData) {
+                CGRect oldFrame = [provider oldFrameForBoxAtIndex:index];
+                [UIView performWithoutAnimation:^{
+                    box.frame = oldFrame;
+                }];
+            }
+            box.hidden = YES;
         }
         visibleBoxes[@(index)] = box;
 
         if (newData) {
             // fresh data, animate in
+            box.hidden = NO;
             box.frame = [provider frameForBoxAtIndex:index];
             [appearingBoxes addObject:box];
             [appearingBoxesWithAnimation addObject:box];
@@ -105,19 +113,9 @@ CGFloat roundToPixel(CGFloat value) {
                 CGRect boxFrame = [provider frameForBoxAtIndex:index];
                 // must be a box being recycled onto screen
                 if (box.hidden) {
-                    [box.layer removeAllAnimations];
-                    [UIView performWithoutAnimation:^{
-                        box.frame = boxFrame;
-                    }];
+                    box.frame = boxFrame;
                     [appearingBoxes addObject:box];
                 } else {
-                    CGRect oldFrame = [provider oldFrameForBoxAtIndex:index];
-                    if (!CGRectEqualToRect(oldFrame, box.frame)) {
-                        [box.layer removeAllAnimations];
-                        [UIView performWithoutAnimation:^{
-                            box.frame = oldFrame;
-                        }];
-                    }
                     if (!CGRectEqualToRect(boxFrame, box.frame)) {
                         box.frame = boxFrame;
                     }
@@ -127,10 +125,7 @@ CGFloat roundToPixel(CGFloat value) {
         if (box.superview != container) {
             [container addSubview:box];
             box.parentBox = container;
-            [box.layer removeAllAnimations];
-            [UIView performWithoutAnimation:^{
-                box.frame = [provider frameForBoxAtIndex:index];
-            }];
+            box.frame = [provider frameForBoxAtIndex:index];
         }
         if (box.hidden) {
             box.hidden = NO;
