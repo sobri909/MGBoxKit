@@ -655,7 +655,7 @@ CGFloat roundToPixel(CGFloat value) {
             return NSOrderedSame;
         }];
 
-    for (int sortedIndex = sorted.count - 1; sortedIndex >= 0; sortedIndex--) {
+    for (NSInteger sortedIndex = sorted.count - 1; sortedIndex >= 0; sortedIndex--) {
         UIView *view = sorted[sortedIndex];
         if (sortedIndex != [container.subviews indexOfObject:view]) {
             [container insertSubview:view atIndex:sortedIndex];
