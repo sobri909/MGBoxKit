@@ -11,4 +11,7 @@ Pod::Spec.new do |s|
   s.framework         = 'QuartzCore', 'CoreText'
   s.requires_arc      = true
   s.dependency        "MGEvents"
+  s.subspec 'Categories' do |ss|
+    ss.source_files = 'MGBoxKit/Categories/*.{h,m}'
+  end  
 end
