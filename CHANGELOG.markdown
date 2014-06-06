@@ -1,3 +1,34 @@
+## 5.0.0
+
+### Enhancements
+
+- Separated `MGEvents` into a separate CocoaPod and added it as a dependency
+
+- `MGBoxProvider` box reuse now includes a "type", allowing for multiple 
+  classes of boxes in a single container.
+
+- new box block properties `onWillMoveToIndex`, `onMovedToIndex` triggered 
+  during when box index positions change.
+
+- Optimised box reuse code for smoother scrolling.
+
+- `MGMushParser` caches `CTFont` instances for better performance.
+
+### Upgrading
+
+- The `MGBoxProvider` API changed, to accommodate box reuse "types". Your 
+  `boxProvider` code will need adjusting to accommodate.
+
+### Fixes
+
+- `MGScrollView` offset correction on rotate accounts for `contentInsets`
+
+- Fixed box/scroller post layout resizing to use `bottomPadding` and 
+  `rightPadding`
+
+- Boxes laid out via `MGBoxProvider` now properly respect their `zIndex` 
+  values.
+  
 ## 4.0.0
 
 ### Enhancements
