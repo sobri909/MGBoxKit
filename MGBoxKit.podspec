@@ -7,11 +7,8 @@ Pod::Spec.new do |s|
   s.author            = { "Matt Greenfield" => "matt@bigpaua.com" }
   s.source            = { :git => "https://github.com/sobri909/MGBoxKit.git", :tag => "4.0.0" }
   s.platform          = :ios, '6.0'
-  s.source_files      = 'MGBoxKit/*.{h,m}'
+  s.source_files      = 'MGBoxKit/**/*.{h,m}'
   s.framework         = 'QuartzCore', 'CoreText'
   s.requires_arc      = true
   s.dependency        "MGEvents"
-  s.subspec 'Categories' do |ss|
-    ss.source_files = 'MGBoxKit/Categories/*.{h,m}'
-  end  
 end
