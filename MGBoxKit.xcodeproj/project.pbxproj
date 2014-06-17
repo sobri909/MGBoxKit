@@ -108,6 +108,7 @@
 		C9161E3116E1FC5000F3D70C /* UIResponder+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponder.m"; sourceTree = "<group>"; };
 		C9161E3216E1FC5000F3D70C /* UIView+MGEasyFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MGEasyFrame.h"; sourceTree = "<group>"; };
 		C9161E3316E1FC5000F3D70C /* UIView+MGEasyFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MGEasyFrame.m"; sourceTree = "<group>"; };
+		C9327F8B1950422900E454B6 /* MGBoxKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MGBoxKit.h; sourceTree = "<group>"; };
 		C9DB6BE618E7E4BD00473AB1 /* MGBlockWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBlockWrapper.h; sourceTree = "<group>"; };
 		C9DB6BE718E7E4BD00473AB1 /* MGBlockWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBlockWrapper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,6 +157,7 @@
 				C9161DF916E1F90C00F3D70C /* MGBase.h */,
 				C9161DFC16E1F90C00F3D70C /* MGBox.h */,
 				C9161DFD16E1F90C00F3D70C /* MGBox.m */,
+				C9327F8B1950422900E454B6 /* MGBoxKit.h */,
 				C914B09F16E2082C00F12F48 /* MGBoxProvider.h */,
 				C914B0A016E2082C00F12F48 /* MGBoxProvider.m */,
 				C9161DFE16E1F90C00F3D70C /* MGButton.h */,
