@@ -422,11 +422,11 @@
 }
 
 - (CGRect)bufferedViewport {
-  UIEdgeInsets buffer = UIEdgeInsetsMake(-self.viewportMargin.height,
-      -self.viewportMargin.width, -self.viewportMargin.height,
-      -self.viewportMargin.width);
-  return CGRectOffset(UIEdgeInsetsInsetRect(self.frame, buffer),
-      self.contentOffset.x, self.contentOffset.y);
+    UIEdgeInsets buffer = UIEdgeInsetsMake(-self.viewportMargin.height,
+          -self.viewportMargin.width, -self.viewportMargin.height, -self.viewportMargin.width);
+    CGRect frame = (CGRect){CGPointZero, self.size};
+    return CGRectOffset(UIEdgeInsetsInsetRect(frame, buffer), self.contentOffset.x,
+          self.contentOffset.y);
 }
 
 - (UIEdgeInsets)margin {
