@@ -1,3 +1,13 @@
+## 5.0.2
+
+### Fixes
+
+- Fixed bufferedViewport for scrollers not at origin 0,0
+  
+## 5.0.1
+
+- Minor import change to use single MGEvents import
+
 ## 5.0.0
 
 ### Enhancements
