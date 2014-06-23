@@ -7,6 +7,7 @@
 #import "MGLayoutManager.h"
 #import "MGMushParser.h"
 #import "NSAttributedString+MGTrim.h"
+#import "NSString+MGEasySize.h"
 
 @interface MGLine ()
 
@@ -86,7 +87,7 @@
                 padding:(UIEdgeInsets)padding {
 
   // compute min height
-  CGSize minSize = [text sizeWithFont:font];
+  CGSize minSize = [text easySizeWithFont:font];
   CGFloat height = minSize.height + padding.top + padding.bottom;
 
   // make the line
@@ -499,7 +500,7 @@
 
           // plain old string
         } else {
-          label.size = [label.text sizeWithFont:label.font
+          label.size = [label.text easySizeWithFont:label.font
               constrainedToSize:(CGSize){limit - used, maxHeight}];
           used += label.width;
         }
@@ -676,7 +677,7 @@
     }
     label.size = size;
   } else {
-    label.size = [label.text sizeWithFont:label.font];
+    label.size = [label.text easySizeWithFont:label.font];
   }
 
   // tag as modifiable
