@@ -314,19 +314,21 @@ CGFloat roundToPixel(CGFloat value) {
     }
   }
 
-  // set origin for new top boxes
-  CGFloat offsetY = 0;
-  for (UIView <MGLayoutBox> *box in newTopBoxes) {
-    box.x = container.leftPadding + box.leftMargin;
-    offsetY += box.topMargin;
-    box.y = offsetY;
-    offsetY += box.height + box.bottomMargin;
-  }
+    // set origin for new top boxes
+    [UIView performWithoutAnimation:^{
+        CGFloat offsetY = container.topPadding;
+        for (UIView <MGLayoutBox> *box in newTopBoxes) {
+            box.x = container.leftPadding + box.leftMargin;
+            offsetY += box.topMargin;
+            box.y = offsetY;
+            offsetY += box.height + box.bottomMargin;
+        }
 
-  // move top new boxes above the top
-  for (UIView <MGLayoutBox> *box in newTopBoxes) {
-    box.y -= offsetY;
-  }
+        // move top new boxes above the top
+        for (UIView <MGLayoutBox> *box in newTopBoxes) {
+            box.y -= (offsetY - container.topPadding);
+        }
+    }];
 
   // new boxes start faded out
   NSMutableSet *newNotTopBoxes = NSMutableSet.set;
