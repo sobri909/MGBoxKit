@@ -48,6 +48,10 @@
     for (int i = 0; i < self.count; i++) {
         [dataKeys addObject:[self keyForBoxAtIndex:i]];
     }
+
+    NSAssert(dataKeys.count == self.count, @"Expected %d data keys but have %d. boxKeyMaker "
+          "must return unique values.", self.count, dataKeys.count);
+
     _dataKeys = dataKeys;
     NSMutableOrderedSet *removed = _oldDataKeys.mutableCopy;
     [removed minusOrderedSet:_dataKeys];
