@@ -137,7 +137,7 @@
   }
 
   // relayout the sections
-  [self.scroller layoutWithSpeed:duration completion:nil];
+  [self.scroller layoutWithDuration:duration completion:nil];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)orient {
@@ -176,8 +176,8 @@
     }
 
     // animate
-    [section layoutWithSpeed:0.3 completion:nil];
-    [self.scroller layoutWithSpeed:0.3 completion:nil];
+    [section layoutWithDuration:0.3 completion:nil];
+    [self.scroller layoutWithDuration:0.3 completion:nil];
   };
 
   return box;
@@ -211,8 +211,8 @@
     [photosGrid.boxes addObject:addBox];
 
     // animate the section and the scroller
-    [photosGrid layoutWithSpeed:0.3 completion:nil];
-    [self.scroller layoutWithSpeed:0.3 completion:nil];
+    [photosGrid layoutWithDuration:0.3 completion:nil];
+    [self.scroller layoutWithDuration:0.3 completion:nil];
     [self.scroller scrollToView:addBox withMargin:8];
   };
 
@@ -348,8 +348,8 @@
 
   // animate and scroll
   if (animated) {
-    [table1 layoutWithSpeed:0.3 completion:nil];
-    [self.scroller layoutWithSpeed:0.3 completion:nil];
+    [table1 layoutWithDuration:0.3 completion:nil];
+    [self.scroller layoutWithDuration:0.3 completion:nil];
     [self.scroller scrollToView:layout withMargin:8];
   } else {
     [table1 layout];
@@ -417,8 +417,8 @@
 
   // animate and scroll
   if (animated) {
-    [table1 layoutWithSpeed:0.3 completion:nil];
-    [self.scroller layoutWithSpeed:0.3 completion:nil];
+    [table1 layoutWithDuration:0.3 completion:nil];
+    [self.scroller layoutWithDuration:0.3 completion:nil];
     [self.scroller scrollToView:convini withMargin:8];
   } else {
     [table1 layout];
@@ -455,8 +455,8 @@
   [section.topLines addObject:line];
 
   // animate
-  [table2 layoutWithSpeed:0.3 completion:nil];
-  [self.scroller layoutWithSpeed:0.3 completion:nil];
+  [table2 layoutWithDuration:0.3 completion:nil];
+  [self.scroller layoutWithDuration:0.3 completion:nil];
 
   // scroll
   [self.scroller scrollToView:section withMargin:8];
@@ -506,8 +506,8 @@
   [section.topLines addObject:waf2];
 
   // animate
-  [table2 layoutWithSpeed:0.3 completion:nil];
-  [self.scroller layoutWithSpeed:0.3 completion:nil];
+  [table2 layoutWithDuration:0.3 completion:nil];
+  [self.scroller layoutWithDuration:0.3 completion:nil];
 
   // scroll
   [self.scroller scrollToView:section withMargin:8];
@@ -529,10 +529,10 @@
   head.font = HEADER_FONT;
 
   id waffle = @"**MGBox** and **MGScrollView** provide **layout** and "
-      "**layoutWithSpeed:completion:** methods.\n\n"
+      "**layoutWithDuration:completion:** methods.\n\n"
       "**layout** automatically positions all child boxes according to their "
       "**margin**, **padding**, and **boxLayoutMode** values.\n\n"
-      "**layoutWithSpeed:completion:** does the same, with the addition of "
+      "**layoutWithDuration:completion:** does the same, with the addition of "
       "fading in new boxes, fading out removed boxes, and animating existing "
       "boxes from old position to new.\n\n"
       "This allows effortless animation of changes to grids, tables, "
@@ -544,8 +544,8 @@
   [section.topLines addObject:line];
 
   // animate
-  [table2 layoutWithSpeed:0.3 completion:nil];
-  [self.scroller layoutWithSpeed:0.3 completion:nil];
+  [table2 layoutWithDuration:0.3 completion:nil];
+  [self.scroller layoutWithDuration:0.3 completion:nil];
 
   // scroll
   [self.scroller scrollToView:section withMargin:8];
@@ -570,7 +570,7 @@
       "**asyncLayoutOnce** block properties.\n\n"
       "The photo grid boxes in this demo are an example of async layout. "
       "Each box is given an initial size and a loading indicator. When **layout** or "
-      "**layoutWithSpeed:completion:** is called on the parent **MGBox**, the "
+      "**layoutWithDuration:completion:** is called on the parent **MGBox**, the "
       "**asyncLayoutOnce** block is called in the background to load an image from "
       "a server, then update the box once finished.\n\n"
       "Each **MGBox** has an optional **asyncQueue** property, if for example you want "
@@ -582,8 +582,8 @@
   [section.topLines addObject:line];
 
   // animate
-  [table2 layoutWithSpeed:0.3 completion:nil];
-  [self.scroller layoutWithSpeed:0.3 completion:nil];
+  [table2 layoutWithDuration:0.3 completion:nil];
+  [self.scroller layoutWithDuration:0.3 completion:nil];
 
   // scroll
   [self.scroller scrollToView:section withMargin:8];
@@ -647,8 +647,8 @@
 
   // animate
   //table2.size = TABLE_SIZE;
-  [table2 layoutWithSpeed:0.3 completion:nil];
-  [self.scroller layoutWithSpeed:0.3 completion:nil];
+  [table2 layoutWithDuration:0.3 completion:nil];
+  [self.scroller layoutWithDuration:0.3 completion:nil];
 
   // scroll
   [self.scroller scrollToView:section withMargin:8];
@@ -693,8 +693,8 @@
   [section.topLines addObject:line2];
 
   // animate
-  [table2 layoutWithSpeed:0.3 completion:nil];
-  [self.scroller layoutWithSpeed:0.3 completion:nil];
+  [table2 layoutWithDuration:0.3 completion:nil];
+  [self.scroller layoutWithDuration:0.3 completion:nil];
 
   // scroll
   [self.scroller scrollToView:section withMargin:8];
@@ -730,8 +730,8 @@
   [section.topLines addObject:line];
 
   // animate
-  [table2 layoutWithSpeed:0.3 completion:nil];
-  [self.scroller layoutWithSpeed:0.3 completion:nil];
+  [table2 layoutWithDuration:0.3 completion:nil];
+  [self.scroller layoutWithDuration:0.3 completion:nil];
 
   // scroll
   [self.scroller scrollToView:section withMargin:8];
@@ -767,8 +767,8 @@
 
   // animate
   //table2.size = TABLE_SIZE;
-  [table2 layoutWithSpeed:0.3 completion:nil];
-  [self.scroller layoutWithSpeed:0.3 completion:nil];
+  [table2 layoutWithDuration:0.3 completion:nil];
+  [self.scroller layoutWithDuration:0.3 completion:nil];
 
   // scroll
   [self.scroller scrollToView:section withMargin:8];
@@ -801,8 +801,8 @@
   [section.topLines addObject:line];
 
   // animate
-  [table2 layoutWithSpeed:0.3 completion:nil];
-  [self.scroller layoutWithSpeed:0.3 completion:nil];
+  [table2 layoutWithDuration:0.3 completion:nil];
+  [self.scroller layoutWithDuration:0.3 completion:nil];
 
   // scroll
   [self.scroller scrollToView:section withMargin:8];
@@ -837,8 +837,8 @@
   [section.topLines addObject:line];
 
   // animate
-  [table2 layoutWithSpeed:0.3 completion:nil];
-  [self.scroller layoutWithSpeed:0.3 completion:nil];
+  [table2 layoutWithDuration:0.3 completion:nil];
+  [self.scroller layoutWithDuration:0.3 completion:nil];
 
   // scroll
   [self.scroller scrollToView:section withMargin:8];
@@ -872,8 +872,8 @@
   [section.topLines addObject:line];
 
   // animate
-  [table2 layoutWithSpeed:0.3 completion:nil];
-  [self.scroller layoutWithSpeed:0.3 completion:nil];
+  [table2 layoutWithDuration:0.3 completion:nil];
+  [self.scroller layoutWithDuration:0.3 completion:nil];
 
   // scroll
   [self.scroller scrollToView:section withMargin:8];
