@@ -1,0 +1,17 @@
+PODS:
+  - MGBoxKit (5.0.2):
+    - MGEvents
+  - MGEvents (1.0.3)
+
+DEPENDENCIES:
+  - MGBoxKit (from `..`)
+
+EXTERNAL SOURCES:
+  MGBoxKit:
+    :path: ..
+
+SPEC CHECKSUMS:
+  MGBoxKit: 69b7fa2a9e4ad6fb11613ca5e6c52759b6309f04
+  MGEvents: e6254d7873bcb90b266801d171f9948194010927
+
+COCOAPODS: 0.33.1
