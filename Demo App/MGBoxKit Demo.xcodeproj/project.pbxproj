@@ -10,7 +10,7 @@
 		3307137FAF1435B4ECA15024 /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 330715EF12EC184937E5FA7E /* add@2x.png */; };
 		33071941672C2D8830257E32 /* PhotoBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 3307132EC7E612F5B422461B /* PhotoBox.m */; };
 		330719F40060E9DDC87FB9C7 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 33071767DF74FC852F68B7FE /* add.png */; };
-		C9161E6916E2023D00F3D70C /* libMGBoxKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9161E4516E1FCF300F3D70C /* libMGBoxKit.a */; };
+		AB41A7CCE1CD40778FEC3D08 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 169B6C21C3B74DE9B58AE82F /* libPods.a */; };
 		C92E0240164E0BDC00275DEC /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92E023F164E0BDC00275DEC /* CoreText.framework */; };
 		C9968EBB1610CDEF00D113FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9968EBA1610CDEF00D113FB /* UIKit.framework */; };
 		C9968EBD1610CDEF00D113FB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9968EBC1610CDEF00D113FB /* Foundation.framework */; };
@@ -29,22 +29,12 @@
 		C9BE1ED91612106000D16831 /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9BE1ED71612106000D16831 /* arrow@2x.png */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		C9161E4416E1FCF300F3D70C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C9161E4016E1FCF300F3D70C /* MGBoxKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C9161DDB16E1F45300F3D70C;
-			remoteInfo = MGBoxKit;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		169B6C21C3B74DE9B58AE82F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3307132EC7E612F5B422461B /* PhotoBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBox.m; sourceTree = "<group>"; };
 		330714AD1C35930E7498DCE3 /* PhotoBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoBox.h; sourceTree = "<group>"; };
 		330715EF12EC184937E5FA7E /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add@2x.png"; sourceTree = "<group>"; };
 		33071767DF74FC852F68B7FE /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
-		C9161E4016E1FCF300F3D70C /* MGBoxKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = MGBoxKit.xcodeproj; sourceTree = "<group>"; };
 		C92E023F164E0BDC00275DEC /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		C9968EB61610CDEF00D113FB /* MGBoxKit Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MGBoxKit Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9968EBA1610CDEF00D113FB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -66,6 +56,7 @@
 		C9968F6C1610EDEF00D113FB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C9BE1ED61612106000D16831 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		C9BE1ED71612106000D16831 /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2x.png"; sourceTree = "<group>"; };
+		D702E0927D8742348D80AAE6 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,12 +64,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9161E6916E2023D00F3D70C /* libMGBoxKit.a in Frameworks */,
 				C92E0240164E0BDC00275DEC /* CoreText.framework in Frameworks */,
 				C9968F6D1610EDEF00D113FB /* QuartzCore.framework in Frameworks */,
 				C9968EBB1610CDEF00D113FB /* UIKit.framework in Frameworks */,
 				C9968EBD1610CDEF00D113FB /* Foundation.framework in Frameworks */,
 				C9968EBF1610CDEF00D113FB /* CoreGraphics.framework in Frameworks */,
+				AB41A7CCE1CD40778FEC3D08 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,20 +87,13 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		C9161E4116E1FCF300F3D70C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C9161E4516E1FCF300F3D70C /* libMGBoxKit.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		C9968EAB1610CDEF00D113FB = {
 			isa = PBXGroup;
 			children = (
 				C9968EC01610CDEF00D113FB /* Demo app */,
 				C9968EB91610CDEF00D113FB /* Frameworks */,
 				C9968EB71610CDEF00D113FB /* Products */,
+				D702E0927D8742348D80AAE6 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,12 +108,12 @@
 		C9968EB91610CDEF00D113FB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C9161E4016E1FCF300F3D70C /* MGBoxKit.xcodeproj */,
 				C92E023F164E0BDC00275DEC /* CoreText.framework */,
 				C9968F6C1610EDEF00D113FB /* QuartzCore.framework */,
 				C9968EBA1610CDEF00D113FB /* UIKit.framework */,
 				C9968EBC1610CDEF00D113FB /* Foundation.framework */,
 				C9968EBE1610CDEF00D113FB /* CoreGraphics.framework */,
+				169B6C21C3B74DE9B58AE82F /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -148,7 +132,6 @@
 				C9BE1EE21612416C00D16831 /* User interface */,
 			);
 			name = "Demo app";
-			path = "Demo App";
 			sourceTree = "<group>";
 		};
 		C9968EC11610CDF000D113FB /* Supporting files */ = {
@@ -189,9 +172,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9968EDD1610CDF000D113FB /* Build configuration list for PBXNativeTarget "MGBoxKit Demo" */;
 			buildPhases = (
+				A7B2E1126BEE43A1AD04A7F7 /* Check Pods Manifest.lock */,
 				C9968EB21610CDEF00D113FB /* Sources */,
 				C9968EB31610CDEF00D113FB /* Frameworks */,
 				C9968EB41610CDEF00D113FB /* Resources */,
+				C7E0F68E73724D6982D99733 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -209,7 +194,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = "";
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Big Paua";
 			};
 			buildConfigurationList = C9968EB01610CDEF00D113FB /* Build configuration list for PBXProject "MGBoxKit Demo" */;
@@ -222,28 +207,12 @@
 			mainGroup = C9968EAB1610CDEF00D113FB;
 			productRefGroup = C9968EB71610CDEF00D113FB /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = C9161E4116E1FCF300F3D70C /* Products */;
-					ProjectRef = C9161E4016E1FCF300F3D70C /* MGBoxKit.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				C9968EB51610CDEF00D113FB /* MGBoxKit Demo */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		C9161E4516E1FCF300F3D70C /* libMGBoxKit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libMGBoxKit.a;
-			remoteRef = C9161E4416E1FCF300F3D70C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C9968EB41610CDEF00D113FB /* Resources */ = {
@@ -264,6 +233,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A7B2E1126BEE43A1AD04A7F7 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C7E0F68E73724D6982D99733 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C9968EB21610CDEF00D113FB /* Sources */ = {
@@ -330,6 +332,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -360,11 +363,12 @@
 		};
 		C9968EDE1610CDF000D113FB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D702E0927D8742348D80AAE6 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Demo App/Demo App-Prefix.pch";
+				GCC_PREFIX_HEADER = "Demo App-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
-				INFOPLIST_FILE = "Demo App/Demo App-Info.plist";
+				INFOPLIST_FILE = "Demo App-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "MGBoxKit Demo";
@@ -374,11 +378,12 @@
 		};
 		C9968EDF1610CDF000D113FB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D702E0927D8742348D80AAE6 /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Demo App/Demo App-Prefix.pch";
+				GCC_PREFIX_HEADER = "Demo App-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
-				INFOPLIST_FILE = "Demo App/Demo App-Info.plist";
+				INFOPLIST_FILE = "Demo App-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "MGBoxKit Demo";

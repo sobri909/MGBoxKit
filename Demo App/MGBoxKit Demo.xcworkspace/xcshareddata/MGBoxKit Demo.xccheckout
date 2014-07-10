@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>20847CB6-94FC-4EE8-9F12-7E7D4E768D39</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MGBoxKit Demo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B621B15D-E9DE-46D0-9F59-43128E10CB44</key>
+		<string>https://github.com/sobri909/MGBoxKit.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Demo App/MGBoxKit Demo.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B621B15D-E9DE-46D0-9F59-43128E10CB44</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/sobri909/MGBoxKit.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B621B15D-E9DE-46D0-9F59-43128E10CB44</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B621B15D-E9DE-46D0-9F59-43128E10CB44</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MGBoxKit</string>
+		</dict>
+	</array>
+</dict>
+</plist>
