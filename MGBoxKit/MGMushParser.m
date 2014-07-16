@@ -67,9 +67,15 @@
   };
 
   id colourParser = @{
-      @"regex":@"(\\{)(.+?)(\\|)(.+?)(\\})",
-      @"replace":@[@"", @"", @"", @3, @""],
-      @"attributes":@[@{ }, @{ }, @{ }, @[@"colour", @1], @{ }]
+    @"regex":@"(\\{#)(.+?)(\\|)(.+?)(\\})",
+    @"replace":@[@"", @"", @"", @3, @""],
+    @"attributes":@[@{ }, @{ }, @{ }, @{ NSForegroundColorAttributeName:@1 }, @{ }]
+  };
+
+  id bgColourParser = @{
+    @"regex":@"(\\{bg#)(.+?)(\\|)(.+?)(\\})",
+    @"replace":@[@"", @"", @"", @3, @""],
+    @"attributes":@[@{ }, @{ }, @{ }, @{ NSBackgroundColorAttributeName:@1 }, @{ }]
   };
 
   [self applyParser:boldParser];
@@ -77,6 +83,7 @@
   [self applyParser:underlineParser];
   [self applyParser:monospaceParser];
   [self applyParser:colourParser];
+  [self applyParser:bgColourParser];
 }
 
 - (void)strip {
@@ -103,8 +110,13 @@
   };
 
   id colourParser = @{
-      @"regex":@"(\\{)(.+?)(\\|)(.+?)(\\})",
-      @"replace":@[@"", @"", @"", @3, @""]
+    @"regex":@"(\\{)(.+?)(\\|)(.+?)(\\})",
+    @"replace":@[@"", @"", @"", @3, @""]
+  };
+
+  id bgColourParser = @{
+    @"regex":@"(\\{bg)(.+?)(\\|)(.+?)(\\})",
+    @"replace":@[@"", @"", @"", @3, @""]
   };
 
   [self applyParser:boldParser];
@@ -112,6 +124,7 @@
   [self applyParser:underlineParser];
   [self applyParser:monospaceParser];
   [self applyParser:colourParser];
+  [self applyParser:bgColourParser];
 }
 
 - (void)applyParser:(NSDictionary *)parser {
@@ -146,20 +159,23 @@
         // apply attributes
         for (int i = 0; i < match.numberOfRanges - 1; i++) {
           id attributes = parser[@"attributes"][i];
-
-          // hard coded colour parser
-          if ([attributes isKindOfClass:NSArray.class]) {
-            NSMutableAttributedString *repl = replacements[i];
-            id hex = [substrs[[attributes[1] intValue]] string];
-            attributes = @{
-                NSForegroundColorAttributeName:[UIColor colorWithHexString:hex]
-            };
-            [repl addAttributes:attributes range:(NSRange){0, repl.length}];
-
-          } else if (attributes) {
-            NSMutableAttributedString *repl = replacements[i];
-            [repl addAttributes:attributes range:(NSRange){0, repl.length}];
+          if (![attributes count]) {
+            continue;
           }
+          NSMutableDictionary *attributesCopy = [attributes mutableCopy];
+          for (NSString *attributeName in attributes) {
+            // convert any colour attributes from hex
+            if ([attributeName isEqualToString:NSForegroundColorAttributeName] ||
+                [attributeName isEqualToString:NSBackgroundColorAttributeName] ||
+                [attributeName isEqualToString:NSUnderlineColorAttributeName] ||
+                [attributeName isEqualToString:NSStrikethroughColorAttributeName]) {
+              id hex = [substrs[[attributes[attributeName] intValue]] string];
+              UIColor *color = [UIColor colorWithHexString:hex];
+              attributesCopy[attributeName] = color;
+            }
+          }
+          NSMutableAttributedString *repl = replacements[i];
+          [repl addAttributes:attributesCopy range:(NSRange){0, repl.length}];
         }
 
         // replace
