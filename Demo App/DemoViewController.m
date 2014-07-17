@@ -450,7 +450,7 @@
       "desired spacing.|mush";
 
   // stuff
-  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:nil width:304
+  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 16, 16)];
   [section.topLines addObject:line];
 
@@ -484,7 +484,7 @@
       "containing box.|mush";
 
   // stuff
-  MGLineStyled *waf1 = [MGLineStyled multilineWithText:waffle1 font:nil width:304
+  MGLineStyled *waf1 = [MGLineStyled multilineWithText:waffle1 font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 16, 16)];
   [section.topLines addObject:waf1];
 
@@ -501,7 +501,7 @@
       "and will be automatically wrapped in a **UILabel** or **UIImageView**.|mush";
 
   // stuff
-  MGLineStyled *waf2 = [MGLineStyled multilineWithText:waffle2 font:nil width:304
+  MGLineStyled *waf2 = [MGLineStyled multilineWithText:waffle2 font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 16, 16)];
   [section.topLines addObject:waf2];
 
@@ -539,7 +539,7 @@
       "table sections, or any arbitrary tree of **MGBLayoutBox** objects.|mush";
 
   // stuff
-  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:nil width:304
+  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 16, 16)];
   [section.topLines addObject:line];
 
@@ -577,7 +577,7 @@
       "to perform their processes in serial or at a different priority.|mush";
 
   // stuff
-  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:nil width:304
+  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 16, 16)];
   [section.topLines addObject:line];
 
@@ -610,7 +610,7 @@
       "when laying out themselves and their children.|mush";
 
   // stuff
-  MGLineStyled *line1 = [MGLineStyled multilineWithText:waffle1 font:nil width:304
+  MGLineStyled *line1 = [MGLineStyled multilineWithText:waffle1 font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 16, 16)];
   [section.topLines addObject:line1];
 
@@ -625,7 +625,7 @@
       "constant position while other views scroll.|mush";
 
   // stuff
-  MGLineStyled *line2 = [MGLineStyled multilineWithText:waffle2 font:nil width:304
+  MGLineStyled *line2 = [MGLineStyled multilineWithText:waffle2 font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 16, 16)];
   [section.topLines addObject:line2];
 
@@ -641,7 +641,7 @@
       "its top and left margins.|mush";
 
   // stuff
-  MGLineStyled *line3 = [MGLineStyled multilineWithText:waffle3 font:nil width:304
+  MGLineStyled *line3 = [MGLineStyled multilineWithText:waffle3 font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 16, 16)];
   [section.topLines addObject:line3];
 
@@ -681,13 +681,13 @@
       "`monospace` with backticks.";
 
   // stuff
-  MGLineStyled *line1 = [MGLineStyled multilineWithText:waffle1 font:nil width:304
+  MGLineStyled *line1 = [MGLineStyled multilineWithText:waffle1 font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 0, 16)];
   line1.borderStyle &= ~MGBorderEtchedBottom;
   [section.topLines addObject:line1];
 
   // stuff
-  MGLineStyled *line2 = [MGLineStyled multilineWithText:waffle2 font:nil width:304
+  MGLineStyled *line2 = [MGLineStyled multilineWithText:waffle2 font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(8, 16, 16, 16)];
   line2.borderStyle &= ~MGBorderEtchedTop;
   [section.topLines addObject:line2];
@@ -725,7 +725,7 @@
       "and **longPressable** boolean properties.|mush";
 
   // stuff
-  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:nil width:304
+  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 16, 16)];
   [section.topLines addObject:line];
 
@@ -761,7 +761,7 @@
       "No fuss. It just works. On all objects.|mush";
 
   // stuff
-  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:nil width:304
+  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 16, 16)];
   [section.topLines addObject:line];
 
@@ -796,7 +796,7 @@
       "`        do:^{ ... }];`|mush";
 
   // stuff
-  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:nil width:304
+  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 16, 16)];
   [section.topLines addObject:line];
 
@@ -832,7 +832,7 @@
       "`                do:^{ ... }];`|mush";
 
   // stuff
-  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:nil width:304
+  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 16, 16)];
   [section.topLines addObject:line];
 
@@ -867,7 +867,7 @@
       "**topLeft**, **topRight**, **bottomLeft**, and **bottomRight**.|mush";
 
   // stuff
-  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:nil width:304
+  MGLineStyled *line = [MGLineStyled multilineWithText:waffle font:HEADER_FONT width:304
       padding:UIEdgeInsetsMake(16, 16, 16, 16)];
   [section.topLines addObject:line];
 
