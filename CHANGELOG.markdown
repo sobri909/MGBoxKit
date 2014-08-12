@@ -1,3 +1,9 @@
+## 5.0.3
+
+- Added text background colour markup to Mush / `MGMushParser`. Set text 
+  background colour with {bg#123456|the text}.
+- Added inline docs to `MGBoxProvider`.
+
 ## 5.0.2
 
 ### Fixes

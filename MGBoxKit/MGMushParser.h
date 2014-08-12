@@ -14,7 +14,7 @@ markup into a resulting `NSAttributedString`.
 - <u>Underlining</u> is achieved with \_\_double underscores\_\_
 - `Monospacing` is achieved with \`single backticks\`
 - Coloured text is achieved with {#123456|the coloured text}
-- Colouring the background behind text is achieved with {bg#123456|text to apply bg colour}
+- Set text background colour with {bg#123456|the text}
 */
 
 @interface MGMushParser : NSObject
