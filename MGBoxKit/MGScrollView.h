@@ -78,6 +78,15 @@ __deprecated;
  */
 - (void)restoreScrollOffset;
 
+/** @name Box adding and removing */
+
+/**
+* Optional margin applied to the visible viewport, to allow boxes to be
+* added ahead of time during scrolling, when using a
+* [boxProvider](-[MGLayoutBox boxProvider]).
+*/
+@property (nonatomic, assign) CGSize viewportMargin;
+
 /** @name Box edge snapping */
 
 /**
@@ -105,8 +114,5 @@ __deprecated;
 
 - (void)keyboardWillAppear:(NSNotification *)note;
 - (void)restoreAfterKeyboardClose:(Block)completion __deprecated;
-
-// for the upcoming box caching/reuse functionality
-@property (nonatomic, assign) CGSize viewportMargin;
 
 @end
