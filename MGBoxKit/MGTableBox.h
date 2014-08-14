@@ -14,12 +14,10 @@
 * example you might store a section header in topLines, store the footer
 * in bottomLines, and use middleLines for the main content table rows.
 *
-* @warning When using an `MGTableBox` you can't add child boxes to the standard
-* [boxes](-[MGLayoutBox boxes]) array, as its contents will be replaced by the
-* contents of topLines, middleLines, and bottomLines on each
-* [layout](-[MGLayoutBox layout]) call. You must instead use the replacement sets.
+* @deprecated This class is no longer maintained.
 */
-@interface MGTableBox : MGBox
+
+__deprecated @interface MGTableBox : MGBox
 
 /** @name Alternative content sets */
 

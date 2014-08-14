@@ -9,8 +9,11 @@
 * background colour, padding, and border style. The styling is designed to match
 * with and be used with MGTableBoxStyled. It also serves as a basic subclassing
 * example (take a look at `MGLineStyled.m` for an example `setup` method).
+*
+* @deprecated This class's styling is pre iOS 7, and should only be used as a loose
+* example of subclassing.
 */
 
-@interface MGLineStyled : MGLine
+__deprecated @interface MGLineStyled : MGLine
 
 @end

@@ -5,8 +5,7 @@
 
 #import "MGBox.h"
 
-// may be deprecated in future. use MGBox borders instead
-typedef enum {
+__deprecated typedef enum {
   MGUnderlineNone, MGUnderlineTop, MGUnderlineBottom
 } MGUnderlineType;
 
@@ -180,8 +179,7 @@ force multiline presentation for a string, append a newline character.
 */
 - (void)setMultilineRight:(NSString *)text;
 
-// may be deprecated in future. use MGBox borders instead
-@property (nonatomic, assign) MGUnderlineType underlineType;
+@property (nonatomic, assign) MGUnderlineType underlineType __deprecated;
 
 /** @name Layout order and positioning */
 
@@ -346,8 +344,7 @@ MGLayoutBox, their [topMargin](-[MGLayoutBox topMargin]) and
 */
 @property (nonatomic, assign) BOOL opaqueLabels;
 
-// may be deprecated in future. use MGBox borders instead
-@property (nonatomic, retain) CALayer *solidUnderline;
+@property (nonatomic, retain) CALayer *solidUnderline __deprecated;
 
 #pragma mark - Sizing
 

@@ -5,7 +5,7 @@
 
 #import "MGLayoutBox.h"
 
-typedef enum {
+__deprecated typedef enum {
   MGBorderNone = 0,
   MGBorderEtchedTop = 1 << 1,
   MGBorderEtchedBottom = 1 << 2,
@@ -65,8 +65,6 @@ typedef enum {
 * pass, call `layoutWithDuration:completion:` on the child box first.
 */
 - (void)layoutWithDuration:(NSTimeInterval)duration completion:(Block)completion;
-- (void)layoutWithSpeed:(NSTimeInterval)speed completion:(Block)completion
-__deprecated;
 
 /** @name Performance */
 
@@ -79,19 +77,9 @@ __deprecated;
 /** @name Borders */
 
 /**
-A convenience property allowing you to toggle on and off etched border style
-for individual or all edges.
-
-Possible `MGBorderStyle` values:
-
-* MGBorderNone
-* MGBorderEtchedTop
-* MGBorderEtchedBottom
-* MGBorderEtchedLeft
-* MGBorderEtchedRight
-* MGBorderEtchedAll
+* @deprecated Etched borders are no longer supported.
 */
-@property (nonatomic, assign) MGBorderStyle borderStyle;
+@property (nonatomic, assign) MGBorderStyle borderStyle __deprecated;
 
 /**
 * Setter for the top border colour.

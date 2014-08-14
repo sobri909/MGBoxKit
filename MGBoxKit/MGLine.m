@@ -10,9 +10,7 @@
 #import "NSString+MGEasySize.h"
 
 @interface MGLine ()
-
 @property (nonatomic, retain) NSMutableArray *dontFit;
-
 @end
 
 @implementation MGLine {
@@ -48,9 +46,6 @@
   self.leftWidth = 0;
   self.middleWidth = 0;
   self.rightWidth = 0;
-
-  // may be deprecated in future. use MGBox borders instead
-  self.underlineType = MGUnderlineNone;
 }
 
 #pragma mark - Factories

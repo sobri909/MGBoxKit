@@ -108,10 +108,6 @@
     [MGLayoutManager layoutBoxesIn:self duration:duration completion:completion];
 }
 
-- (void)layoutWithSpeed:(NSTimeInterval)speed completion:(Block)completion {
-    [self layoutWithDuration:speed completion:completion];
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
 
@@ -226,28 +222,19 @@
 
 #pragma mark - Dealing with the keyboard
 
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-
 - (void)keyboardWillAppear:(NSNotification *)note {
-
-  // haven't been asked to deal with keyboard scrolling?
-  if (!self.keepAboveKeyboard && !self.keepFirstResponderAboveKeyboard) {
-    return;
-  }
-
-  // target, if given an explicit view to keep above keyboard
-  UIView *view = self.keepAboveKeyboard;
-
-  // target by finding a descendant that's first respondent
-  if (!view && self.keepFirstResponderAboveKeyboard) {
-    UIResponder *first = self.currentFirstResponder;
-    if ([first isKindOfClass:UIView.class]
-        && [(id)first isDescendantOfView:self]) {
-      view = (id)first;
-    } else {
-      return;
+    if (!self.keepFirstResponderAboveKeyboard) {
+        return;
     }
-  }
+
+    UIView *view;
+
+    UIResponder *first = self.currentFirstResponder;
+    if ([first isKindOfClass:UIView.class] && [(id)first isDescendantOfView:self]) {
+        view = (id)first;
+    } else {
+        return;
+    }
 
   // target rect in local space
   CGRect target = [view.superview convertRect:view.frame toView:nil];
@@ -281,8 +268,6 @@
   } completion:nil];
 }
 
-#pragma clang diagnostic warning "-Wdeprecated-declarations"
-
 - (void)keyboardWillDisappear:(NSNotification *)note {
   double d = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
   int curve = [note.userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue];
@@ -292,26 +277,6 @@
     self.contentOffset = offset;
     keyboardNudge = 0;
   } completion:nil];
-}
-
-- (void)restoreAfterKeyboardClose:(Block)completion {
-  if (!keyboardNudge) {
-    if (completion) {
-      completion();
-    }
-    return;
-  }
-
-  [UIView animateWithDuration:0.3 animations:^{
-    CGPoint offset = self.contentOffset;
-    offset.y -= keyboardNudge;
-    self.contentOffset = offset;
-    keyboardNudge = 0;
-  } completion:^(BOOL fini) {
-    if (completion) {
-      completion();
-    }
-  }];
 }
 
 #pragma mark - Scroll Offset Handling

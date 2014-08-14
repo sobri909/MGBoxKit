@@ -59,9 +59,6 @@
 }
 
 - (void)setup {
-
-  // defaults
-  self.borderStyle = MGBorderNone;
   self.boxLayoutMode = MGBoxLayoutAutomatic;
   self.contentLayoutMode = MGLayoutTableStyle;
   self.sizingMode = MGResizingNone;
@@ -109,10 +106,6 @@
             }
         });
     }
-}
-
-- (void)layoutWithSpeed:(NSTimeInterval)speed completion:(Block)completion {
-    [self layoutWithDuration:speed completion:completion];
 }
 
 - (void)appeared {

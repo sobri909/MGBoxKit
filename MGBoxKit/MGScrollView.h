@@ -52,8 +52,6 @@
 * child box to also animate the positioning of its children in the same drawing pass, call `layoutWithDuration:completion:` on the child box first.
 */
 - (void)layoutWithDuration:(NSTimeInterval)duration completion:(Block)completion;
-- (void)layoutWithSpeed:(NSTimeInterval)speed completion:(Block)completion
-__deprecated;
 
 /** @name Scrolling */
 
@@ -103,7 +101,6 @@ __deprecated;
 * active input field visible. Default is `YES`.
 */
 @property (nonatomic, assign) BOOL keepFirstResponderAboveKeyboard;
-@property (nonatomic, weak) UIView *keepAboveKeyboard __deprecated;
 
 /**
 * The amount of space to allow between the the keyboard and the active input
@@ -113,6 +110,5 @@ __deprecated;
 @property (nonatomic, assign) CGFloat keyboardMargin;
 
 - (void)keyboardWillAppear:(NSNotification *)note;
-- (void)restoreAfterKeyboardClose:(Block)completion __deprecated;
 
 @end

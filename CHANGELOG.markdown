@@ -1,3 +1,8 @@
+## 6.0.0
+
+- Deprecated `MGTableBox`, `MGTableBoxStyled` and `MGLineStyled`.
+- Removed previously deprecated properties and methods.
+
 ## 5.0.3
 
 - Added text background colour markup to Mush / `MGMushParser`. Set text 
