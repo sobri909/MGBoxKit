@@ -6,10 +6,6 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 
 `MGBox`, `MGScrollView`, and `MGButton` can also be used as generic `UIView` wrappers to get the benefits of view padding, margins, and zIndex, amongst others.
 
-## Demo App
-
-![Screenshot #1](/Screenshots/Screenshot1.png "Screenshot #1")
-
 ## API Reference, Guides, and Changelog
 
 - [API Reference](http://www.bigpaua.com/MGBoxKit/docs/index.html)
@@ -25,7 +21,7 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 
 - Table layouts (similar to `UITableView`, but less fuss)
 - Grid layouts (similar to `UICollectionView`, but less fuss)
-- Optional box offscreen culling and reuse
+- Optionl box caching for smooth scrolling and low memory use
 - Table rows automatically layout `NSStrings`, `UIImages`, 
   `NSAttributedStrings`, and multiline text
 - Table rows accept `Mush` lightweight markup for bold, italics, underline, and 
@@ -40,9 +36,6 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 ## Code Convenience Features
 
 - Blocks based tap, swipe, and hold gesture recognisers
-- Blocks based custom event observing and triggering
-- Blocks based UIControl event handlers
-- Blocks based keypath observers
 - UIView easy frame accessors
 
 ## Setup
@@ -51,14 +44,10 @@ Includes blocks based gesture recognisers, observers, control events, and custom
 
 Add `pod 'MGBoxKit'` to your `Podfile`
 
-### Manual
-
-1. Add the `MGBoxKit` folder to your project. (ARC required)
-2. Add the `CoreText` and `QuartzCore` frameworks to your project.
-
 ## Example Usage
 
-**Note:** For more complete documentation and examples please check the [API Reference and Guides](http://www.bigpaua.com/MGBoxKit/docs/index.html).
+**Note:** For more complete documentation and examples please check the
+[API Reference and Guides](http://www.bigpaua.com/MGBoxKit/docs/index.html).
 
 ### Building a Table (Similar to UITableView)
 
