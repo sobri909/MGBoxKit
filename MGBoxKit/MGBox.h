@@ -24,8 +24,8 @@ __deprecated typedef enum {
 * A plain `MGBox` has no default styling, thus is visually and functionally the
 * same as a plain `UIView`, but with extra layout sugar on top.
 *
-* @warning To layout child boxes inside an `MGBox`, instead of adding them to
-* `subviews`, add them to the [boxes]([MGLayoutBox boxes]) array.
+* @warning To layout child boxes inside an `MGBox`, add them to
+* [boxes]([MGLayoutBox boxes]) instead of `subviews`,
 */
 
 @interface MGBox : UIView <MGLayoutBox, UIGestureRecognizerDelegate>
@@ -54,15 +54,16 @@ __deprecated typedef enum {
 /** @name Layout */
 
 /**
-* An animated version of [MGLayoutBox layout], taking a duration parameter and
-* optional completion block.
+* An animated version of [layout](-[MGLayoutBox layout]), taking a duration
+* parameter and optional completion block.
 *
-* All MGLayoutBox positioning rules will be applied, the same as in the
-* unanimated [layout](-[MGLayoutBox layout]) method, but with child boxes animated between previous and
-* new computed positions, fading new boxes in, and fading removed boxes out.
-* Child boxes will have their unanimated layout method called. If you want a
-* child box to also animate the positioning of its children in the same drawing
-* pass, call `layoutWithDuration:completion:` on the child box first.
+* All <MGLayoutBox> positioning rules will be applied, the same as in the
+* unanimated [layout](-[MGLayoutBox layout]) method, but with child boxes
+* animated between previous and new computed positions, fading new boxes in,
+* and fading removed boxes out. Child boxes will have their unanimated layout
+* method called. If you want a child box to also animate the positioning of its
+* children in the same drawing pass, call `layoutWithDuration:completion:` on
+* the child box first.
 */
 - (void)layoutWithDuration:(NSTimeInterval)duration completion:(Block)completion;
 
@@ -126,9 +127,18 @@ __deprecated typedef enum {
 @property (nonatomic, retain) UIView *rightBorder;
 
 /**
-* Pass in a `UIColor` to set all borders to the same colour. Or pass in an
-* `NSArray` of four `UIColor` values to set top, left, bottom, and right border
-* colours (in that order).
+Pass in a `UIColor` to set all borders to the same colour. Or pass in an
+`NSArray` of four `UIColor` values to set top, left, bottom, and right border
+colours (in that order).
+
+    // all borders the same colour
+    box.borderColors = UIColor.redColor;
+
+    // individual colours
+    box.borderColors = @[
+        UIColor.redColor, UIColor.greenColor,
+        UIColor.blueColor, UIColor.blackColor
+    ];
 */
 - (void)setBorderColors:(id)colors;
 

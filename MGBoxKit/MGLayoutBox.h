@@ -51,7 +51,11 @@ typedef enum {
 */
 @property (nonatomic, retain) NSMutableArray *boxes;
 
-// pretend you didn't see this. the future isn't now
+/**
+* For large or dynamic tables and grids, create and configure a `boxProvider`
+* to provide on demand content. See the **Tables and Grids Guide** and
+* <MGBoxProvider> docs for more details.
+*/
 @property (nonatomic, retain) MGBoxProvider *boxProvider;
 
 /**
@@ -65,7 +69,7 @@ typedef enum {
 
 /**
 A block assigned to `asyncLayout` will be executed on <asyncQueue> on every
-call to <[MGLayoutBox layout]> or <-[MGScrollView layoutWithSpeed:completion:]>,
+call to [layout](-[MGLayoutBox layout]) or [layoutWithDuration:completion:](-[MGScrollView layoutWithDuration:completion:]),
 after the standard layout pass has completed. Useful for performing any CPU or
 network intensive data gathering that will result in presentation changes.
 
@@ -242,8 +246,7 @@ box with another.
 This is the main layout method, which should be called on a container box once
 you have finished adding, removing, positioning, and styling child boxes.
 
-[MGScrollView](MGScrollView) and [MGBox](MGBox) also provide animated layout
-methods:
+<MGScrollView> and <MGBox> also provide animated layout methods:
 
 - -[MGScrollView layoutWithDuration:completion:]
 - -[MGBox layoutWithDuration:completion:]

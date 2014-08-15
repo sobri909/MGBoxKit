@@ -81,7 +81,8 @@ Should return a `CGSize` for the box at the given index.
 @property (nonatomic, copy) MGBoxSizeMaker boxSizeMaker;
 
 /**
-Should return a `UIEdgeInsets` for the margins of the box at the given index.
+Should return a `UIEdgeInsets` for the margins of the box at the given index. If no
+`boxSizeMaker` is provided, the default value of `UIEdgeInsetsZero` will be used.
 
     boxProvider.boxMarginMaker = ^(NSUInteger index) {
         if (index == 0) { // header
@@ -204,6 +205,8 @@ box is inserted before it.
 @property (nonatomic, weak) UIView <MGLayoutBox> *container;
 
 #pragma mark - Ignore below here plz
+
+/** @name Internal */
 
 @property (nonatomic, assign) BOOL lockVisibleIndexes;
 
