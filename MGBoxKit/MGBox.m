@@ -321,6 +321,8 @@
     }
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (void)setBackgroundColor:(UIColor *)color {
   super.backgroundColor = color;
   [MGBox optimizeView:self forColor:color];
@@ -329,6 +331,7 @@
     self.borderStyle = self.borderStyle;
   }
 }
+#pragma clang diagnostic pop
 
 - (void)setBorderStyle:(MGBorderStyle)style {
   _borderStyle = style;

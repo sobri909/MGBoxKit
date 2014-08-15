@@ -683,12 +683,16 @@
 
 #pragma mark - Style setters
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (void)setFrame:(CGRect)frame {
   super.frame = frame;
   self.underlineType = self.underlineType;
 }
+#pragma clang diagnostic pop
 
-// this may disappear in future. use MGBox borders instead
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (void)setUnderlineType:(MGUnderlineType)type {
   _underlineType = type;
   switch (_underlineType) {
@@ -706,6 +710,7 @@
       break;
   }
 }
+#pragma clang diagnostic pop
 
 - (void)setTextColor:(UIColor *)color {
   _textColor = color;

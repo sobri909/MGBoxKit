@@ -16,6 +16,11 @@
 * used as a loose example of subclasssing.
 */
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 __deprecated @interface MGTableBoxStyled : MGTableBox
 
 @end
+
+#pragma clang diagnostic pop

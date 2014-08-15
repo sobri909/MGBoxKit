@@ -50,7 +50,7 @@
     }
 
     NSAssert(dataKeys.count == self.count, @"Expected %d data keys but have %d. boxKeyMaker "
-          "must return unique values.", (int)self.count, dataKeys.count);
+          "must return unique values.", (int)self.count, (int)dataKeys.count);
 
     _dataKeys = dataKeys;
     NSMutableOrderedSet *removed = _oldDataKeys.mutableCopy;
