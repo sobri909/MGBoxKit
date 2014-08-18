@@ -264,18 +264,19 @@ CGFloat roundToPixel(CGFloat value) {
   }
   container.layingOut = YES;
 
-    // box provider style layout
-    if (container.boxProvider) {
-        [container.boxProvider updateDataKeys];
-        [container.boxProvider updateBoxFrames];
-        [container.boxProvider updateVisibleIndexes];
-        [self layoutVisibleBoxesIn:container duration:duration completion:completion];
-        [self updateContentSizeFor:container];
-        [container.boxProvider updateOldDataKeys];
-        [container.boxProvider updateOldBoxFrames];
-        container.layingOut = NO;
-        return;
-    }
+  // box provider style layout
+  if (container.boxProvider) {
+    [container.boxProvider updateDataKeys];
+    [container.boxProvider updateBoxFrames];
+    [container.boxProvider updateVisibleIndexes];
+    [self layoutVisibleBoxesIn:container duration:duration completion:completion];
+    [container.boxProvider updateOldDataKeys];
+    [self updateContentSizeFor:container];
+    [container.boxProvider updateOldBoxFrames];
+    container.layingOut = NO;
+    return;
+  }
+
 
   // find new top boxes
   NSMutableOrderedSet *newTopBoxes = NSMutableOrderedSet.orderedSet;
