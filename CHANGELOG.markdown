@@ -1,3 +1,7 @@
+## 7.0.0
+
+- Moved `MGMushParser` to a separate CocoaPod.
+ 
 ## 6.0.0
 
 - Deprecated `MGTableBox`, `MGTableBoxStyled` and `MGLineStyled`.
