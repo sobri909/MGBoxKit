@@ -1,3 +1,7 @@
+## 7.0.1
+
+- Fixed box provider reuse bug when data changes near content bounds.
+
 ## 7.0.0
 
 - Moved `MGMushParser` to a separate CocoaPod.
