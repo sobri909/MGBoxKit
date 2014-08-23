@@ -166,8 +166,10 @@
         [MGLayoutManager layoutVisibleBoxesIn:self duration:0 completion:nil];
 
         // Apple bug workaround
-        self.showsVerticalScrollIndicator = NO;
-        self.showsVerticalScrollIndicator = YES;
+        if (self.showsVerticalScrollIndicator) {
+            self.showsVerticalScrollIndicator = NO;
+            self.showsVerticalScrollIndicator = YES;
+        }
     }
 }
 
