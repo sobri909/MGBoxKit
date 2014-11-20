@@ -171,7 +171,9 @@
       leftUsed = self.leftWidth ? self.leftWidth : used;
 
       // right second
-      from = self.leftPadding + leftUsed + middleUsed;
+      from = self.rightWidth
+            ? self.width - self.rightPadding - self.rightWidth
+            : self.leftPadding + leftUsed + middleUsed;
       limit = self.rightWidth ? self.rightWidth : maxWidth - leftUsed;
       used = [self layoutItems:self.rightItems from:from within:limit
           align:self.rightItemsAlignment];
