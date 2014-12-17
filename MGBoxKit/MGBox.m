@@ -259,8 +259,10 @@
   tappable = can;
   if (can) {
     [self addGestureRecognizer:self.tapper];
+    self.exclusiveTouch = !self.allowSimultaneousTaps;
   } else if (self.tapper) {
     [self removeGestureRecognizer:self.tapper];
+    self.exclusiveTouch = !self.allowSimultaneousTaps && !self.longPressable;
   }
 }
 
@@ -283,8 +285,10 @@
   longPressable = can;
   if (can) {
     [self addGestureRecognizer:self.longPresser];
+    self.exclusiveTouch = !self.allowSimultaneousTaps;
   } else if (self.longPresser) {
     [self removeGestureRecognizer:self.longPresser];
+    self.exclusiveTouch = !self.allowSimultaneousTaps && !self.tappable;
   }
 }
 

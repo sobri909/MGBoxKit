@@ -166,4 +166,12 @@ colours (in that order).
 */
 - (UIImage *)screenshotWithShadow:(BOOL)shadow scale:(float)scale;
 
+/** @name Tapping */
+
+/**
+ * If set to YES this box can trigger tap events simultaneously with other views.
+ * Defaults to NO.
+ */
+@property (nonatomic, assign) BOOL allowSimultaneousTaps;
+
 @end
