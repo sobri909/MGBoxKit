@@ -174,4 +174,16 @@ colours (in that order).
  */
 @property (nonatomic, assign) BOOL allowSimultaneousTaps;
 
+/**
+ * Analagous to UIButton's highlighted property.  Highlighted is set to YES if
+ * a touch down event occurs on the MGBox, and set to NO on touch up or cancelled
+ * events.
+ */
+@property (nonatomic, assign) BOOL highlighted;
+
+/**
+ * A convenience block that is called whenever the highlighted property changes
+ */
+@property (nonatomic, copy) void (^onHighlightChanged)(BOOL highlighted);
+
 @end

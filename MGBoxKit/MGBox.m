@@ -62,6 +62,12 @@
   self.boxLayoutMode = MGBoxLayoutAutomatic;
   self.contentLayoutMode = MGLayoutTableStyle;
   self.sizingMode = MGResizingNone;
+  __weak MGBox *wBox = self;
+  [self onChangeOf:@"highlighted" do:^{
+      if (wBox.onHighlightChanged) {
+          wBox.onHighlightChanged(wBox.highlighted);
+      }
+  }];
 }
 
 #pragma mark - Layout
@@ -195,6 +201,7 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    self.highlighted = YES;
     if (self.onTouchesBegan) {
         self.onTouchesBegan();
     }
@@ -202,6 +209,7 @@
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    self.highlighted = NO;
     if (self.onTouchesCancelled) {
         self.onTouchesCancelled();
     }
@@ -209,6 +217,7 @@
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    self.highlighted = NO;
     if (self.onTouchesEnded) {
         self.onTouchesEnded();
     }
