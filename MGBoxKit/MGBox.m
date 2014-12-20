@@ -62,12 +62,6 @@
   self.boxLayoutMode = MGBoxLayoutAutomatic;
   self.contentLayoutMode = MGLayoutTableStyle;
   self.sizingMode = MGResizingNone;
-  __weak MGBox *wBox = self;
-  [self onChangeOf:@"highlighted" do:^{
-      if (wBox.onHighlightChanged) {
-          wBox.onHighlightChanged(wBox.highlighted);
-      }
-  }];
 }
 
 #pragma mark - Layout
@@ -320,6 +314,18 @@
   if (onLongPress) {
     self.longPressable = YES;
   }
+}
+
+- (void)setOnHighlightChanged:(void (^)(BOOL))block {
+    if (!_onHighlightChanged) {
+        __weak MGBox *wBox = self;
+        [self onChangeOf:@"highlighted" do:^{
+            if (wBox.onHighlightChanged) {
+                wBox.onHighlightChanged(wBox.highlighted);
+            }
+        }];
+    }
+    _onHighlightChanged = block;
 }
 
 #pragma mark Border and background setters
