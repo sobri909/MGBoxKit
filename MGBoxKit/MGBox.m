@@ -11,6 +11,7 @@
 @implementation MGBox {
   BOOL fixedPositionEstablished;
   BOOL asyncDrawing, asyncDrawOnceing;
+  BOOL watchingHighlightChanged;
 }
 
 // MGLayoutBox protocol
@@ -317,7 +318,8 @@
 }
 
 - (void)setOnHighlightChanged:(void (^)(BOOL))block {
-    if (!_onHighlightChanged) {
+    if (!_onHighlightChanged && !watchingHighlightChanged) {
+        watchingHighlightChanged = YES;
         __weak MGBox *wBox = self;
         [self onChangeOf:@"highlighted" do:^{
             if (wBox.onHighlightChanged) {
