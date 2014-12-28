@@ -102,7 +102,7 @@ different priority or perform a bunch of expensive processes in serial.
         box.asyncQueue = queue;
     }
 */
-@property (nonatomic, assign) dispatch_queue_t asyncQueue;
+@property (nonatomic, strong) dispatch_queue_t asyncQueue;
 
 #pragma mark - Styling and positioning
 
