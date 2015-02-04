@@ -23,6 +23,7 @@
 @synthesize attachedTo, replacementFor, sizingMode, minWidth;
 @synthesize fixedPosition, zIndex, layingOut, slideBoxesInFromEmpty;
 @synthesize dontLayoutChildren;
+@synthesize scrollsHorizontally;
 
 // MGLayoutBox protocol optionals
 @synthesize cacheKey;

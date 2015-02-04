@@ -21,6 +21,7 @@
 @synthesize attachedTo, replacementFor, sizingMode, minWidth;
 @synthesize fixedPosition, zIndex, layingOut, slideBoxesInFromEmpty;
 @synthesize dontLayoutChildren;
+@synthesize scrollsHorizontally;
 
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];

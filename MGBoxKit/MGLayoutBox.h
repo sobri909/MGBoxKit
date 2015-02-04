@@ -241,6 +241,7 @@ box with another.
 @property (nonatomic, assign) BOOL dontLayoutChildren;
 @property (nonatomic, assign) BOOL slideBoxesInFromEmpty;
 @property (nonatomic, assign) BOOL layingOut;
+@property (nonatomic, assign) BOOL scrollsHorizontally;
 
 /**
 This is the main layout method, which should be called on a container box once
