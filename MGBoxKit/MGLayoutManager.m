@@ -606,7 +606,7 @@ CGFloat roundToPixel(CGFloat value) {
           : container.size;
     if (container.sizingMode == MGResizingShrinkWrap) {
         newSize = (CGSize){
-              container.leftPadding + container.rightPadding,
+              MAX(container.leftPadding + container.rightPadding, container.minWidth),
               container.topPadding + container.bottomPadding
         };
     } else {
