@@ -488,9 +488,6 @@
         size.width = ceil(size.width) < maxSize.width ? ceil(size.width) : maxSize.width;
         size.height = MAX(ceil(size.height), self.innerSize.height);
 
-        NSLog(@"[%@] self.size:%@ self.innerSize:%@ label.height:%f", self.class,
-              NSStringFromCGSize(self.size), NSStringFromCGSize(self.innerSize), size.height);
-
 //        // for auto resizing margin sanity, make height odd/even match with self
 //        if ((int)size.height % 2 && !((int)self.height % 2)) {
 //            size.height += 1;
