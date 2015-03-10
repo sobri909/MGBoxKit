@@ -27,7 +27,7 @@
   // default font styles
   self.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
   self.textColor = UIColor.blackColor;
-  self.textShadowColor = UIColor.whiteColor;
+  self.textShadowColor = UIColor.clearColor;
   self.leftTextShadowOffset = (CGSize){0, 1};
   self.middleTextShadowOffset = (CGSize){0, 1};
   self.rightTextShadowOffset = (CGSize){0, 1};
