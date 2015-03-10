@@ -473,15 +473,22 @@
 #pragma mark - Metrics getters
 
 - (CGFloat)paddedVerticalCenter {
-  return self.innerHeight / 2 + self.topPadding;
+  return self.innerSize.height / 2 + self.topPadding;
+}
+
+- (CGSize)innerSize {
+    CGSize size = self.size;
+    size.width -= (self.leftPadding + self.rightPadding);
+    size.height -= (self.topPadding + self.bottomPadding);
+    return size;
 }
 
 - (CGFloat)innerWidth {
-  return self.width - self.leftPadding - self.rightPadding;
+    return self.innerSize.width;
 }
 
 - (CGFloat)innerHeight {
-  return self.height - self.topPadding - self.bottomPadding;
+    return self.innerSize.height;
 }
 
 #pragma mark - Border getters

@@ -152,14 +152,21 @@ colours (in that order).
 - (CGFloat)paddedVerticalCenter;
 
 /**
-* Returns the box's width minus its left and right padding.
+* Returns the box's size minus its padding.
 */
-- (CGFloat)innerWidth;
+- (CGSize)innerSize;
+
+/**
+* Returns the box's width minus its left and right padding.
+* @deprecated Use innerSize.width instead.
+*/
+- (CGFloat)innerWidth __deprecated;
 
 /**
 * Returns the box's height minus its top and bottom padding.
+* @deprecated Use innerSize.height instead.
 */
-- (CGFloat)innerHeight;
+- (CGFloat)innerHeight __deprecated;
 
 /**
 * A convenience method to return a screenshot of the box, with added drop shadow.

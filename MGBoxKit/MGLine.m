@@ -471,44 +471,33 @@
 
     // UILabels made by MGLine can be resized
     if ([item isKindOfClass:UILabel.class] && item.tag == -1) {
-      UILabel *label = (id)item;
+        UILabel *label = (id)item;
 
-      // multiline
-      if (!label.numberOfLines) {
-        CGFloat maxHeight = self.maxHeight ? self.maxHeight - self.topPadding
-            - self.bottomPadding : FLT_MAX;
-          
-        // attributed string?
-        if ([label respondsToSelector:@selector(attributedText)]) {
-          CGSize maxSize = (CGSize){limit - used, maxHeight};
-          CGSize size = [label.attributedText boundingRectWithSize:maxSize
-              options:NSStringDrawingUsesLineFragmentOrigin
-                  | NSStringDrawingUsesFontLeading context:nil].size;
-          size.width = ceilf(size.width) < maxSize.width ? ceilf(size.width) : maxSize.width;
-          size.height = ceilf(size.height);
+        NSStringDrawingOptions sizeOptions = label.numberOfLines
+              ? NSStringDrawingUsesFontLeading
+              : NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
 
-          // for auto resizing margin sanity, make height odd/even match with self
-          if ((int)size.height % 2 && !((int)self.height % 2)) {
-            size.height += 1;
-          }
-          label.size = size;
+        CGFloat maxWidth = limit - used;
+        CGFloat maxHeight = self.maxHeight
+              ? self.maxHeight - self.topPadding - self.bottomPadding
+              : FLT_MAX;
+        CGSize maxSize = (CGSize){maxWidth, maxHeight};
 
-          used += (label.width);
+        CGSize size = [label.attributedText boundingRectWithSize:maxSize options:sizeOptions
+              context:nil].size;
+        size.width = ceil(size.width) < maxSize.width ? ceil(size.width) : maxSize.width;
+        size.height = MAX(ceil(size.height), self.innerSize.height);
 
-          // plain old string
-        } else {
-          label.size = [label.text easySizeWithFont:label.font
-              constrainedToSize:(CGSize){limit - used, maxHeight}];
-          used += label.width;
-        }
+        NSLog(@"[%@] self.size:%@ self.innerSize:%@ label.height:%f", self.class,
+              NSStringFromCGSize(self.size), NSStringFromCGSize(self.innerSize), size.height);
 
-        // single line
-      } else {
-        if (used + label.width > limit) { // needs slimming
-          label.width = limit - used;
-        }
+//        // for auto resizing margin sanity, make height odd/even match with self
+//        if ((int)size.height % 2 && !((int)self.height % 2)) {
+//            size.height += 1;
+//        }
+
+        label.size = size;
         used += label.width;
-      }
 
       // UITextFields can be resized
     } else if ([item isKindOfClass:UITextField.class]) {
@@ -874,15 +863,15 @@
 #pragma mark - Metrics getters
 
 - (CGFloat)leftSpace {
-  return self.innerWidth - middleUsed - rightUsed;
+  return self.innerSize.width - middleUsed - rightUsed;
 }
 
 - (CGFloat)middleSpace {
-  return self.innerWidth - leftUsed - rightUsed;
+  return self.innerSize.width - leftUsed - rightUsed;
 }
 
 - (CGFloat)rightSpace {
-  return self.innerWidth - leftUsed - middleUsed;
+  return self.innerSize.width - leftUsed - middleUsed;
 }
 
 #pragma mark - Getters
