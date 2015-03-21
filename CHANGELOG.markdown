@@ -1,3 +1,15 @@
+## 8.0.0
+
+- Changed default MGLine label shadow colour to `clearColor`
+- Added `innerSize` MGBox property, and deprecated `innerWidth` and 
+  `innerHeight` (use `innerSize.width` / `innerSize.height` instead)
+- Improved MGLine label vertical centring 
+- Added `onHighlightChanged` MGBox block property, for performing actions on 
+  touch up, down, and cancel
+- Added `allowSimultaneousTaps` MGBox property
+- Removed various previously deprecated classes and properties
+- Various misc bug fixes
+
 ## 7.0.1
 
 - Fixed box provider reuse bug when data changes near content bounds.
