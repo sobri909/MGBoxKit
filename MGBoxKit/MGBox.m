@@ -342,36 +342,9 @@
     }
 }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (void)setBackgroundColor:(UIColor *)color {
   super.backgroundColor = color;
   [MGBox optimizeView:self forColor:color];
-    
-  if (self.borderStyle) {
-    self.borderStyle = self.borderStyle;
-  }
-}
-#pragma clang diagnostic pop
-
-- (void)setBorderStyle:(MGBorderStyle)style {
-  _borderStyle = style;
-  if (style == MGBorderNone) {
-    self.borderColors = UIColor.clearColor;
-    return;
-  }
-  self.topBorderColor = (style & MGBorderEtchedTop) == MGBorderEtchedTop
-      ? [self.backgroundColor colorByAdding:0.16 alpha:-0.5]
-      : UIColor.clearColor;
-  self.bottomBorderColor = (style & MGBorderEtchedBottom) == MGBorderEtchedBottom
-      ? [self.backgroundColor colorByAdding:-0.16 alpha:-0.5]
-      : UIColor.clearColor;
-  self.leftBorderColor = (style & MGBorderEtchedLeft) == MGBorderEtchedLeft
-      ? [self.backgroundColor colorByAdding:0.16 alpha:-0.5]
-      : UIColor.clearColor;
-  self.rightBorderColor = (style & MGBorderEtchedRight) == MGBorderEtchedRight
-      ? [self.backgroundColor colorByAdding:-0.16 alpha:-0.5]
-      : UIColor.clearColor;
 }
 
 - (void)setBorderColors:(id)colors {

@@ -671,35 +671,6 @@
 
 #pragma mark - Style setters
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (void)setFrame:(CGRect)frame {
-  super.frame = frame;
-  self.underlineType = self.underlineType;
-}
-#pragma clang diagnostic pop
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (void)setUnderlineType:(MGUnderlineType)type {
-  _underlineType = type;
-  switch (_underlineType) {
-    case MGUnderlineTop:
-      self.solidUnderline.frame = CGRectMake(0, 0, self.width, 2);
-      [self.layer addSublayer:self.solidUnderline];
-      break;
-    case MGUnderlineBottom:
-      self.solidUnderline.frame = CGRectMake(0, self.height - 2, self.width, 2);
-      [self.layer addSublayer:self.solidUnderline];
-      break;
-    case MGUnderlineNone:
-    default:
-      [self.solidUnderline removeFromSuperlayer];
-      break;
-  }
-}
-#pragma clang diagnostic pop
-
 - (void)setTextColor:(UIColor *)color {
   _textColor = color;
   NSMutableArray *items = self.leftItems.mutableCopy;
@@ -878,20 +849,6 @@
   [items addObjectsFromArray:self.middleItems];
   [items addObjectsFromArray:self.rightItems];
   return items;
-}
-
-- (CALayer *)solidUnderline {
-  if (_solidUnderline) {
-    return _solidUnderline;
-  }
-  _solidUnderline = CALayer.layer;
-  _solidUnderline.frame = CGRectMake(0, 0, self.width, 2);
-  _solidUnderline.backgroundColor = [UIColor colorWithWhite:0.87 alpha:1].CGColor;
-  CALayer *bot = CALayer.layer;
-  bot.frame = CGRectMake(0, 1, self.frame.size.width, 1);
-  bot.backgroundColor = UIColor.whiteColor.CGColor;
-  [_solidUnderline addSublayer:bot];
-  return _solidUnderline;
 }
 
 - (NSMutableArray *)leftItems {

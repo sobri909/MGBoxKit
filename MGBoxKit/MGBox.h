@@ -5,16 +5,6 @@
 
 #import "MGLayoutBox.h"
 
-__deprecated typedef enum {
-  MGBorderNone = 0,
-  MGBorderEtchedTop = 1 << 1,
-  MGBorderEtchedBottom = 1 << 2,
-  MGBorderEtchedLeft = 1 << 3,
-  MGBorderEtchedRight = 1 << 4,
-  MGBorderEtchedAll = (MGBorderEtchedTop | MGBorderEtchedBottom
-      | MGBorderEtchedLeft | MGBorderEtchedRight)
-} MGBorderStyle;
-
 /**
 * `MGBox` is the most base view class of **MGBoxKit**, and functions as
 * a generic `UIView` wrapper/replacement. You can use in any situation you might
@@ -76,11 +66,6 @@ __deprecated typedef enum {
 @property (nonatomic, assign) BOOL rasterize;
 
 /** @name Borders */
-
-/**
-* @deprecated Etched borders are no longer supported.
-*/
-@property (nonatomic, assign) MGBorderStyle borderStyle __deprecated;
 
 /**
 * Setter for the top border colour.
