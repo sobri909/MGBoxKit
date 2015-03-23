@@ -271,6 +271,11 @@
 }
 
 - (void)keyboardWillDisappear:(NSNotification *)note {
+
+  if (!self.keepFirstResponderAboveKeyboard) {
+      return;
+  }
+
   double d = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
   int curve = [note.userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue];
   [UIView animateWithDuration:d delay:0 options:curve animations:^{
