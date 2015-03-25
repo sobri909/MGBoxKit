@@ -3,6 +3,7 @@
 //  http://bigpaua.com/
 //
 
+#import <tgmath.h>
 #import "MGLine.h"
 #import "MGLayoutManager.h"
 #import "MGMushParser.h"
@@ -235,8 +236,10 @@
       break;
   }
 
-  // adjust height to fit contents
-  [self adjustHeight];
+    [self adjustHeight];
+    [self updateYFor:self.leftItems];
+    [self updateYFor:self.middleItems];
+    [self updateYFor:self.rightItems];
 
   // deal with attached boxes
   for (UIView <MGLayoutBox> *attachee in self.allItems) {
@@ -357,39 +360,21 @@
       continue;
     }
 
-    x += self.itemPadding;
+      x += self.itemPadding;
 
-    CGFloat y = 0;
-    switch (self.verticalAlignment) {
-      case MGVerticalAlignmentTop:
-        y = self.topPadding;
-        view.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
-        break;
-      case MGVerticalAlignmentCenter:
-        y = self.paddedVerticalCenter - view.height / 2;
-        view.autoresizingMask = UIViewAutoresizingFlexibleTopMargin
-            | UIViewAutoresizingFlexibleBottomMargin;
-        break;
-      case MGVerticalAlignmentBottom:
-        y = self.height - self.bottomPadding - view.height;
-        view.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-        break;
-    }
+      // MGLayoutBoxes have margins to deal with
+      if ([view conformsToProtocol:@protocol(MGLayoutBox)]) {
+          UIView <MGLayoutBox> *box = (id)view;
 
-    // MGLayoutBoxes have margins to deal with
-    if ([view conformsToProtocol:@protocol(MGLayoutBox)]) {
-      UIView <MGLayoutBox> *box = (id)view;
+          x += box.leftMargin;
+          box.x = round(x + nudge);
+          x += box.rightMargin;
 
-      y += box.topMargin;
-      x += box.leftMargin;
-      box.origin = (CGPoint){roundf(x + nudge), roundf(y)};
-      x += box.rightMargin;
-
-      // better be a UIView then
-    } else {
-      view.origin = (CGPoint){roundf(x + nudge), roundf(y)};
-    }
-    x += view.width + self.itemPadding;
+          // better be a UIView then
+      } else {
+          view.x = round(x + nudge);
+      }
+      x += view.width + self.itemPadding;
   }
 
   return used;
@@ -419,8 +404,40 @@
     newHeight = MIN(newHeight, self.maxHeight);
   }
   if (newHeight != self.height) {
-    self.height = ceilf(newHeight);
+      self.height = ceil(newHeight);
   }
+}
+
+- (void)updateYFor:(NSArray *)items {
+    for (int i = 0; i < items.count; i++) {
+        UIView *view = items[i];
+
+        CGFloat y = 0;
+        switch (self.verticalAlignment) {
+            case MGVerticalAlignmentTop:
+                y = self.topPadding;
+                view.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
+                break;
+            case MGVerticalAlignmentCenter:
+                y = self.paddedVerticalCenter - view.height / 2;
+                view.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+                break;
+            case MGVerticalAlignmentBottom:
+                y = self.height - self.bottomPadding - view.height;
+                view.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+                break;
+        }
+
+        if ([view conformsToProtocol:@protocol(MGLayoutBox)]) {
+            UIView <MGLayoutBox> *box = (id)view;
+            y += box.topMargin;
+        }
+
+        y = round(y);
+        if (view.y != y) {
+            view.y = y;
+        }
+    }
 }
 
 - (CGFloat)size:(NSArray *)views within:(CGFloat)limit {
@@ -542,13 +559,13 @@
   // distribute leftover space to expandables
   if (limit - used > 0) {
     CGFloat remaining = limit - used;
-    CGFloat perBox = floorf(remaining / expandables.count);
+    CGFloat perBox = floor(remaining / expandables.count);
     CGFloat leftover = remaining - perBox * expandables.count;
     for (MGBox *expandable in expandables) {
       expandable.width += perBox;
       used += perBox;
       if (expandable == expandables.lastObject) {
-        expandable.width += floorf(leftover);
+        expandable.width += floor(leftover);
         used += leftover;
       }
       [expandable layout];
@@ -651,8 +668,8 @@
     CGSize size = [label.attributedText boundingRectWithSize:maxSize
         options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
         context:nil].size;
-    size.width = ceilf(size.width) < maxSize.width ? ceilf(size.width) : maxSize.width;
-    size.height = ceilf(size.height);
+    size.width = ceil(size.width) < maxSize.width ? ceil(size.width) : maxSize.width;
+    size.height = ceil(size.height);
 
     // for auto resizing margin sanity, make height odd/even match with self
     if ((int)size.height % 2 && !((int)self.height % 2)) {
