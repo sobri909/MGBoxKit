@@ -1,0 +1,13 @@
+PODS:
+  - MGEvents (1.0.3)
+  - MGMushParser (1.2.1)
+
+DEPENDENCIES:
+  - MGEvents
+  - MGMushParser
+
+SPEC CHECKSUMS:
+  MGEvents: 739ea3e582a8df05bd1044500c7fb6d8f7aff5c8
+  MGMushParser: e5f80531a96a086694103592db4cbad3ffd78fa5
+
+COCOAPODS: 0.35.0

@@ -1,0 +1,790 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		36511D03B7E2EF9CD336B213 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C40780E2AD174A0BC698A82 /* libPods.a */; };
+		622BDA741AE2ECC00092EFDE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDA661AE2ECC00092EFDE /* AppDelegate.m */; };
+		622BDA751AE2ECC00092EFDE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 622BDA671AE2ECC00092EFDE /* LaunchScreen.xib */; };
+		622BDA761AE2ECC00092EFDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 622BDA681AE2ECC00092EFDE /* Main.storyboard */; };
+		622BDA771AE2ECC00092EFDE /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDA6B1AE2ECC00092EFDE /* DetailViewController.m */; };
+		622BDA781AE2ECC00092EFDE /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 622BDA6C1AE2ECC00092EFDE /* Contents.json */; };
+		622BDA7A1AE2ECC00092EFDE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDA701AE2ECC00092EFDE /* main.m */; };
+		622BDA7B1AE2ECC00092EFDE /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDA721AE2ECC00092EFDE /* MasterViewController.m */; };
+		622BDA8C1AE2EE3C0092EFDE /* MGBoxKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 622BDA811AE2EE3C0092EFDE /* MGBoxKit.framework */; };
+		622BDA951AE2EE3C0092EFDE /* MGBoxKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDA941AE2EE3C0092EFDE /* MGBoxKitTests.m */; };
+		622BDA981AE2EE3C0092EFDE /* MGBoxKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 622BDA811AE2EE3C0092EFDE /* MGBoxKit.framework */; };
+		622BDA991AE2EE3C0092EFDE /* MGBoxKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 622BDA811AE2EE3C0092EFDE /* MGBoxKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		622BDAF51AE2EEA10092EFDE /* NSAttributedString+MGTrim.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDADA1AE2EEA10092EFDE /* NSAttributedString+MGTrim.h */; };
+		622BDAF61AE2EEA10092EFDE /* NSAttributedString+MGTrim.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDADB1AE2EEA10092EFDE /* NSAttributedString+MGTrim.m */; };
+		622BDAF71AE2EEA10092EFDE /* NSString+MGEasySize.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDADC1AE2EEA10092EFDE /* NSString+MGEasySize.h */; };
+		622BDAF81AE2EEA10092EFDE /* NSString+MGEasySize.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDADD1AE2EEA10092EFDE /* NSString+MGEasySize.m */; };
+		622BDAF91AE2EEA10092EFDE /* UIColor+MGExpanded.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDADE1AE2EEA10092EFDE /* UIColor+MGExpanded.h */; };
+		622BDAFA1AE2EEA10092EFDE /* UIColor+MGExpanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDADF1AE2EEA10092EFDE /* UIColor+MGExpanded.m */; };
+		622BDAFB1AE2EEA10092EFDE /* UIResponder+FirstResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDAE01AE2EEA10092EFDE /* UIResponder+FirstResponder.h */; };
+		622BDAFC1AE2EEA10092EFDE /* UIResponder+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDAE11AE2EEA10092EFDE /* UIResponder+FirstResponder.m */; };
+		622BDAFD1AE2EEA10092EFDE /* UIView+MGEasyFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDAE21AE2EEA10092EFDE /* UIView+MGEasyFrame.h */; };
+		622BDAFE1AE2EEA10092EFDE /* UIView+MGEasyFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDAE31AE2EEA10092EFDE /* UIView+MGEasyFrame.m */; };
+		622BDB001AE2EEA10092EFDE /* MGBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDAE51AE2EEA10092EFDE /* MGBase.h */; };
+		622BDB011AE2EEA10092EFDE /* MGBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDAE61AE2EEA10092EFDE /* MGBox.h */; };
+		622BDB021AE2EEA10092EFDE /* MGBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDAE71AE2EEA10092EFDE /* MGBox.m */; };
+		622BDB031AE2EEA10092EFDE /* MGBoxKit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 622BDAE81AE2EEA10092EFDE /* MGBoxKit-Prefix.pch */; };
+		622BDB051AE2EEA10092EFDE /* MGBoxProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDAEA1AE2EEA10092EFDE /* MGBoxProvider.h */; };
+		622BDB061AE2EEA10092EFDE /* MGBoxProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDAEB1AE2EEA10092EFDE /* MGBoxProvider.m */; };
+		622BDB071AE2EEA10092EFDE /* MGButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDAEC1AE2EEA10092EFDE /* MGButton.h */; };
+		622BDB081AE2EEA10092EFDE /* MGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDAED1AE2EEA10092EFDE /* MGButton.m */; };
+		622BDB091AE2EEA10092EFDE /* MGLayoutBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDAEE1AE2EEA10092EFDE /* MGLayoutBox.h */; };
+		622BDB0A1AE2EEA10092EFDE /* MGLayoutManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDAEF1AE2EEA10092EFDE /* MGLayoutManager.h */; };
+		622BDB0B1AE2EEA10092EFDE /* MGLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDAF01AE2EEA10092EFDE /* MGLayoutManager.m */; };
+		622BDB0C1AE2EEA10092EFDE /* MGLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDAF11AE2EEA10092EFDE /* MGLine.h */; };
+		622BDB0D1AE2EEA10092EFDE /* MGLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDAF21AE2EEA10092EFDE /* MGLine.m */; };
+		622BDB0E1AE2EEA10092EFDE /* MGScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDAF31AE2EEA10092EFDE /* MGScrollView.h */; };
+		622BDB0F1AE2EEA10092EFDE /* MGScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDAF41AE2EEA10092EFDE /* MGScrollView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		622BDA8D1AE2EE3C0092EFDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 622BDA311AE2EBF40092EFDE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 622BDA801AE2EE3C0092EFDE;
+			remoteInfo = MGBoxKit;
+		};
+		622BDA8F1AE2EE3C0092EFDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 622BDA311AE2EBF40092EFDE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 622BDA381AE2EBF40092EFDE;
+			remoteInfo = MGBoxKitTestApp;
+		};
+		622BDA961AE2EE3C0092EFDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 622BDA311AE2EBF40092EFDE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 622BDA801AE2EE3C0092EFDE;
+			remoteInfo = MGBoxKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		622BDA9D1AE2EE3C0092EFDE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				622BDA991AE2EE3C0092EFDE /* MGBoxKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1C40780E2AD174A0BC698A82 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3522F6AA490E8C33B2777D70 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		622BDA391AE2EBF40092EFDE /* MGBoxKitTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MGBoxKitTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		622BDA651AE2ECC00092EFDE /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		622BDA661AE2ECC00092EFDE /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		622BDA671AE2ECC00092EFDE /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		622BDA681AE2ECC00092EFDE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		622BDA6A1AE2ECC00092EFDE /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		622BDA6B1AE2ECC00092EFDE /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		622BDA6C1AE2ECC00092EFDE /* Contents.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
+		622BDA6F1AE2ECC00092EFDE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		622BDA701AE2ECC00092EFDE /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		622BDA711AE2ECC00092EFDE /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		622BDA721AE2ECC00092EFDE /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		622BDA811AE2EE3C0092EFDE /* MGBoxKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MGBoxKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		622BDA8B1AE2EE3C0092EFDE /* MGBoxKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MGBoxKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		622BDA931AE2EE3C0092EFDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		622BDA941AE2EE3C0092EFDE /* MGBoxKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGBoxKitTests.m; sourceTree = "<group>"; };
+		622BDADA1AE2EEA10092EFDE /* NSAttributedString+MGTrim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MGTrim.h"; sourceTree = "<group>"; };
+		622BDADB1AE2EEA10092EFDE /* NSAttributedString+MGTrim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MGTrim.m"; sourceTree = "<group>"; };
+		622BDADC1AE2EEA10092EFDE /* NSString+MGEasySize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MGEasySize.h"; sourceTree = "<group>"; };
+		622BDADD1AE2EEA10092EFDE /* NSString+MGEasySize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MGEasySize.m"; sourceTree = "<group>"; };
+		622BDADE1AE2EEA10092EFDE /* UIColor+MGExpanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MGExpanded.h"; sourceTree = "<group>"; };
+		622BDADF1AE2EEA10092EFDE /* UIColor+MGExpanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MGExpanded.m"; sourceTree = "<group>"; };
+		622BDAE01AE2EEA10092EFDE /* UIResponder+FirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+FirstResponder.h"; sourceTree = "<group>"; };
+		622BDAE11AE2EEA10092EFDE /* UIResponder+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponder.m"; sourceTree = "<group>"; };
+		622BDAE21AE2EEA10092EFDE /* UIView+MGEasyFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MGEasyFrame.h"; sourceTree = "<group>"; };
+		622BDAE31AE2EEA10092EFDE /* UIView+MGEasyFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MGEasyFrame.m"; sourceTree = "<group>"; };
+		622BDAE51AE2EEA10092EFDE /* MGBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBase.h; sourceTree = "<group>"; };
+		622BDAE61AE2EEA10092EFDE /* MGBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBox.h; sourceTree = "<group>"; };
+		622BDAE71AE2EEA10092EFDE /* MGBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBox.m; sourceTree = "<group>"; };
+		622BDAE81AE2EEA10092EFDE /* MGBoxKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MGBoxKit-Prefix.pch"; sourceTree = "<group>"; };
+		622BDAEA1AE2EEA10092EFDE /* MGBoxProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBoxProvider.h; sourceTree = "<group>"; };
+		622BDAEB1AE2EEA10092EFDE /* MGBoxProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBoxProvider.m; sourceTree = "<group>"; };
+		622BDAEC1AE2EEA10092EFDE /* MGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGButton.h; sourceTree = "<group>"; };
+		622BDAED1AE2EEA10092EFDE /* MGButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGButton.m; sourceTree = "<group>"; };
+		622BDAEE1AE2EEA10092EFDE /* MGLayoutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLayoutBox.h; sourceTree = "<group>"; };
+		622BDAEF1AE2EEA10092EFDE /* MGLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLayoutManager.h; sourceTree = "<group>"; };
+		622BDAF01AE2EEA10092EFDE /* MGLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLayoutManager.m; sourceTree = "<group>"; };
+		622BDAF11AE2EEA10092EFDE /* MGLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGLine.h; sourceTree = "<group>"; };
+		622BDAF21AE2EEA10092EFDE /* MGLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGLine.m; sourceTree = "<group>"; };
+		622BDAF31AE2EEA10092EFDE /* MGScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGScrollView.h; sourceTree = "<group>"; };
+		622BDAF41AE2EEA10092EFDE /* MGScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGScrollView.m; sourceTree = "<group>"; };
+		622BDB171AE2F3040092EFDE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		622BDB181AE2F3040092EFDE /* MGBoxKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBoxKit.h; sourceTree = "<group>"; };
+		769A40B5697B44BD0E245133 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		622BDA361AE2EBF40092EFDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				622BDA981AE2EE3C0092EFDE /* MGBoxKit.framework in Frameworks */,
+				36511D03B7E2EF9CD336B213 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		622BDA7D1AE2EE3C0092EFDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		622BDA881AE2EE3C0092EFDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				622BDA8C1AE2EE3C0092EFDE /* MGBoxKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		037D1A843482262F72247E30 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1C40780E2AD174A0BC698A82 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		622BDA301AE2EBF40092EFDE = {
+			isa = PBXGroup;
+			children = (
+				622BDB121AE2F1E90092EFDE /* Supporting Files */,
+				622BDA731AE2ECC00092EFDE /* MGBoxKitTestApp */,
+				622BDA821AE2EE3C0092EFDE /* MGBoxKit */,
+				622BDA911AE2EE3C0092EFDE /* MGBoxKitTests */,
+				622BDA3A1AE2EBF40092EFDE /* Products */,
+				ED93909911AD229801FF72D3 /* Pods */,
+				037D1A843482262F72247E30 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		622BDA3A1AE2EBF40092EFDE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				622BDA391AE2EBF40092EFDE /* MGBoxKitTestApp.app */,
+				622BDA811AE2EE3C0092EFDE /* MGBoxKit.framework */,
+				622BDA8B1AE2EE3C0092EFDE /* MGBoxKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		622BDA691AE2ECC00092EFDE /* Base.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				622BDA671AE2ECC00092EFDE /* LaunchScreen.xib */,
+				622BDA681AE2ECC00092EFDE /* Main.storyboard */,
+			);
+			path = Base.lproj;
+			sourceTree = "<group>";
+		};
+		622BDA6D1AE2ECC00092EFDE /* AppIcon.appiconset */ = {
+			isa = PBXGroup;
+			children = (
+				622BDA6C1AE2ECC00092EFDE /* Contents.json */,
+			);
+			path = AppIcon.appiconset;
+			sourceTree = "<group>";
+		};
+		622BDA6E1AE2ECC00092EFDE /* Images.xcassets */ = {
+			isa = PBXGroup;
+			children = (
+				622BDA6D1AE2ECC00092EFDE /* AppIcon.appiconset */,
+			);
+			path = Images.xcassets;
+			sourceTree = "<group>";
+		};
+		622BDA731AE2ECC00092EFDE /* MGBoxKitTestApp */ = {
+			isa = PBXGroup;
+			children = (
+				622BDA651AE2ECC00092EFDE /* AppDelegate.h */,
+				622BDA661AE2ECC00092EFDE /* AppDelegate.m */,
+				622BDA691AE2ECC00092EFDE /* Base.lproj */,
+				622BDA6A1AE2ECC00092EFDE /* DetailViewController.h */,
+				622BDA6B1AE2ECC00092EFDE /* DetailViewController.m */,
+				622BDA6E1AE2ECC00092EFDE /* Images.xcassets */,
+				622BDA6F1AE2ECC00092EFDE /* Info.plist */,
+				622BDA701AE2ECC00092EFDE /* main.m */,
+				622BDA711AE2ECC00092EFDE /* MasterViewController.h */,
+				622BDA721AE2ECC00092EFDE /* MasterViewController.m */,
+			);
+			name = MGBoxKitTestApp;
+			path = MGBoxKit.xcodeproj/../MGBoxKitTestApp;
+			sourceTree = "<group>";
+		};
+		622BDA821AE2EE3C0092EFDE /* MGBoxKit */ = {
+			isa = PBXGroup;
+			children = (
+				622BDAD91AE2EEA10092EFDE /* Categories */,
+				622BDAE51AE2EEA10092EFDE /* MGBase.h */,
+				622BDAE61AE2EEA10092EFDE /* MGBox.h */,
+				622BDAE71AE2EEA10092EFDE /* MGBox.m */,
+				622BDAE81AE2EEA10092EFDE /* MGBoxKit-Prefix.pch */,
+				622BDAEA1AE2EEA10092EFDE /* MGBoxProvider.h */,
+				622BDAEB1AE2EEA10092EFDE /* MGBoxProvider.m */,
+				622BDAEC1AE2EEA10092EFDE /* MGButton.h */,
+				622BDAED1AE2EEA10092EFDE /* MGButton.m */,
+				622BDAEE1AE2EEA10092EFDE /* MGLayoutBox.h */,
+				622BDAEF1AE2EEA10092EFDE /* MGLayoutManager.h */,
+				622BDAF01AE2EEA10092EFDE /* MGLayoutManager.m */,
+				622BDAF11AE2EEA10092EFDE /* MGLine.h */,
+				622BDAF21AE2EEA10092EFDE /* MGLine.m */,
+				622BDAF31AE2EEA10092EFDE /* MGScrollView.h */,
+				622BDAF41AE2EEA10092EFDE /* MGScrollView.m */,
+			);
+			path = MGBoxKit;
+			sourceTree = "<group>";
+		};
+		622BDA911AE2EE3C0092EFDE /* MGBoxKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				622BDA941AE2EE3C0092EFDE /* MGBoxKitTests.m */,
+				622BDA921AE2EE3C0092EFDE /* Supporting Files */,
+			);
+			path = MGBoxKitTests;
+			sourceTree = "<group>";
+		};
+		622BDA921AE2EE3C0092EFDE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				622BDA931AE2EE3C0092EFDE /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		622BDAD91AE2EEA10092EFDE /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				622BDADA1AE2EEA10092EFDE /* NSAttributedString+MGTrim.h */,
+				622BDADB1AE2EEA10092EFDE /* NSAttributedString+MGTrim.m */,
+				622BDADC1AE2EEA10092EFDE /* NSString+MGEasySize.h */,
+				622BDADD1AE2EEA10092EFDE /* NSString+MGEasySize.m */,
+				622BDADE1AE2EEA10092EFDE /* UIColor+MGExpanded.h */,
+				622BDADF1AE2EEA10092EFDE /* UIColor+MGExpanded.m */,
+				622BDAE01AE2EEA10092EFDE /* UIResponder+FirstResponder.h */,
+				622BDAE11AE2EEA10092EFDE /* UIResponder+FirstResponder.m */,
+				622BDAE21AE2EEA10092EFDE /* UIView+MGEasyFrame.h */,
+				622BDAE31AE2EEA10092EFDE /* UIView+MGEasyFrame.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		622BDB121AE2F1E90092EFDE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				622BDB161AE2F3040092EFDE /* MGBoxKit */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		622BDB161AE2F3040092EFDE /* MGBoxKit */ = {
+			isa = PBXGroup;
+			children = (
+				622BDB171AE2F3040092EFDE /* Info.plist */,
+				622BDB181AE2F3040092EFDE /* MGBoxKit.h */,
+			);
+			path = MGBoxKit;
+			sourceTree = "<group>";
+		};
+		ED93909911AD229801FF72D3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				769A40B5697B44BD0E245133 /* Pods.debug.xcconfig */,
+				3522F6AA490E8C33B2777D70 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		622BDA7E1AE2EE3C0092EFDE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				622BDB0E1AE2EEA10092EFDE /* MGScrollView.h in Headers */,
+				622BDAF51AE2EEA10092EFDE /* NSAttributedString+MGTrim.h in Headers */,
+				622BDB011AE2EEA10092EFDE /* MGBox.h in Headers */,
+				622BDB091AE2EEA10092EFDE /* MGLayoutBox.h in Headers */,
+				622BDB071AE2EEA10092EFDE /* MGButton.h in Headers */,
+				622BDB0C1AE2EEA10092EFDE /* MGLine.h in Headers */,
+				622BDAF71AE2EEA10092EFDE /* NSString+MGEasySize.h in Headers */,
+				622BDAFD1AE2EEA10092EFDE /* UIView+MGEasyFrame.h in Headers */,
+				622BDB0A1AE2EEA10092EFDE /* MGLayoutManager.h in Headers */,
+				622BDB031AE2EEA10092EFDE /* MGBoxKit-Prefix.pch in Headers */,
+				622BDB051AE2EEA10092EFDE /* MGBoxProvider.h in Headers */,
+				622BDB001AE2EEA10092EFDE /* MGBase.h in Headers */,
+				622BDAF91AE2EEA10092EFDE /* UIColor+MGExpanded.h in Headers */,
+				622BDAFB1AE2EEA10092EFDE /* UIResponder+FirstResponder.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		622BDA381AE2EBF40092EFDE /* MGBoxKitTestApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 622BDA5F1AE2EBF50092EFDE /* Build configuration list for PBXNativeTarget "MGBoxKitTestApp" */;
+			buildPhases = (
+				0B296E38A2D11C4D93AB8B06 /* Check Pods Manifest.lock */,
+				622BDA351AE2EBF40092EFDE /* Sources */,
+				622BDA361AE2EBF40092EFDE /* Frameworks */,
+				622BDA371AE2EBF40092EFDE /* Resources */,
+				622BDA9D1AE2EE3C0092EFDE /* Embed Frameworks */,
+				CBACDA47FF8369FCA9E624BB /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				622BDA971AE2EE3C0092EFDE /* PBXTargetDependency */,
+			);
+			name = MGBoxKitTestApp;
+			productName = MGBoxKit;
+			productReference = 622BDA391AE2EBF40092EFDE /* MGBoxKitTestApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		622BDA801AE2EE3C0092EFDE /* MGBoxKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 622BDA9A1AE2EE3C0092EFDE /* Build configuration list for PBXNativeTarget "MGBoxKit" */;
+			buildPhases = (
+				622BDA7C1AE2EE3C0092EFDE /* Sources */,
+				622BDA7D1AE2EE3C0092EFDE /* Frameworks */,
+				622BDA7E1AE2EE3C0092EFDE /* Headers */,
+				622BDA7F1AE2EE3C0092EFDE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MGBoxKit;
+			productName = MGBoxKit;
+			productReference = 622BDA811AE2EE3C0092EFDE /* MGBoxKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		622BDA8A1AE2EE3C0092EFDE /* MGBoxKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 622BDA9E1AE2EE3C0092EFDE /* Build configuration list for PBXNativeTarget "MGBoxKitTests" */;
+			buildPhases = (
+				622BDA871AE2EE3C0092EFDE /* Sources */,
+				622BDA881AE2EE3C0092EFDE /* Frameworks */,
+				622BDA891AE2EE3C0092EFDE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				622BDA8E1AE2EE3C0092EFDE /* PBXTargetDependency */,
+				622BDA901AE2EE3C0092EFDE /* PBXTargetDependency */,
+			);
+			name = MGBoxKitTests;
+			productName = MGBoxKitTests;
+			productReference = 622BDA8B1AE2EE3C0092EFDE /* MGBoxKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		622BDA311AE2EBF40092EFDE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = MGBoxKit;
+				TargetAttributes = {
+					622BDA381AE2EBF40092EFDE = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					622BDA801AE2EE3C0092EFDE = {
+						CreatedOnToolsVersion = 6.3;
+					};
+					622BDA8A1AE2EE3C0092EFDE = {
+						CreatedOnToolsVersion = 6.3;
+						TestTargetID = 622BDA381AE2EBF40092EFDE;
+					};
+				};
+			};
+			buildConfigurationList = 622BDA341AE2EBF40092EFDE /* Build configuration list for PBXProject "MGBoxKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 622BDA301AE2EBF40092EFDE;
+			productRefGroup = 622BDA3A1AE2EBF40092EFDE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				622BDA381AE2EBF40092EFDE /* MGBoxKitTestApp */,
+				622BDA801AE2EE3C0092EFDE /* MGBoxKit */,
+				622BDA8A1AE2EE3C0092EFDE /* MGBoxKitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		622BDA371AE2EBF40092EFDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				622BDA751AE2ECC00092EFDE /* LaunchScreen.xib in Resources */,
+				622BDA761AE2ECC00092EFDE /* Main.storyboard in Resources */,
+				622BDA781AE2ECC00092EFDE /* Contents.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		622BDA7F1AE2EE3C0092EFDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		622BDA891AE2EE3C0092EFDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0B296E38A2D11C4D93AB8B06 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		CBACDA47FF8369FCA9E624BB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		622BDA351AE2EBF40092EFDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				622BDA7B1AE2ECC00092EFDE /* MasterViewController.m in Sources */,
+				622BDA741AE2ECC00092EFDE /* AppDelegate.m in Sources */,
+				622BDA7A1AE2ECC00092EFDE /* main.m in Sources */,
+				622BDA771AE2ECC00092EFDE /* DetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		622BDA7C1AE2EE3C0092EFDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				622BDAFC1AE2EEA10092EFDE /* UIResponder+FirstResponder.m in Sources */,
+				622BDAFA1AE2EEA10092EFDE /* UIColor+MGExpanded.m in Sources */,
+				622BDAFE1AE2EEA10092EFDE /* UIView+MGEasyFrame.m in Sources */,
+				622BDB0F1AE2EEA10092EFDE /* MGScrollView.m in Sources */,
+				622BDB0B1AE2EEA10092EFDE /* MGLayoutManager.m in Sources */,
+				622BDB021AE2EEA10092EFDE /* MGBox.m in Sources */,
+				622BDB061AE2EEA10092EFDE /* MGBoxProvider.m in Sources */,
+				622BDB081AE2EEA10092EFDE /* MGButton.m in Sources */,
+				622BDAF81AE2EEA10092EFDE /* NSString+MGEasySize.m in Sources */,
+				622BDAF61AE2EEA10092EFDE /* NSAttributedString+MGTrim.m in Sources */,
+				622BDB0D1AE2EEA10092EFDE /* MGLine.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		622BDA871AE2EE3C0092EFDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				622BDA951AE2EE3C0092EFDE /* MGBoxKitTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		622BDA8E1AE2EE3C0092EFDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 622BDA801AE2EE3C0092EFDE /* MGBoxKit */;
+			targetProxy = 622BDA8D1AE2EE3C0092EFDE /* PBXContainerItemProxy */;
+		};
+		622BDA901AE2EE3C0092EFDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 622BDA381AE2EBF40092EFDE /* MGBoxKitTestApp */;
+			targetProxy = 622BDA8F1AE2EE3C0092EFDE /* PBXContainerItemProxy */;
+		};
+		622BDA971AE2EE3C0092EFDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 622BDA801AE2EE3C0092EFDE /* MGBoxKit */;
+			targetProxy = 622BDA961AE2EE3C0092EFDE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		622BDA5D1AE2EBF50092EFDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		622BDA5E1AE2EBF50092EFDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		622BDA601AE2EBF50092EFDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 769A40B5697B44BD0E245133 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = MGBoxKitTestApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		622BDA611AE2EBF50092EFDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3522F6AA490E8C33B2777D70 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = MGBoxKitTestApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		622BDA9B1AE2EE3C0092EFDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 769A40B5697B44BD0E245133 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "MGBoxKit/MGBoxKit-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Supporting Files/MGBoxKit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		622BDA9C1AE2EE3C0092EFDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3522F6AA490E8C33B2777D70 /* Pods.release.xcconfig */;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "MGBoxKit/MGBoxKit-Prefix.pch";
+				INFOPLIST_FILE = "Supporting Files/MGBoxKit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		622BDA9F1AE2EE3C0092EFDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 769A40B5697B44BD0E245133 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = MGBoxKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MGBoxKitTestApp.app/MGBoxKitTestApp";
+			};
+			name = Debug;
+		};
+		622BDAA01AE2EE3C0092EFDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3522F6AA490E8C33B2777D70 /* Pods.release.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = MGBoxKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MGBoxKitTestApp.app/MGBoxKitTestApp";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		622BDA341AE2EBF40092EFDE /* Build configuration list for PBXProject "MGBoxKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				622BDA5D1AE2EBF50092EFDE /* Debug */,
+				622BDA5E1AE2EBF50092EFDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		622BDA5F1AE2EBF50092EFDE /* Build configuration list for PBXNativeTarget "MGBoxKitTestApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				622BDA601AE2EBF50092EFDE /* Debug */,
+				622BDA611AE2EBF50092EFDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		622BDA9A1AE2EE3C0092EFDE /* Build configuration list for PBXNativeTarget "MGBoxKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				622BDA9B1AE2EE3C0092EFDE /* Debug */,
+				622BDA9C1AE2EE3C0092EFDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		622BDA9E1AE2EE3C0092EFDE /* Build configuration list for PBXNativeTarget "MGBoxKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				622BDA9F1AE2EE3C0092EFDE /* Debug */,
+				622BDAA01AE2EE3C0092EFDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 622BDA311AE2EBF40092EFDE /* Project object */;
+}

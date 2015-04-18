@@ -1,0 +1,2 @@
+pod 'MGEvents'
+pod 'MGMushParser'
