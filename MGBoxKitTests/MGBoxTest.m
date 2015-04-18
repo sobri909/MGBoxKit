@@ -10,6 +10,30 @@
 #import <XCTest/XCTest.h>
 #import "MGBox.h"
 
+#define HC_SHORTHAND
+#import <OCHamcrest/OCHamcrest.h>
+
+#define MOCKITO_SHORTHAND
+#import <OCMockito/OCMockito.h>
+
+#import <OCMock/OCMock.h>
+
+@interface MGBoxSubclass : MGBox
+
+@property BOOL hasBeenInitialized;
+
+@end
+
+@implementation MGBoxSubclass
+
+- (void)setup {
+  [super setup];
+  
+  self.hasBeenInitialized = YES;
+}
+
+@end
+
 @interface MGBoxTest : XCTestCase
 
 @end
@@ -37,6 +61,12 @@
   MGBox *box = [MGBox boxWithSize:boxSize];
 
   XCTAssertTrue(CGSizeEqualToSize(box.frame.size, boxSize));
+}
+
+- (void)test_setup_is_called_when_default_box_created {
+  MGBoxSubclass *box = [MGBoxSubclass box];
+  
+  XCTAssertTrue(box.hasBeenInitialized);
 }
 
 @end

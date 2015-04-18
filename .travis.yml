@@ -3,6 +3,6 @@ before_install:
 - gem i cocoapods --no-ri --no-rdoc
 - gem i xcpretty  --no-ri --no-rdoc
 script:
-- set -o pipefail && xcodebuild -workspace MGBoxKit.xcworkspace -scheme MGBoxKitTests -sdk iphonesimulator test | xcpretty -c 
+- set -o pipefail && xcodebuild -workspace MGBoxKit.xcworkspace -scheme MGBoxKitTests -sdk iphonesimulator test | xcpretty -c
 
 
