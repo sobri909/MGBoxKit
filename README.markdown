@@ -1,3 +1,5 @@
+![](https://api.travis-ci.org/Ben-G/MGBoxKit.svg)
+
 ## API Reference, Guides, and Changelog
 
 - [API Reference](http://cocoadocs.org/docsets/MGBoxKit)
