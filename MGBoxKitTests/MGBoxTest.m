@@ -1,6 +1,6 @@
 //
-//  MGBoxKitTests.m
-//  MGBoxKitTests
+//  MGBoxTest.m
+//  MGBoxKit
 //
 //  Created by Benjamin Encz on 4/18/15.
 //  Copyright (c) 2015 MGBoxKit. All rights reserved.
@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "MGBox.h"
 
-@interface MGBoxKitTests : XCTestCase
+@interface MGBoxTest : XCTestCase
 
 @end
 
-@implementation MGBoxKitTests
+@implementation MGBoxTest
 
 - (void)setUp {
     [super setUp];
@@ -25,16 +26,17 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+- (void)test_box {
+  MGBox *box = [MGBox box];
+  
+  XCTAssertTrue(CGSizeEqualToSize(box.frame.size, CGSizeZero));
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+- (void)test_box_with_size {
+  CGSize boxSize = CGSizeMake(100, 100);
+  MGBox *box = [MGBox boxWithSize:boxSize];
+
+  XCTAssertTrue(CGSizeEqualToSize(box.frame.size, boxSize));
 }
 
 @end

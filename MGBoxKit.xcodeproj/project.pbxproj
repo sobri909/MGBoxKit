@@ -16,7 +16,6 @@
 		622BDA7A1AE2ECC00092EFDE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDA701AE2ECC00092EFDE /* main.m */; };
 		622BDA7B1AE2ECC00092EFDE /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDA721AE2ECC00092EFDE /* MasterViewController.m */; };
 		622BDA8C1AE2EE3C0092EFDE /* MGBoxKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 622BDA811AE2EE3C0092EFDE /* MGBoxKit.framework */; };
-		622BDA951AE2EE3C0092EFDE /* MGBoxKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDA941AE2EE3C0092EFDE /* MGBoxKitTests.m */; };
 		622BDA981AE2EE3C0092EFDE /* MGBoxKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 622BDA811AE2EE3C0092EFDE /* MGBoxKit.framework */; };
 		622BDA991AE2EE3C0092EFDE /* MGBoxKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 622BDA811AE2EE3C0092EFDE /* MGBoxKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		622BDAF51AE2EEA10092EFDE /* NSAttributedString+MGTrim.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDADA1AE2EEA10092EFDE /* NSAttributedString+MGTrim.h */; };
@@ -44,6 +43,7 @@
 		622BDB0D1AE2EEA10092EFDE /* MGLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDAF21AE2EEA10092EFDE /* MGLine.m */; };
 		622BDB0E1AE2EEA10092EFDE /* MGScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 622BDAF31AE2EEA10092EFDE /* MGScrollView.h */; };
 		622BDB0F1AE2EEA10092EFDE /* MGScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDAF41AE2EEA10092EFDE /* MGScrollView.m */; };
+		622BDB1C1AE3022F0092EFDE /* MGBoxTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 622BDB1B1AE3022F0092EFDE /* MGBoxTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,7 +102,6 @@
 		622BDA811AE2EE3C0092EFDE /* MGBoxKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MGBoxKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		622BDA8B1AE2EE3C0092EFDE /* MGBoxKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MGBoxKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		622BDA931AE2EE3C0092EFDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		622BDA941AE2EE3C0092EFDE /* MGBoxKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MGBoxKitTests.m; sourceTree = "<group>"; };
 		622BDADA1AE2EEA10092EFDE /* NSAttributedString+MGTrim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MGTrim.h"; sourceTree = "<group>"; };
 		622BDADB1AE2EEA10092EFDE /* NSAttributedString+MGTrim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MGTrim.m"; sourceTree = "<group>"; };
 		622BDADC1AE2EEA10092EFDE /* NSString+MGEasySize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MGEasySize.h"; sourceTree = "<group>"; };
@@ -130,6 +129,7 @@
 		622BDAF41AE2EEA10092EFDE /* MGScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGScrollView.m; sourceTree = "<group>"; };
 		622BDB171AE2F3040092EFDE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		622BDB181AE2F3040092EFDE /* MGBoxKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGBoxKit.h; sourceTree = "<group>"; };
+		622BDB1B1AE3022F0092EFDE /* MGBoxTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGBoxTest.m; sourceTree = "<group>"; };
 		769A40B5697B44BD0E245133 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -261,8 +261,8 @@
 		622BDA911AE2EE3C0092EFDE /* MGBoxKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				622BDA941AE2EE3C0092EFDE /* MGBoxKitTests.m */,
 				622BDA921AE2EE3C0092EFDE /* Supporting Files */,
+				622BDB1B1AE3022F0092EFDE /* MGBoxTest.m */,
 			);
 			path = MGBoxKitTests;
 			sourceTree = "<group>";
@@ -538,7 +538,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				622BDA951AE2EE3C0092EFDE /* MGBoxKitTests.m in Sources */,
+				622BDB1C1AE3022F0092EFDE /* MGBoxTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,7 +651,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MGBoxKitTestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -663,7 +663,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MGBoxKitTestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -685,7 +685,7 @@
 				);
 				INFOPLIST_FILE = "Supporting Files/MGBoxKit/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -706,7 +706,7 @@
 				GCC_PREFIX_HEADER = "MGBoxKit/MGBoxKit-Prefix.pch";
 				INFOPLIST_FILE = "Supporting Files/MGBoxKit/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -728,7 +728,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = MGBoxKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MGBoxKitTestApp.app/MGBoxKitTestApp";
@@ -744,7 +744,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = MGBoxKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MGBoxKitTestApp.app/MGBoxKitTestApp";
