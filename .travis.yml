@@ -4,5 +4,5 @@ before_install:
 - gem i xcpretty  --no-ri --no-rdoc
 script:
 - set -o pipefail && xcodebuild -workspace MGBoxKit.xcworkspace -scheme MGBoxKitTests -sdk iphonesimulator test | xcpretty -c
-
+after_success: slather
 
