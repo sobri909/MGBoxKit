@@ -61,7 +61,7 @@ CGFloat roundToPixel(CGFloat value) {
 }
 
 + (void)layoutVisibleBoxesIn:(UIView <MGLayoutBox> *)container
-      duration:(NSTimeInterval)duration completion:(Block)completion {
+      duration:(NSTimeInterval)duration completion:(MGBlock)completion {
     MGBoxProvider *provider = container.boxProvider;
 
     NSMapTable *boxToIndexMap = [NSMapTable mapTableWithKeyOptions:NSMapTableObjectPointerPersonality
@@ -207,7 +207,7 @@ CGFloat roundToPixel(CGFloat value) {
     }
 
     // remove the removeables and finish up
-    Block fini = ^{
+    MGBlock fini = ^{
         for (UIView <MGLayoutBox> *box in disappearingBoxesWithAnimation) {
             box.hidden = YES;
         }
@@ -256,7 +256,7 @@ CGFloat roundToPixel(CGFloat value) {
 }
 
 + (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container duration:(NSTimeInterval)duration
-      completion:(Block)completion {
+      completion:(MGBlock)completion {
 
   // layout locked?
   if (container.layingOut) {

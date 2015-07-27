@@ -84,13 +84,13 @@ network intensive data gathering that will result in presentation changes.
         });
     };
 */
-@property (nonatomic, copy) Block asyncLayout;
+@property (nonatomic, copy) MGBlock asyncLayout;
 
 /**
 * The same as <asyncLayout>, except a block assigned to this will only execute
 * once, on the first <layout> pass.
 */
-@property (nonatomic, copy) Block asyncLayoutOnce;
+@property (nonatomic, copy) MGBlock asyncLayoutOnce;
 
 /**
 The background queue used for <asyncLayout> and <asyncLayoutOnce>. Default is
@@ -277,7 +277,7 @@ tap.
         NSLog(@"i've been tapped!");
     };
 */
-@property (nonatomic, copy) Block onTap;
+@property (nonatomic, copy) MGBlock onTap;
 
 /**
 * This method fires when <tapper> registers a tap. The default implementation
@@ -302,7 +302,7 @@ tap.
 * A block assigned to this property to will be executed when <swiper> registers a
 * swipe.
 */
-@property (nonatomic, copy) Block onSwipe;
+@property (nonatomic, copy) MGBlock onSwipe;
 
 /**
 * This method fires when <swiper> registers a swipe. The default implementation
@@ -327,7 +327,7 @@ tap.
 * A block assigned to this property to will be executed when <longPresser>
 * registers a long press.
 */
-@property (nonatomic, copy) Block onLongPress;
+@property (nonatomic, copy) MGBlock onLongPress;
 
 /**
 * This method fires when <longPresser> registers a long press. The default
@@ -343,19 +343,19 @@ tap.
 * A block assigned to this property to will be executed when
 * `touchesBegan:withEvent:` fires.
 */
-@property (nonatomic, copy) Block onTouchesBegan;
+@property (nonatomic, copy) MGBlock onTouchesBegan;
 
 /**
 * A block assigned to this property to will be executed when
 * `touchesCancelled:withEvent:` fires.
 */
-@property (nonatomic, copy) Block onTouchesCancelled;
+@property (nonatomic, copy) MGBlock onTouchesCancelled;
 
 /**
 * A block assigned to this property to will be executed when
 * `touchesEnded:withEvent:` fires.
 */
-@property (nonatomic, copy) Block onTouchesEnded;
+@property (nonatomic, copy) MGBlock onTouchesEnded;
 
 #pragma mark - Box reuse / offscreen culling
 
@@ -369,7 +369,7 @@ tap.
 * A block assigned to this property to will be executed when the box is
 * added due to being inside the viewport.
 */
-@property (nonatomic, copy) Block onAppear;
+@property (nonatomic, copy) MGBlock onAppear;
 
 /**
 * This method fires when the box is added due to being inside the viewport.
@@ -381,7 +381,7 @@ tap.
 * A block assigned to this property to will be executed when the box is
 * removed due to going outside the viewport.
 */
-@property (nonatomic, copy) Block onDisappear;
+@property (nonatomic, copy) MGBlock onDisappear;
 
 /**
 * This method fires when the box is removed due to going outside the viewport.

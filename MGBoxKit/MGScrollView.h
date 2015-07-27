@@ -51,7 +51,7 @@
 * Child boxes will have their unanimated layout method called. If you want a
 * child box to also animate the positioning of its children in the same drawing pass, call `layoutWithDuration:completion:` on the child box first.
 */
-- (void)layoutWithDuration:(NSTimeInterval)duration completion:(Block)completion;
+- (void)layoutWithDuration:(NSTimeInterval)duration completion:(MGBlock)completion;
 
 /** @name Scrolling */
 

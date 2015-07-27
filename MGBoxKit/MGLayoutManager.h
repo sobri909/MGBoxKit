@@ -8,9 +8,9 @@
 
 + (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container;
 + (void)layoutBoxesIn:(UIView <MGLayoutBox> *)container duration:(NSTimeInterval)duration
-      completion:(Block)completion;
+      completion:(MGBlock)completion;
 + (void)layoutVisibleBoxesIn:(UIView <MGLayoutBox> *)container
-      duration:(NSTimeInterval)duration completion:(Block)completion;
+      duration:(NSTimeInterval)duration completion:(MGBlock)completion;
 + (NSOrderedSet *)framesForBoxesIn:(UIView <MGLayoutBox> *)container;
 + (void)positionBoxesIn:(UIView <MGLayoutBox> *)container;
 + (void)positionAttachedBoxesIn:(UIView <MGLayoutBox> *)container;

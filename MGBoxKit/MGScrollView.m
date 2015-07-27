@@ -104,7 +104,7 @@
   }
 }
 
-- (void)layoutWithDuration:(NSTimeInterval)duration completion:(Block)completion {
+- (void)layoutWithDuration:(NSTimeInterval)duration completion:(MGBlock)completion {
     [MGLayoutManager layoutBoxesIn:self duration:duration completion:completion];
 }
 
@@ -372,7 +372,7 @@
   }
 }
 
-- (void)setOnTap:(Block)_onTap {
+- (void)setOnTap:(MGBlock)_onTap {
   onTap = [_onTap copy];
   if (onTap) {
     self.tappable = YES;

@@ -88,7 +88,7 @@
   }
 }
 
-- (void)layoutWithDuration:(NSTimeInterval)duration completion:(Block)completion {
+- (void)layoutWithDuration:(NSTimeInterval)duration completion:(MGBlock)completion {
     [MGLayoutManager layoutBoxesIn:self duration:duration completion:completion];
 
     // async draws
@@ -296,21 +296,21 @@
   }
 }
 
-- (void)setOnTap:(Block)_onTap {
+- (void)setOnTap:(MGBlock)_onTap {
   onTap = [_onTap copy];
   if (onTap) {
     self.tappable = YES;
   }
 }
 
-- (void)setOnSwipe:(Block)_onSwipe {
+- (void)setOnSwipe:(MGBlock)_onSwipe {
   onSwipe = [_onSwipe copy];
   if (onSwipe) {
     self.swipable = YES;
   }
 }
 
-- (void)setOnLongPress:(Block)_onLongPress {
+- (void)setOnLongPress:(MGBlock)_onLongPress {
   onLongPress = _onLongPress;
   if (onLongPress) {
     self.longPressable = YES;

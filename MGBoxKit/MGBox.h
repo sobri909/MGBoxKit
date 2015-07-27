@@ -56,7 +56,7 @@
 * children in the same drawing pass, call `layoutWithDuration:completion:` on
 * the child box first.
 */
-- (void)layoutWithDuration:(NSTimeInterval)duration completion:(Block)completion;
+- (void)layoutWithDuration:(NSTimeInterval)duration completion:(MGBlock)completion;
 
 /** @name Performance */
 
