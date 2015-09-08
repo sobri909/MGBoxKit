@@ -175,15 +175,14 @@
       from = self.rightWidth
             ? self.width - self.rightPadding - self.rightWidth
             : self.leftPadding + leftUsed + middleUsed;
-      limit = self.rightWidth ? self.rightWidth : maxWidth - leftUsed;
+      limit = self.rightWidth ? self.rightWidth : maxWidth - leftUsed - middleUsed;
       used = [self layoutItems:self.rightItems from:from within:limit
           align:self.rightItemsAlignment];
       rightUsed = self.rightWidth ? self.rightWidth : used;
 
       // middle last
       from = self.leftPadding + leftUsed;
-      limit = self.middleWidth ? self.middleWidth : maxWidth - leftUsed
-          - rightUsed;
+      limit = self.middleWidth ? self.middleWidth : maxWidth - leftUsed - rightUsed;
       used = [self layoutItems:self.middleItems from:from within:limit
           align:self.middleItemsAlignment];
       middleUsed = self.middleWidth ? self.middleWidth : used;
