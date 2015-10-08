@@ -153,6 +153,19 @@
   return ![touch.view isKindOfClass:UIControl.class];
 }
 
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    if (self.allowTouchesToPassThrough) {
+        for (UIView *view in self.subviews) {
+            if (CGRectContainsPoint(view.frame, point)) {
+                return [super pointInside:point withEvent:event];
+            }
+        }
+        return NO;
+    } else {
+        return [super pointInside:point withEvent:event];
+    }
+}
+
 #pragma mark - Scrolling
 
 - (void)scrollToView:(UIView *)view withMargin:(CGFloat)_margin {

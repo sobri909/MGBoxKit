@@ -109,6 +109,13 @@
 */
 @property (nonatomic, assign) CGFloat keyboardMargin;
 
+/**
+ * Allow touch events to pass through to views beneath the MGScrollView
+ * if the touch didn't hit one of the scroll view's subviews.
+ * Default is `NO`.
+ */
+@property (nonatomic, assign) BOOL allowTouchesToPassThrough;
+
 - (void)keyboardWillAppear:(NSNotification *)note;
 
 @end
