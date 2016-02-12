@@ -192,7 +192,7 @@
 
 - (BOOL)dataWasRemovedForBox:(UIView <MGLayoutBox> *)box {
     NSUInteger index = [self oldIndexOfBox:box];
-    if (index == NSNotFound) {
+    if (index == NSNotFound || index >= _oldDataKeys.count) {
         return NO;
     }
     return _removedDataKeys ? [_removedDataKeys containsObject:_oldDataKeys[index]] : NO;
