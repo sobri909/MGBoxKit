@@ -7,6 +7,7 @@
 #import "MGBox.h"
 #import "MGLayoutManager.h"
 #import "UIColor+MGExpanded.h"
+#import "UIView+MGEasyFrame.h"
 
 @implementation MGBox {
   BOOL fixedPositionEstablished;

@@ -7,6 +7,7 @@
 #import "MGScrollView.h"
 #import "MGLayoutManager.h"
 #import "MGBoxProvider.h"
+#import "UIView+MGEasyFrame.h"
 
 // default keyboardMargin
 #define KEYBOARD_MARGIN 8
