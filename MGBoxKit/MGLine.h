@@ -79,7 +79,7 @@ displayed. The items that are not displayed will remain in their respective cont
 * @param right An `NSString`, `NSAttributedString`, `UIView`, `UIImage`, or
 * `NSArray` of accepted types. Will be assigned to rightItems.
 * @param width The returned line will have this width.
-* @param minHeight A minimum acceptable row height, beyond which the line may
+* @param height A minimum acceptable row height, beyond which the line may
 * extend to accommodate the multiline text. Will be assigned to minHeight.
 */
 + (id)lineWithMultilineLeft:(NSString *)left right:(id)right width:(CGFloat)width
