@@ -244,7 +244,7 @@ CGFloat roundToPixel(CGFloat value) {
             [self stackTableStyle:container onlyMove:nil];
             break;
         case MGLayoutGridStyle:
-            [self stackGridStyle:container onlyMove:nil];
+            [self stackGridStyle:container onlyMove:nil horizontal:[container scrollsHorizontally]];
             break;
     }
 
@@ -350,7 +350,7 @@ CGFloat roundToPixel(CGFloat value) {
       [MGLayoutManager stackTableStyle:container onlyMove:newNotTopBoxes];
       break;
     case MGLayoutGridStyle:
-      [MGLayoutManager stackGridStyle:container onlyMove:newNotTopBoxes];
+      [MGLayoutManager stackGridStyle:container onlyMove:newNotTopBoxes horizontal:[container scrollsHorizontally]];
       break;
   }
 
@@ -483,29 +483,47 @@ CGFloat roundToPixel(CGFloat value) {
 }
 
 + (void)stackGridStyle:(UIView <MGLayoutBox> *)container
-              onlyMove:(NSSet *)only {
-  CGFloat x = container.leftPadding, y = container.topPadding, maxHeight = 0;
+              onlyMove:(NSSet *)only
+            horizontal:(BOOL)horizontal {
+  CGFloat x = container.leftPadding, y = container.topPadding, maxHeight = 0, maxWidth = 0;
 
   // lay out automatic boxes
   for (UIView <MGLayoutBox> *box in container.boxes) {
     if (box.boxLayoutMode != MGBoxLayoutAutomatic) {
       continue;
     }
+    
+    if (horizontal) {
+      // next column?
+      if (y + box.topMargin + box.height + box.bottomMargin > container.height) {
+        x = maxWidth;
+        y = container.topPadding;
+      }
+        
+      // position
+      y += box.topMargin;
+      if (!only || [only containsObject:box]) {
+        box.origin = CGPointMake(roundToPixel(x + box.leftMargin), roundToPixel(y));
+      }
+      
+      y += box.height + box.bottomMargin;
+      maxWidth = MAX(maxWidth, x + box.leftMargin + box.width + box.rightMargin);
+    } else {
+      // next row?
+      if (x + box.leftMargin + box.width + box.rightMargin > container.width) {
+        x = container.leftPadding;
+        y = maxHeight;
+      }
 
-    // next row?
-    if (x + box.leftMargin + box.width + box.rightMargin > container.width) {
-      x = container.leftPadding;
-      y = maxHeight;
+      // position
+      x += box.leftMargin;
+      if (!only || [only containsObject:box]) {
+        box.origin = CGPointMake(roundToPixel(x), roundToPixel(y + box.topMargin));
+      }
+
+      x += box.width + box.rightMargin;
+      maxHeight = MAX(maxHeight, y + box.topMargin + box.height + box.bottomMargin);
     }
-
-    // position
-    x += box.leftMargin;
-    if (!only || [only containsObject:box]) {
-      box.origin = CGPointMake(roundToPixel(x), roundToPixel(y + box.topMargin));
-    }
-
-    x += box.width + box.rightMargin;
-    maxHeight = MAX(maxHeight, y + box.topMargin + box.height + box.bottomMargin);
   }
 
   // don't update size if we weren't positioning everyone
