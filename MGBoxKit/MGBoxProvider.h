@@ -9,7 +9,7 @@ typedef UIView <MGLayoutBox> *(^MGBoxMaker)(NSString *type);
 typedef UIView <MGLayoutBox> *(^MGBoxCustomiser)(NSUInteger index);
 typedef UIEdgeInsets(^MGBoxMarginMaker)(NSUInteger index);
 typedef CGSize(^MGBoxSizeMaker)(NSUInteger index);
-typedef NSUInteger(^MGCounter)();
+typedef NSUInteger(^MGCounter)(void);
 
 typedef void (^MGBoxAnimator)(id box, NSUInteger index, NSTimeInterval duration,
       CGRect fromFrame, CGRect toFrame);
