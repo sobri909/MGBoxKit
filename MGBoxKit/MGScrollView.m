@@ -89,17 +89,17 @@
   // async draws
   if (self.asyncLayout || self.asyncLayoutOnce) {
     dispatch_async(self.asyncQueue, ^{
-      if (self.asyncLayout && !asyncDrawing) {
-        asyncDrawing = YES;
-        self.asyncLayout();
-        asyncDrawing = NO;
-      }
-      if (self.asyncLayoutOnce && !asyncDrawOnceing) {
-        asyncDrawOnceing = YES;
-        self.asyncLayoutOnce();
-        self.asyncLayoutOnce = nil;
-        asyncDrawOnceing = NO;
-      }
+        if (self.asyncLayout && !self->asyncDrawing) {
+            self->asyncDrawing = YES;
+            self.asyncLayout();
+            self->asyncDrawing = NO;
+        }
+        if (self.asyncLayoutOnce && !self->asyncDrawOnceing) {
+            self->asyncDrawOnceing = YES;
+            self.asyncLayoutOnce();
+            self.asyncLayoutOnce = nil;
+            self->asyncDrawOnceing = NO;
+        }
     });
   }
 }
@@ -293,9 +293,9 @@
   int curve = [note.userInfo[UIKeyboardAnimationCurveUserInfoKey] intValue];
   [UIView animateWithDuration:d delay:0 options:curve animations:^{
     CGPoint offset = self.contentOffset;
-    offset.y -= keyboardNudge;
+    offset.y -= self->keyboardNudge;
     self.contentOffset = offset;
-    keyboardNudge = 0;
+    self->keyboardNudge = 0;
   } completion:nil];
 }
 

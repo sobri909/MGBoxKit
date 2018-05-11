@@ -259,17 +259,17 @@
   // async draws
   if (self.asyncLayout || self.asyncLayoutOnce) {
     dispatch_async(self.asyncQueue, ^{
-      if (self.asyncLayout && !asyncDrawing) {
-        asyncDrawing = YES;
-        self.asyncLayout();
-        asyncDrawing = NO;
-      }
-      if (self.asyncLayoutOnce && !asyncDrawOnceing) {
-        asyncDrawOnceing = YES;
-        self.asyncLayoutOnce();
-        self.asyncLayoutOnce = nil;
-        asyncDrawOnceing = NO;
-      }
+        if (self.asyncLayout && !self->asyncDrawing) {
+            self->asyncDrawing = YES;
+            self.asyncLayout();
+            self->asyncDrawing = NO;
+        }
+        if (self.asyncLayoutOnce && !self->asyncDrawOnceing) {
+            self->asyncDrawOnceing = YES;
+            self.asyncLayoutOnce();
+            self.asyncLayoutOnce = nil;
+            self->asyncDrawOnceing = NO;
+        }
     });
   }
 }

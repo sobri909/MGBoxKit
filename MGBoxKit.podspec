@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.license           = { :type => "BSD", :file => "LICENSE" }
   s.author            = { "Matt Greenfield" => "matt@bigpaua.com" }
   s.source            = { :git => "https://github.com/sobri909/MGBoxKit.git", :tag => "8.0.0" }
-  s.platform          = :ios, '6.0'
+  s.ios.deployment_target = '9.0'
   s.source_files      = 'MGBoxKit/**/*.{h,m}'
   s.frameworks        = 'QuartzCore', 'UIKit'
   s.requires_arc      = true
