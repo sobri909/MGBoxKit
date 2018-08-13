@@ -6,6 +6,7 @@
 #import "MGScrollView.h"
 #import "MGBoxProvider.h"
 #import <tgmath.h>
+#import "UIView+MGEasyFrame.h"
 
 CGFloat roundToPixel(CGFloat value) {
   return UIScreen.mainScreen.scale == 1 ? round(value) : round(value * 2.0) / 2.0;

@@ -9,6 +9,7 @@
 #import "MGMushParser.h"
 #import "NSAttributedString+MGTrim.h"
 #import "NSString+MGEasySize.h"
+#import "UIView+MGEasyFrame.h"
 
 @interface MGLine ()
 @property (nonatomic, retain) NSMutableArray *dontFit;

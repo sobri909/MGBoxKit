@@ -6,6 +6,7 @@
 
 #import "MGButton.h"
 #import "MGLayoutManager.h"
+#import "UIView+MGEasyFrame.h"
 
 @implementation MGButton {
   BOOL fixedPositionEstablished;
