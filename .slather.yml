@@ -1,0 +1,6 @@
+# .slather.yml
+
+ci_service: travis_ci
+coverage_service: coveralls
+xcodeproj: MGBoxKit.xcodeproj
+source_directory: MGBoxKit

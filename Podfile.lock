@@ -1,0 +1,22 @@
+PODS:
+  - MGEvents (1.0.3)
+  - MGMushParser (1.2.1)
+  - OCHamcrest (4.1.1)
+  - OCMock (3.1.2)
+  - OCMockito (1.4.0):
+    - OCHamcrest (~> 4.0)
+
+DEPENDENCIES:
+  - MGEvents
+  - MGMushParser
+  - OCMock
+  - OCMockito (~> 1.0)
+
+SPEC CHECKSUMS:
+  MGEvents: 739ea3e582a8df05bd1044500c7fb6d8f7aff5c8
+  MGMushParser: e5f80531a96a086694103592db4cbad3ffd78fa5
+  OCHamcrest: 6f03ffa81d12feab872638490a44ab0a6d3aca10
+  OCMock: a10ea9f0a6e921651f96f78b6faee95ebc813b92
+  OCMockito: 4981140c9a9ec06c31af40f636e3c0f25f27e6b2
+
+COCOAPODS: 0.35.0
