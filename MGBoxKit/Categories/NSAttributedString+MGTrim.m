@@ -13,7 +13,13 @@
   NSCharacterSet *invertedSet = set.invertedSet;
   NSString *string = self.string;
   unsigned int loc, len;
-
+    
+  // If the string only contains characters in the given set, return (essentially) the empty string
+  // http://stackoverflow.com/questions/1671605/how-to-check-if-a-string-only-contains-alphanumeric-characters-in-objective-c
+  if ([[string stringByTrimmingCharactersInSet:set] isEqualToString:@""]) {
+      return [self attributedSubstringFromRange:NSMakeRange(0, 0)];
+  }
+  // Else the string has at least one character that isn't in the set
   NSRange range = [string rangeOfCharacterFromSet:invertedSet];
   loc = (range.length > 0) ? (int)range.location : 0;
 
